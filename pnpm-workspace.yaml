@@ -1,0 +1,7 @@
+# pnpm settings. magic-string is pinned to its last dual-format (CJS+ESM) release because
+# Tailwind's compiler require()s it, which fails on Node < 22 with the ESM-only 1.x line.
+overrides:
+  magic-string: 0.30.21
+
+allowBuilds:
+  esbuild: true
