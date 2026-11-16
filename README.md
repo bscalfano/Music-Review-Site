@@ -20,18 +20,18 @@ pnpm dev                     # http://localhost:3000
 
 ## Scripts
 
-| Command                             | What it does                                                              |
-| ----------------------------------- | ------------------------------------------------------------------------- |
-| `pnpm dev`                          | Start the dev server                                                      |
-| `pnpm build` / `pnpm start`         | Production build / serve                                                  |
-| `pnpm lint` / `pnpm typecheck`      | ESLint / TypeScript                                                       |
-| `pnpm format` / `pnpm format:check` | Prettier                                                                  |
-| `pnpm test`                         | Unit tests (Vitest)                                                       |
-| `pnpm e2e`                          | End-to-end tests (Playwright). Set `E2E_BASE_URL` to test a deployed site |
-| `pnpm db:generate`                  | Generate a migration from schema changes                                  |
-| `pnpm db:migrate`                   | Apply migrations to `DATABASE_URL`                                        |
+| Command                             | What it does                                                                                                                     |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm dev`                          | Start the dev server                                                                                                             |
+| `pnpm build` / `pnpm start`         | Production build / serve                                                                                                         |
+| `pnpm lint` / `pnpm typecheck`      | ESLint / TypeScript                                                                                                              |
+| `pnpm format` / `pnpm format:check` | Prettier                                                                                                                         |
+| `pnpm test`                         | Unit tests (Vitest)                                                                                                              |
+| `pnpm e2e`                          | Access-control tests over HTTP (Playwright; uses a running `pnpm dev` or starts one). Set `E2E_BASE_URL` to test a deployed site |
+| `pnpm db:generate`                  | Generate a migration from schema changes                                                                                         |
+| `pnpm db:migrate`                   | Apply migrations to `DATABASE_URL`                                                                                               |
 
-First time using Playwright: `pnpm exec playwright install chromium`.
+Browser-based Playwright tests would need `pnpm exec playwright install chromium` first; the current tests do not.
 
 ## Database
 
@@ -59,6 +59,27 @@ Slow work (album tracklists, genres, covers) runs from a Postgres-backed queue (
 
 - `kickJobs()` runs due jobs right after a response is sent. This is what keeps the queue moving in practice.
 - `/api/cron/jobs` (protected by `CRON_SECRET`) sweeps the queue. `vercel.json` schedules it **once a day**, because that is the most Vercel's free plan allows. It's a safety net for retries, not the primary runner.
+
+## Authentication
+
+Sign-in uses Auth.js (v5) with Google and email links (Resend); both create the account the first time they are used. Each provider only appears once its keys are set in `.env.local` (see `.env.example`). Cloudflare Turnstile guards the sign-in form: it fails closed in production if `TURNSTILE_SECRET_KEY` is missing, and is skipped in development.
+
+- **Owner role:** the account whose email equals `OWNER_EMAIL` becomes `owner` at sign-in.
+- **Dev sign-in:** while running `pnpm dev`, the sign-in page lists the seed users so you can sign in as any of them without Google or Resend. This provider does not exist in production builds.
+- **Sessions** are JWTs, but the account's current state (suspended, deleted, role) is re-read from the database on every request, so a ban takes effect immediately.
+- **Server checks:** use `requireUser()` / `requireAdmin()` from `src/lib/auth/session.ts` in every page and action that needs them. `/admin` answers 404 to non-admins.
+
+## Who can see what
+
+Visibility of a user's content (public vs private accounts, followers, blocks, suspensions) is defined once, in `src/lib/social/visibility.ts`: `canViewContent` for single items and `authorVisibleTo` as a SQL filter for lists. **Every query that shows user content must use it.** `tests/unit/visibility-sql.test.ts` checks that the two agree for every combination against the real database.
+
+## File storage
+
+Avatars, banners and album covers are stored in Cloudflare R2 when the `R2_*` variables are set. In development without them, files go to `public/uploads/` (git-ignored) instead. Uploads are re-encoded server-side (`sharp`), which strips EXIF/location data, and are limited to JPEG/PNG/WebP up to 4 MB.
+
+## Profile themes
+
+Profiles are customized with fixed options only (preset + accent color); users cannot supply CSS. Presets live in `src/lib/profiles/themes.ts`; add one there and it appears in settings. Accent colors are automatically adjusted to meet WCAG AA contrast against the preset in both light and dark mode.
 
 ## Conventions
 

@@ -1,6 +1,13 @@
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { mkdir, rm, writeFile } from "node:fs/promises";
+import { dirname, resolve, sep } from "node:path";
+import { DeleteObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
-/** Cloudflare R2 via its S3-compatible API. All settings come from env (see .env.example). */
+/**
+ * File storage for covers, avatars and banners.
+ *  - Production: Cloudflare R2 via its S3-compatible API (settings from env, see .env.example).
+ *  - Development without R2 keys: a local folder, public/uploads (git-ignored).
+ *  - Otherwise: null, and callers degrade gracefully (e.g. covers fall back to Cover Art Archive).
+ */
 export type StorageConfig = {
   accountId: string;
   accessKeyId: string;
@@ -31,6 +38,8 @@ export function readStorageConfig(env: NodeJS.ProcessEnv = process.env): Storage
 
 export interface Storage {
   put(args: { key: string; body: Uint8Array; contentType: string }): Promise<void>;
+  /** Best effort: a failed delete must never fail the request that triggered it. */
+  delete(key: string): Promise<void>;
   publicUrl(key: string): string;
 }
 
@@ -53,12 +62,47 @@ export function createR2Storage(config: StorageConfig): Storage {
         }),
       );
     },
+    async delete(key) {
+      try {
+        await client.send(new DeleteObjectCommand({ Bucket: config.bucket, Key: key }));
+      } catch (err) {
+        console.error("[storage] delete failed", key, err);
+      }
+    },
     publicUrl: (key) => `${config.publicUrl}/${key}`,
   };
 }
 
-/** The configured storage, or null when R2 isn't set up (local dev before Phase 1 setup). */
+const LOCAL_DIR = resolve(process.cwd(), "public", "uploads");
+
+export function createLocalStorage(dir = LOCAL_DIR): Storage {
+  const pathFor = (key: string) => {
+    const full = resolve(dir, key);
+    if (!full.startsWith(dir + sep)) throw new Error(`Invalid storage key: ${key}`); // no ../ escapes
+    return full;
+  };
+  return {
+    async put({ key, body }) {
+      const file = pathFor(key);
+      await mkdir(dirname(file), { recursive: true });
+      await writeFile(file, body);
+    },
+    async delete(key) {
+      await rm(pathFor(key), { force: true }).catch(() => {});
+    },
+    publicUrl: (key) => `/uploads/${key}`,
+  };
+}
+
+/** The storage to use right now, or null when nothing is configured. */
 export function getStorage(): Storage | null {
   const config = readStorageConfig();
-  return config ? createR2Storage(config) : null;
+  if (config) return createR2Storage(config);
+  if (process.env.NODE_ENV === "development") return createLocalStorage();
+  return null;
+}
+
+/** Public URL for a stored object's key, or null when no storage is available. */
+export function storagePublicUrl(key: string): string | null {
+  return getStorage()?.publicUrl(key) ?? null;
 }

@@ -80,3 +80,36 @@
     @apply bg-background text-foreground;
   }
 }
+
+/*
+ * Profile theming. A profile page wraps its content in .profile-theme and sets --pt-* variables
+ * inline (see src/lib/profiles/themes.ts). Users never supply CSS: only validated hex colours
+ * reach these variables. Light/dark values are both present; the active colour scheme picks one.
+ */
+.profile-theme {
+  --pt-accent: var(--pt-accent-l, currentColor);
+  --pt-bg: var(--pt-bg-l);
+  --pt-fg: var(--pt-fg-l);
+  --pt-card: var(--pt-card-l);
+  --pt-muted: var(--pt-muted-l);
+  --pt-border: var(--pt-border-l);
+  --profile-accent: var(--pt-accent);
+}
+.dark .profile-theme {
+  --pt-accent: var(--pt-accent-d, currentColor);
+  --pt-bg: var(--pt-bg-d);
+  --pt-fg: var(--pt-fg-d);
+  --pt-card: var(--pt-card-d);
+  --pt-muted: var(--pt-muted-d);
+  --pt-border: var(--pt-border-d);
+}
+.profile-theme[data-themed="true"] {
+  --background: var(--pt-bg);
+  --foreground: var(--pt-fg);
+  --card: var(--pt-card);
+  --muted-foreground: var(--pt-muted);
+  --border: var(--pt-border);
+  --muted: color-mix(in oklab, var(--pt-fg) 8%, var(--pt-bg));
+  background-color: var(--background);
+  color: var(--foreground);
+}

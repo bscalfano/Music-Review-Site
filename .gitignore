@@ -48,3 +48,6 @@ next-env.d.ts
 /playwright-report
 /test-results
 /coverage
+
+# local dev uploads (storage fallback when R2 is not configured)
+/public/uploads

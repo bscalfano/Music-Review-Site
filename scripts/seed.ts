@@ -9,7 +9,7 @@
  * are real catalog data and are kept by `db:unseed`.
  */
 import { config } from "dotenv";
-import { eq, like, sql } from "drizzle-orm";
+import { eq, inArray, like, sql } from "drizzle-orm";
 import { getDb, schema } from "@/db";
 import { enrichAlbum } from "@/lib/albums/enrich";
 import { ensureAlbum, type AlbumRow } from "@/lib/albums/ensure-album";
@@ -218,10 +218,15 @@ async function seed() {
 
   // --- reviews and logs ---------------------------------------------------------------------
   const ratingPool: Array<number | null> = [null, 0, 3, 4, 5, 6, 6, 7, 7, 8, 8, 8, 9, 9, 10, 10];
-  const tagRows = await db
+  // Tags are shared and outlive the seed users, so creating them must be idempotent.
+  await db
     .insert(schema.tags)
     .values(TAGS.map((name) => ({ name })))
-    .returning();
+    .onConflictDoNothing();
+  const tagRows = await db
+    .select()
+    .from(schema.tags)
+    .where(inArray(schema.tags.name, [...TAGS]));
   const now = Date.now();
   const DAY = 86_400_000;
 

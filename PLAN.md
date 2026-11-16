@@ -34,7 +34,7 @@ Design rules:
 | Styling | **Tailwind CSS** + **shadcn/ui** | Most common setup; easy to restyle |
 | Database | **PostgreSQL** on **Neon** (free tier) | Relational data fits users/follows/reviews well. (Supabase also fine.) |
 | ORM | **Drizzle ORM** + drizzle-kit migrations | Type-safe, migrations in git |
-| Auth | **Auth.js (NextAuth v5)**, Drizzle adapter | Google sign-in + email magic link; no passwords stored |
+| Auth | **Auth.js (NextAuth v5)**, custom adapter, JWT sessions | Google sign-in + email magic link; no passwords stored |
 | Email | **Resend** | Magic links + notification emails |
 | File storage | **Cloudflare R2** (S3-compatible, free egress) | Cached cover art, avatars, images in reviews |
 | Bot protection | **Cloudflare Turnstile** on sign-up | Free, invisible CAPTCHA; stops bulk spam accounts |
@@ -184,7 +184,7 @@ The clip is a **30-second preview** from **Deezer API** (no auth), with **iTunes
 - **Blocks:** see §2.3.
 - **Sign-up:** Turnstile, plus email verification via the magic link or Google.
 - **Legal:** Terms, Privacy Policy and Community Guidelines pages (plain-language templates; the owner should review them). Minimum age 13. Account deletion hard-deletes personal data after a 30-day grace period.
-- **Uploads:** images only (JPEG/PNG/WebP), ≤ 5 MB, re-encoded server-side with `sharp` (strips EXIF/location data; animated images are flattened to the first frame), with a per-user storage quota. Avatars and banners can be reported, and admins can reset them to the default.
+- **Uploads:** images only (JPEG/PNG/WebP), ≤ 4 MB (Vercel rejects request bodies over 4.5 MB), re-encoded server-side with `sharp` (strips EXIF/location data; animated images are flattened to the first frame), with a quota that is built in: each user has one avatar and one banner, and a new upload replaces and deletes the old file. Avatars and banners can be reported, and admins can reset them to the default.
 
 ### 2.10 Project structure
 
@@ -255,7 +255,7 @@ Signed-out users see sections 3 only, with the prompt "Sign in to see what peopl
 ### 2.13 Profile page: Four Favorites & customization
 
 **Layout of `/u/[handle]`, top to bottom:**
-1. **Banner** (3:1), with the avatar overlapping its bottom-left edge.
+1. **Banner** (shown 2:1 on phones, 3:1 on wide screens), with the avatar overlapping its bottom-left edge.
 2. **Header:** display name, @handle, pronouns, location, links, bio, follower/following counts, Follow button (or Edit profile on your own profile).
 3. **Four Favorites:** a "FAVORITE ALBUMS" heading and a row of 4 square covers. The row stays 4 across on mobile, just smaller.
 4. **Tabs + cover grid** (Reviews · Lists · Queue · Stats).
@@ -272,7 +272,7 @@ Signed-out users see sections 3 only, with the prompt "Sign in to see what peopl
 | Option | Details |
 |---|---|
 | Avatar | Upload, crop to a square in the browser (`react-easy-crop`), stored at 400px and shown as a circle. Defaults to the Google picture or a generated initial. |
-| Banner | Upload, crop to 3:1, stored at 1500×500 and 750×250, plus a vertical focal-point slider (the crop shifts around that point on narrow screens). Optional: with no banner, a gradient is generated from the accent color. |
+| Banner | Upload, crop to 2:1, stored at 1500×750 and 750×375. Phones show it whole; wide screens show it 3:1, cropped vertically around a focal-point slider the user sets. Optional: with no banner, a gradient is generated from the accent color. |
 | Display name, pronouns, location | Name 1–50 chars; pronouns ≤ 20; location ≤ 40. All optional except the name. |
 | Bio | ≤ 300 chars, plain text with line breaks, auto-linked URLs and @mentions. No markdown. |
 | Links | Up to 3 `https` links with labels. Known sites (Instagram, Spotify, Bandcamp, etc.) get icons. Rendered with `rel="nofollow ugc noopener"`. |
@@ -369,7 +369,7 @@ Each phase ends with the app building, lint and tests passing, a commit, and a s
 
 **Phase 2 — Auth, users, profiles**
 1. Auth.js (Google + magic link), Turnstile, handle selection, reserved handles, owner role from the `OWNER_EMAIL` env var.
-2. `src/config/site.ts` (§2.14). Profile page per §2.13: header, avatar/banner upload + crop, bio, links, **Four Favorites** (build the shared `<AlbumPicker>` here, since `/write` reuses it in Phase 3; reorder; `fanCount` upkeep), accent color + theme presets with the contrast check, and the cover grid. Settings (profile, notification prefs).
+2. `src/config/site.ts` (§2.14). Profile page per §2.13: header, avatar/banner upload + crop, bio, links, **Four Favorites** (build the shared `<AlbumPicker>` here, since `/write` reuses it in Phase 3; reorder; `fanCount` upkeep), accent color + theme presets with the contrast check, and the cover grid. Settings (profile, images, favorites, appearance, privacy, handle). **Notification prefs move to Phase 4**, when notifications exist.
 3. `requireUser` / `requireAdmin` helpers; Playwright test that protected routes reject anonymous users.
 4. The `canView` visibility rule and SQL filter (§2.4), with the full combination unit tests, **before** any content query is written. Every query from here on must use it.
 
