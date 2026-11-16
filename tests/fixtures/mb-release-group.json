@@ -1,0 +1,4211 @@
+{
+  "disambiguation": "",
+  "secondary-type-ids": [],
+  "primary-type-id": "f529b476-6e62-324f-b0aa-1f3e33d313fc",
+  "first-release-date": "2000-08-03",
+  "genres": [
+    {
+      "name": "alternative rock",
+      "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+      "disambiguation": "",
+      "count": 6
+    },
+    {
+      "id": "608b0471-7531-4854-a348-e698c69cb699",
+      "disambiguation": "",
+      "count": 2,
+      "name": "ambient"
+    },
+    {
+      "name": "ambient pop",
+      "count": 1,
+      "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+      "disambiguation": ""
+    },
+    {
+      "count": 2,
+      "disambiguation": "",
+      "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+      "name": "art pop"
+    },
+    {
+      "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+      "disambiguation": "",
+      "count": 11,
+      "name": "art rock"
+    },
+    {
+      "name": "avant-garde",
+      "count": 3,
+      "disambiguation": "",
+      "id": "b1c0c2ad-e5ae-4bb6-a1be-d66e195fd2d7"
+    },
+    {
+      "name": "electronic",
+      "disambiguation": "",
+      "id": "89255676-1f14-4dd8-bbad-fca839d6aff4",
+      "count": 14
+    },
+    {
+      "count": 2,
+      "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+      "disambiguation": "",
+      "name": "electronica"
+    },
+    {
+      "name": "experimental rock",
+      "count": 10,
+      "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7",
+      "disambiguation": ""
+    },
+    {
+      "name": "idm",
+      "count": 2,
+      "disambiguation": "",
+      "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9"
+    },
+    {
+      "name": "indie rock",
+      "count": 1,
+      "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7",
+      "disambiguation": ""
+    },
+    {
+      "name": "indietronica",
+      "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d",
+      "disambiguation": "",
+      "count": 1
+    },
+    {
+      "id": "32bea60c-e201-4241-8ed4-228636d34a97",
+      "disambiguation": "",
+      "count": 1,
+      "name": "leftfield"
+    },
+    {
+      "name": "post-rock",
+      "id": "0bfffa19-4e4a-4bf7-bf53-6ec44f0a2f8e",
+      "disambiguation": "",
+      "count": 3
+    },
+    {
+      "name": "rock",
+      "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798",
+      "disambiguation": "",
+      "count": 3
+    }
+  ],
+  "id": "e75c0549-ad55-39e3-8025-c72c5d4a3c5d",
+  "primary-type": "Album",
+  "releases": [
+    {
+      "packaging": null,
+      "id": "677cf459-923a-49ca-b144-90083728d2dc",
+      "date": "2000-08-03",
+      "release-events": [
+        {
+          "date": "2000-08-03",
+          "area": {
+            "name": "Europe",
+            "type-id": null,
+            "disambiguation": "",
+            "sort-name": "Europe",
+            "id": "89a675c2-3e37-3518-b83c-418bad59a85a",
+            "iso-3166-1-codes": ["XE"],
+            "type": null
+          }
+        }
+      ],
+      "status": "Official",
+      "title": "Kid A",
+      "artist-credit": [
+        {
+          "artist": {
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+            "sort-name": "Radiohead",
+            "disambiguation": "",
+            "country": "GB",
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+            "name": "Radiohead",
+            "type": "Group",
+            "genres": [
+              {
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+                "disambiguation": "",
+                "count": 43,
+                "name": "alternative rock"
+              },
+              {
+                "disambiguation": "",
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+                "count": 1,
+                "name": "ambient pop"
+              },
+              {
+                "disambiguation": "",
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+                "count": 3,
+                "name": "art pop"
+              },
+              {
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+                "disambiguation": "",
+                "count": 30,
+                "name": "art rock"
+              },
+              {
+                "name": "britpop",
+                "disambiguation": "",
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+                "count": 2
+              },
+              {
+                "name": "chamber pop",
+                "disambiguation": "",
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9",
+                "count": 1
+              },
+              {
+                "name": "crossover prog",
+                "count": 1,
+                "disambiguation": "",
+                "id": "eee90717-3eee-41bd-b463-003c180544bd"
+              },
+              {
+                "name": "electronic",
+                "count": 14,
+                "disambiguation": "",
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4"
+              },
+              {
+                "disambiguation": "",
+                "id": "c4a69842-f891-4569-9506-1882aa5db433",
+                "count": 1,
+                "name": "electronic rock"
+              },
+              {
+                "name": "electronica",
+                "disambiguation": "",
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+                "count": 2
+              },
+              {
+                "name": "experimental",
+                "count": 3,
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99",
+                "disambiguation": ""
+              },
+              {
+                "name": "experimental rock",
+                "count": 14,
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7",
+                "disambiguation": ""
+              },
+              {
+                "name": "idm",
+                "count": 1,
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9",
+                "disambiguation": ""
+              },
+              {
+                "name": "indie rock",
+                "count": 5,
+                "disambiguation": "",
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7"
+              },
+              {
+                "name": "indietronica",
+                "count": 1,
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d",
+                "disambiguation": ""
+              },
+              {
+                "disambiguation": "",
+                "id": "a493b79c-4072-4371-a14c-446b1027982a",
+                "count": 2,
+                "name": "post-britpop"
+              },
+              {
+                "count": 1,
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2",
+                "disambiguation": "",
+                "name": "post-grunge"
+              },
+              {
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798",
+                "disambiguation": "",
+                "count": 19,
+                "name": "rock"
+              }
+            ]
+          },
+          "joinphrase": "",
+          "name": "Radiohead"
+        }
+      ],
+      "barcode": "724352775316",
+      "packaging-id": null,
+      "text-representation": { "language": "eng", "script": "Latn" },
+      "disambiguation": "",
+      "quality": "normal",
+      "country": "XE",
+      "genres": [],
+      "status-id": "4e304316-386d-3409-af2e-78857eec5cfe"
+    },
+    {
+      "genres": [
+        {
+          "name": "rock",
+          "count": 1,
+          "disambiguation": "",
+          "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798"
+        }
+      ],
+      "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+      "text-representation": { "script": "Latn", "language": "eng" },
+      "quality": "normal",
+      "country": "JP",
+      "disambiguation": "",
+      "status": "Official",
+      "title": "Kid A",
+      "artist-credit": [
+        {
+          "name": "Radiohead",
+          "joinphrase": "",
+          "artist": {
+            "country": "GB",
+            "sort-name": "Radiohead",
+            "disambiguation": "",
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+            "name": "Radiohead",
+            "type": "Group",
+            "genres": [
+              {
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+                "disambiguation": "",
+                "count": 43,
+                "name": "alternative rock"
+              },
+              {
+                "disambiguation": "",
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+                "count": 1,
+                "name": "ambient pop"
+              },
+              {
+                "count": 3,
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+                "disambiguation": "",
+                "name": "art pop"
+              },
+              {
+                "name": "art rock",
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+                "disambiguation": "",
+                "count": 30
+              },
+              {
+                "count": 2,
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+                "disambiguation": "",
+                "name": "britpop"
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9",
+                "name": "chamber pop"
+              },
+              {
+                "id": "eee90717-3eee-41bd-b463-003c180544bd",
+                "disambiguation": "",
+                "count": 1,
+                "name": "crossover prog"
+              },
+              {
+                "count": 14,
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4",
+                "disambiguation": "",
+                "name": "electronic"
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "c4a69842-f891-4569-9506-1882aa5db433",
+                "name": "electronic rock"
+              },
+              {
+                "disambiguation": "",
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+                "count": 2,
+                "name": "electronica"
+              },
+              {
+                "count": 3,
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99",
+                "disambiguation": "",
+                "name": "experimental"
+              },
+              {
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7",
+                "disambiguation": "",
+                "count": 14,
+                "name": "experimental rock"
+              },
+              {
+                "disambiguation": "",
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9",
+                "count": 1,
+                "name": "idm"
+              },
+              {
+                "name": "indie rock",
+                "count": 5,
+                "disambiguation": "",
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7"
+              },
+              {
+                "disambiguation": "",
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d",
+                "count": 1,
+                "name": "indietronica"
+              },
+              {
+                "disambiguation": "",
+                "id": "a493b79c-4072-4371-a14c-446b1027982a",
+                "count": 2,
+                "name": "post-britpop"
+              },
+              {
+                "name": "post-grunge",
+                "count": 1,
+                "disambiguation": "",
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2"
+              },
+              {
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798",
+                "disambiguation": "",
+                "count": 19,
+                "name": "rock"
+              }
+            ]
+          }
+        }
+      ],
+      "barcode": "4988006786011",
+      "packaging-id": "ec27701a-4a22-37f4-bfac-6616e0f9750a",
+      "packaging": "Jewel Case",
+      "id": "e1bdf797-8b89-4d4c-8986-bcb0974d9726",
+      "release-events": [
+        {
+          "area": {
+            "type": null,
+            "iso-3166-1-codes": ["JP"],
+            "type-id": null,
+            "disambiguation": "",
+            "sort-name": "Japan",
+            "id": "2db42837-c832-3c27-b4a3-08198f75693c",
+            "name": "Japan"
+          },
+          "date": "2000-09-27"
+        }
+      ],
+      "date": "2000-09-27"
+    },
+    {
+      "date": "2000-09-29",
+      "release-events": [
+        {
+          "area": {
+            "name": "Europe",
+            "id": "89a675c2-3e37-3518-b83c-418bad59a85a",
+            "disambiguation": "",
+            "sort-name": "Europe",
+            "type-id": null,
+            "iso-3166-1-codes": ["XE"],
+            "type": null
+          },
+          "date": "2000-09-29"
+        },
+        {
+          "date": "2000-09-29",
+          "area": {
+            "name": "France",
+            "type-id": null,
+            "sort-name": "France",
+            "disambiguation": "",
+            "id": "08310658-51eb-3801-80de-5a0739207115",
+            "iso-3166-1-codes": ["FR"],
+            "type": null
+          }
+        },
+        {
+          "date": "2000-09-29",
+          "area": {
+            "sort-name": "Germany",
+            "disambiguation": "",
+            "id": "85752fda-13c4-31a3-bee5-0e5cb1f51dad",
+            "type-id": null,
+            "name": "Germany",
+            "type": null,
+            "iso-3166-1-codes": ["DE"]
+          }
+        },
+        {
+          "date": "2000-10-02",
+          "area": {
+            "type": null,
+            "iso-3166-1-codes": ["GB"],
+            "disambiguation": "",
+            "id": "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
+            "sort-name": "United Kingdom",
+            "type-id": null,
+            "name": "United Kingdom"
+          }
+        }
+      ],
+      "id": "f947caf6-2da7-3a57-aa4b-0d5e374226ce",
+      "packaging": "Jewel Case",
+      "packaging-id": "ec27701a-4a22-37f4-bfac-6616e0f9750a",
+      "barcode": "724352775323",
+      "artist-credit": [
+        {
+          "artist": {
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+            "disambiguation": "",
+            "sort-name": "Radiohead",
+            "country": "GB",
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+            "name": "Radiohead",
+            "type": "Group",
+            "genres": [
+              {
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+                "disambiguation": "",
+                "count": 43,
+                "name": "alternative rock"
+              },
+              {
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+                "disambiguation": "",
+                "count": 1,
+                "name": "ambient pop"
+              },
+              {
+                "name": "art pop",
+                "count": 3,
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+                "disambiguation": ""
+              },
+              {
+                "count": 30,
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+                "disambiguation": "",
+                "name": "art rock"
+              },
+              {
+                "count": 2,
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+                "disambiguation": "",
+                "name": "britpop"
+              },
+              {
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9",
+                "disambiguation": "",
+                "count": 1,
+                "name": "chamber pop"
+              },
+              {
+                "name": "crossover prog",
+                "id": "eee90717-3eee-41bd-b463-003c180544bd",
+                "disambiguation": "",
+                "count": 1
+              },
+              {
+                "name": "electronic",
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4",
+                "disambiguation": "",
+                "count": 14
+              },
+              {
+                "count": 1,
+                "id": "c4a69842-f891-4569-9506-1882aa5db433",
+                "disambiguation": "",
+                "name": "electronic rock"
+              },
+              {
+                "count": 2,
+                "disambiguation": "",
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+                "name": "electronica"
+              },
+              {
+                "count": 3,
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99",
+                "disambiguation": "",
+                "name": "experimental"
+              },
+              {
+                "name": "experimental rock",
+                "count": 14,
+                "disambiguation": "",
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7"
+              },
+              {
+                "name": "idm",
+                "count": 1,
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9",
+                "disambiguation": ""
+              },
+              {
+                "count": 5,
+                "disambiguation": "",
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7",
+                "name": "indie rock"
+              },
+              {
+                "name": "indietronica",
+                "disambiguation": "",
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d",
+                "count": 1
+              },
+              {
+                "count": 2,
+                "id": "a493b79c-4072-4371-a14c-446b1027982a",
+                "disambiguation": "",
+                "name": "post-britpop"
+              },
+              {
+                "name": "post-grunge",
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2",
+                "disambiguation": "",
+                "count": 1
+              },
+              {
+                "name": "rock",
+                "count": 19,
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798",
+                "disambiguation": ""
+              }
+            ]
+          },
+          "name": "Radiohead",
+          "joinphrase": ""
+        }
+      ],
+      "status": "Official",
+      "title": "Kid A",
+      "quality": "normal",
+      "disambiguation": "",
+      "country": "XE",
+      "text-representation": { "script": "Latn", "language": "eng" },
+      "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+      "genres": []
+    },
+    {
+      "packaging": "Jewel Case",
+      "id": "57e1d657-a38d-3de5-b33e-45b661b0d5b0",
+      "date": "2000-10-02",
+      "release-events": [
+        {
+          "area": {
+            "name": "United Kingdom",
+            "sort-name": "United Kingdom",
+            "disambiguation": "",
+            "id": "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
+            "type-id": null,
+            "iso-3166-1-codes": ["GB"],
+            "type": null
+          },
+          "date": "2000-10-02"
+        }
+      ],
+      "title": "Kid A",
+      "status": "Official",
+      "artist-credit": [
+        {
+          "name": "Radiohead",
+          "joinphrase": "",
+          "artist": {
+            "genres": [
+              {
+                "name": "alternative rock",
+                "count": 43,
+                "disambiguation": "",
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18"
+              },
+              {
+                "name": "ambient pop",
+                "count": 1,
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+                "disambiguation": ""
+              },
+              {
+                "count": 3,
+                "disambiguation": "",
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+                "name": "art pop"
+              },
+              {
+                "count": 30,
+                "disambiguation": "",
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+                "name": "art rock"
+              },
+              {
+                "name": "britpop",
+                "count": 2,
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+                "disambiguation": ""
+              },
+              {
+                "disambiguation": "",
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9",
+                "count": 1,
+                "name": "chamber pop"
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "eee90717-3eee-41bd-b463-003c180544bd",
+                "name": "crossover prog"
+              },
+              {
+                "name": "electronic",
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4",
+                "disambiguation": "",
+                "count": 14
+              },
+              {
+                "name": "electronic rock",
+                "count": 1,
+                "id": "c4a69842-f891-4569-9506-1882aa5db433",
+                "disambiguation": ""
+              },
+              {
+                "name": "electronica",
+                "disambiguation": "",
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+                "count": 2
+              },
+              {
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99",
+                "disambiguation": "",
+                "count": 3,
+                "name": "experimental"
+              },
+              {
+                "name": "experimental rock",
+                "disambiguation": "",
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7",
+                "count": 14
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9",
+                "name": "idm"
+              },
+              {
+                "count": 5,
+                "disambiguation": "",
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7",
+                "name": "indie rock"
+              },
+              {
+                "disambiguation": "",
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d",
+                "count": 1,
+                "name": "indietronica"
+              },
+              {
+                "count": 2,
+                "id": "a493b79c-4072-4371-a14c-446b1027982a",
+                "disambiguation": "",
+                "name": "post-britpop"
+              },
+              {
+                "count": 1,
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2",
+                "disambiguation": "",
+                "name": "post-grunge"
+              },
+              {
+                "name": "rock",
+                "disambiguation": "",
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798",
+                "count": 19
+              }
+            ],
+            "type": "Group",
+            "name": "Radiohead",
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+            "disambiguation": "",
+            "country": "GB",
+            "sort-name": "Radiohead",
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711"
+          }
+        }
+      ],
+      "barcode": "724352959020",
+      "packaging-id": "ec27701a-4a22-37f4-bfac-6616e0f9750a",
+      "text-representation": { "script": "Latn", "language": "eng" },
+      "disambiguation": "hidden booklet",
+      "quality": "normal",
+      "country": "GB",
+      "genres": [
+        {
+          "name": "alternative rock",
+          "count": 2,
+          "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+          "disambiguation": ""
+        },
+        {
+          "count": 1,
+          "disambiguation": "",
+          "id": "608b0471-7531-4854-a348-e698c69cb699",
+          "name": "ambient"
+        },
+        {
+          "count": 1,
+          "disambiguation": "",
+          "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+          "name": "art rock"
+        },
+        {
+          "name": "electronic",
+          "count": 2,
+          "id": "89255676-1f14-4dd8-bbad-fca839d6aff4",
+          "disambiguation": ""
+        },
+        {
+          "name": "electronica",
+          "count": 1,
+          "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+          "disambiguation": ""
+        },
+        {
+          "name": "experimental",
+          "disambiguation": "",
+          "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99",
+          "count": 2
+        },
+        {
+          "name": "experimental rock",
+          "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7",
+          "disambiguation": "",
+          "count": 1
+        },
+        {
+          "count": 1,
+          "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9",
+          "disambiguation": "",
+          "name": "idm"
+        },
+        {
+          "name": "post-rock",
+          "count": 1,
+          "disambiguation": "",
+          "id": "0bfffa19-4e4a-4bf7-bf53-6ec44f0a2f8e"
+        },
+        {
+          "name": "rock",
+          "disambiguation": "",
+          "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798",
+          "count": 2
+        }
+      ],
+      "status-id": "4e304316-386d-3409-af2e-78857eec5cfe"
+    },
+    {
+      "text-representation": { "language": "eng", "script": "Latn" },
+      "country": "US",
+      "quality": "normal",
+      "disambiguation": "Book and Compact Disc",
+      "genres": [
+        {
+          "name": "alternative rock",
+          "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+          "disambiguation": "",
+          "count": 1
+        }
+      ],
+      "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+      "packaging": "Book",
+      "date": "2000-10-02",
+      "release-events": [
+        {
+          "area": {
+            "sort-name": "United States",
+            "id": "489ce91b-6658-3307-9877-795b68554c98",
+            "disambiguation": "",
+            "type-id": null,
+            "name": "United States",
+            "type": null,
+            "iso-3166-1-codes": ["US"]
+          },
+          "date": "2000-10-02"
+        }
+      ],
+      "id": "5cf1960d-d7c1-31cf-99e1-41c00069a471",
+      "artist-credit": [
+        {
+          "name": "Radiohead",
+          "joinphrase": "",
+          "artist": {
+            "name": "Radiohead",
+            "sort-name": "Radiohead",
+            "disambiguation": "",
+            "country": "GB",
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+            "genres": [
+              {
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+                "disambiguation": "",
+                "count": 43,
+                "name": "alternative rock"
+              },
+              {
+                "name": "ambient pop",
+                "count": 1,
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+                "disambiguation": ""
+              },
+              {
+                "count": 3,
+                "disambiguation": "",
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+                "name": "art pop"
+              },
+              {
+                "name": "art rock",
+                "disambiguation": "",
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+                "count": 30
+              },
+              {
+                "name": "britpop",
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+                "disambiguation": "",
+                "count": 2
+              },
+              {
+                "name": "chamber pop",
+                "count": 1,
+                "disambiguation": "",
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9"
+              },
+              {
+                "id": "eee90717-3eee-41bd-b463-003c180544bd",
+                "disambiguation": "",
+                "count": 1,
+                "name": "crossover prog"
+              },
+              {
+                "count": 14,
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4",
+                "disambiguation": "",
+                "name": "electronic"
+              },
+              {
+                "disambiguation": "",
+                "id": "c4a69842-f891-4569-9506-1882aa5db433",
+                "count": 1,
+                "name": "electronic rock"
+              },
+              {
+                "count": 2,
+                "disambiguation": "",
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+                "name": "electronica"
+              },
+              {
+                "name": "experimental",
+                "count": 3,
+                "disambiguation": "",
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99"
+              },
+              {
+                "count": 14,
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7",
+                "disambiguation": "",
+                "name": "experimental rock"
+              },
+              {
+                "name": "idm",
+                "disambiguation": "",
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9",
+                "count": 1
+              },
+              {
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7",
+                "disambiguation": "",
+                "count": 5,
+                "name": "indie rock"
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d",
+                "name": "indietronica"
+              },
+              {
+                "name": "post-britpop",
+                "disambiguation": "",
+                "id": "a493b79c-4072-4371-a14c-446b1027982a",
+                "count": 2
+              },
+              {
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2",
+                "disambiguation": "",
+                "count": 1,
+                "name": "post-grunge"
+              },
+              {
+                "name": "rock",
+                "count": 19,
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798",
+                "disambiguation": ""
+              }
+            ],
+            "type": "Group"
+          }
+        }
+      ],
+      "status": "Official",
+      "title": "Kid A",
+      "packaging-id": "d60b6157-79fe-3913-ab8b-23b32de8690d",
+      "barcode": "724352968428"
+    },
+    {
+      "genres": [
+        {
+          "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+          "disambiguation": "",
+          "count": 1,
+          "name": "alternative rock"
+        }
+      ],
+      "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+      "text-representation": { "language": "eng", "script": "Latn" },
+      "quality": "normal",
+      "country": "CA",
+      "disambiguation": "",
+      "title": "Kid A",
+      "status": "Official",
+      "artist-credit": [
+        {
+          "artist": {
+            "country": "GB",
+            "disambiguation": "",
+            "sort-name": "Radiohead",
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+            "name": "Radiohead",
+            "type": "Group",
+            "genres": [
+              {
+                "name": "alternative rock",
+                "count": 43,
+                "disambiguation": "",
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18"
+              },
+              {
+                "name": "ambient pop",
+                "count": 1,
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+                "disambiguation": ""
+              },
+              {
+                "name": "art pop",
+                "count": 3,
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+                "disambiguation": ""
+              },
+              {
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+                "disambiguation": "",
+                "count": 30,
+                "name": "art rock"
+              },
+              {
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+                "disambiguation": "",
+                "count": 2,
+                "name": "britpop"
+              },
+              {
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9",
+                "disambiguation": "",
+                "count": 1,
+                "name": "chamber pop"
+              },
+              {
+                "name": "crossover prog",
+                "disambiguation": "",
+                "id": "eee90717-3eee-41bd-b463-003c180544bd",
+                "count": 1
+              },
+              {
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4",
+                "disambiguation": "",
+                "count": 14,
+                "name": "electronic"
+              },
+              {
+                "name": "electronic rock",
+                "id": "c4a69842-f891-4569-9506-1882aa5db433",
+                "disambiguation": "",
+                "count": 1
+              },
+              {
+                "name": "electronica",
+                "count": 2,
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+                "disambiguation": ""
+              },
+              {
+                "name": "experimental",
+                "count": 3,
+                "disambiguation": "",
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99"
+              },
+              {
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7",
+                "disambiguation": "",
+                "count": 14,
+                "name": "experimental rock"
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9",
+                "name": "idm"
+              },
+              {
+                "name": "indie rock",
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7",
+                "disambiguation": "",
+                "count": 5
+              },
+              {
+                "count": 1,
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d",
+                "disambiguation": "",
+                "name": "indietronica"
+              },
+              {
+                "disambiguation": "",
+                "id": "a493b79c-4072-4371-a14c-446b1027982a",
+                "count": 2,
+                "name": "post-britpop"
+              },
+              {
+                "disambiguation": "",
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2",
+                "count": 1,
+                "name": "post-grunge"
+              },
+              {
+                "name": "rock",
+                "count": 19,
+                "disambiguation": "",
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798"
+              }
+            ]
+          },
+          "joinphrase": "",
+          "name": "Radiohead"
+        }
+      ],
+      "barcode": "724352775323",
+      "packaging-id": "ec27701a-4a22-37f4-bfac-6616e0f9750a",
+      "packaging": "Jewel Case",
+      "id": "9046da34-87be-3727-80a9-c1cb0c276113",
+      "date": "2000-10-03",
+      "release-events": [
+        {
+          "date": "2000-10-03",
+          "area": {
+            "name": "Canada",
+            "sort-name": "Canada",
+            "id": "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+            "disambiguation": "",
+            "type-id": null,
+            "iso-3166-1-codes": ["CA"],
+            "type": null
+          }
+        }
+      ]
+    },
+    {
+      "genres": [],
+      "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+      "text-representation": { "language": "eng", "script": "Latn" },
+      "quality": "normal",
+      "country": "GB",
+      "disambiguation": "",
+      "title": "Kid A",
+      "status": "Official",
+      "artist-credit": [
+        {
+          "name": "Radiohead",
+          "joinphrase": "",
+          "artist": {
+            "type": "Group",
+            "genres": [
+              {
+                "name": "alternative rock",
+                "count": 43,
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+                "disambiguation": ""
+              },
+              {
+                "name": "ambient pop",
+                "count": 1,
+                "disambiguation": "",
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b"
+              },
+              {
+                "name": "art pop",
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+                "disambiguation": "",
+                "count": 3
+              },
+              {
+                "count": 30,
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+                "disambiguation": "",
+                "name": "art rock"
+              },
+              {
+                "disambiguation": "",
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+                "count": 2,
+                "name": "britpop"
+              },
+              {
+                "count": 1,
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9",
+                "disambiguation": "",
+                "name": "chamber pop"
+              },
+              {
+                "id": "eee90717-3eee-41bd-b463-003c180544bd",
+                "disambiguation": "",
+                "count": 1,
+                "name": "crossover prog"
+              },
+              {
+                "name": "electronic",
+                "count": 14,
+                "disambiguation": "",
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4"
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "c4a69842-f891-4569-9506-1882aa5db433",
+                "name": "electronic rock"
+              },
+              {
+                "name": "electronica",
+                "count": 2,
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+                "disambiguation": ""
+              },
+              {
+                "name": "experimental",
+                "count": 3,
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99",
+                "disambiguation": ""
+              },
+              {
+                "name": "experimental rock",
+                "count": 14,
+                "disambiguation": "",
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7"
+              },
+              {
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9",
+                "disambiguation": "",
+                "count": 1,
+                "name": "idm"
+              },
+              {
+                "name": "indie rock",
+                "disambiguation": "",
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7",
+                "count": 5
+              },
+              {
+                "disambiguation": "",
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d",
+                "count": 1,
+                "name": "indietronica"
+              },
+              {
+                "count": 2,
+                "id": "a493b79c-4072-4371-a14c-446b1027982a",
+                "disambiguation": "",
+                "name": "post-britpop"
+              },
+              {
+                "name": "post-grunge",
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2",
+                "disambiguation": "",
+                "count": 1
+              },
+              {
+                "name": "rock",
+                "count": 19,
+                "disambiguation": "",
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798"
+              }
+            ],
+            "disambiguation": "",
+            "country": "GB",
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+            "sort-name": "Radiohead",
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+            "name": "Radiohead"
+          }
+        }
+      ],
+      "packaging-id": "f7101ce3-0384-39ce-9fde-fbbd0044d35f",
+      "barcode": "724352959013",
+      "packaging": "Cardboard/Paper Sleeve",
+      "release-events": [
+        {
+          "area": {
+            "sort-name": "United Kingdom",
+            "id": "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
+            "disambiguation": "",
+            "type-id": null,
+            "name": "United Kingdom",
+            "type": null,
+            "iso-3166-1-codes": ["GB"]
+          },
+          "date": "2000-10-03"
+        }
+      ],
+      "date": "2000-10-03",
+      "id": "59cc4c93-7b71-4ef4-a7aa-60b37f881a79"
+    },
+    {
+      "text-representation": { "language": "eng", "script": "Latn" },
+      "quality": "normal",
+      "disambiguation": "",
+      "country": "US",
+      "genres": [
+        {
+          "name": "electronic",
+          "id": "89255676-1f14-4dd8-bbad-fca839d6aff4",
+          "disambiguation": "",
+          "count": 1
+        }
+      ],
+      "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+      "packaging": "Jewel Case",
+      "id": "18e2b05b-937a-3c25-ac78-07267e6411a0",
+      "date": "2000-10-03",
+      "release-events": [
+        {
+          "date": "2000-10-03",
+          "area": {
+            "type": null,
+            "iso-3166-1-codes": ["US"],
+            "type-id": null,
+            "sort-name": "United States",
+            "disambiguation": "",
+            "id": "489ce91b-6658-3307-9877-795b68554c98",
+            "name": "United States"
+          }
+        }
+      ],
+      "title": "Kid A",
+      "status": "Official",
+      "artist-credit": [
+        {
+          "joinphrase": "",
+          "name": "Radiohead",
+          "artist": {
+            "genres": [
+              {
+                "count": 43,
+                "disambiguation": "",
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+                "name": "alternative rock"
+              },
+              {
+                "name": "ambient pop",
+                "count": 1,
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+                "disambiguation": ""
+              },
+              {
+                "name": "art pop",
+                "count": 3,
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+                "disambiguation": ""
+              },
+              {
+                "name": "art rock",
+                "count": 30,
+                "disambiguation": "",
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b"
+              },
+              {
+                "name": "britpop",
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+                "disambiguation": "",
+                "count": 2
+              },
+              {
+                "name": "chamber pop",
+                "count": 1,
+                "disambiguation": "",
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9"
+              },
+              {
+                "name": "crossover prog",
+                "id": "eee90717-3eee-41bd-b463-003c180544bd",
+                "disambiguation": "",
+                "count": 1
+              },
+              {
+                "name": "electronic",
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4",
+                "disambiguation": "",
+                "count": 14
+              },
+              {
+                "name": "electronic rock",
+                "disambiguation": "",
+                "id": "c4a69842-f891-4569-9506-1882aa5db433",
+                "count": 1
+              },
+              {
+                "count": 2,
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+                "disambiguation": "",
+                "name": "electronica"
+              },
+              {
+                "name": "experimental",
+                "disambiguation": "",
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99",
+                "count": 3
+              },
+              {
+                "disambiguation": "",
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7",
+                "count": 14,
+                "name": "experimental rock"
+              },
+              {
+                "name": "idm",
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9",
+                "disambiguation": "",
+                "count": 1
+              },
+              {
+                "name": "indie rock",
+                "count": 5,
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7",
+                "disambiguation": ""
+              },
+              {
+                "name": "indietronica",
+                "disambiguation": "",
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d",
+                "count": 1
+              },
+              {
+                "id": "a493b79c-4072-4371-a14c-446b1027982a",
+                "disambiguation": "",
+                "count": 2,
+                "name": "post-britpop"
+              },
+              {
+                "name": "post-grunge",
+                "count": 1,
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2",
+                "disambiguation": ""
+              },
+              {
+                "count": 19,
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798",
+                "disambiguation": "",
+                "name": "rock"
+              }
+            ],
+            "type": "Group",
+            "name": "Radiohead",
+            "sort-name": "Radiohead",
+            "disambiguation": "",
+            "country": "GB",
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b"
+          }
+        }
+      ],
+      "barcode": "724352775323",
+      "packaging-id": "ec27701a-4a22-37f4-bfac-6616e0f9750a"
+    },
+    {
+      "id": "c91b59d9-c72d-35e2-b97b-67884b5117d5",
+      "date": "2000-10",
+      "release-events": [
+        {
+          "area": {
+            "iso-3166-1-codes": ["AU"],
+            "type": null,
+            "name": "Australia",
+            "type-id": null,
+            "id": "106e0bec-b638-3b37-b731-f53d507dc00e",
+            "disambiguation": "",
+            "sort-name": "Australia"
+          },
+          "date": "2000-10"
+        }
+      ],
+      "packaging": null,
+      "barcode": "9326165002361",
+      "packaging-id": null,
+      "title": "Kid A",
+      "status": "Official",
+      "artist-credit": [
+        {
+          "artist": {
+            "genres": [
+              {
+                "name": "alternative rock",
+                "count": 43,
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+                "disambiguation": ""
+              },
+              {
+                "disambiguation": "",
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+                "count": 1,
+                "name": "ambient pop"
+              },
+              {
+                "count": 3,
+                "disambiguation": "",
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+                "name": "art pop"
+              },
+              {
+                "count": 30,
+                "disambiguation": "",
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+                "name": "art rock"
+              },
+              {
+                "name": "britpop",
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+                "disambiguation": "",
+                "count": 2
+              },
+              {
+                "name": "chamber pop",
+                "count": 1,
+                "disambiguation": "",
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9"
+              },
+              {
+                "name": "crossover prog",
+                "id": "eee90717-3eee-41bd-b463-003c180544bd",
+                "disambiguation": "",
+                "count": 1
+              },
+              {
+                "name": "electronic",
+                "count": 14,
+                "disambiguation": "",
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4"
+              },
+              {
+                "id": "c4a69842-f891-4569-9506-1882aa5db433",
+                "disambiguation": "",
+                "count": 1,
+                "name": "electronic rock"
+              },
+              {
+                "name": "electronica",
+                "disambiguation": "",
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+                "count": 2
+              },
+              {
+                "count": 3,
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99",
+                "disambiguation": "",
+                "name": "experimental"
+              },
+              {
+                "count": 14,
+                "disambiguation": "",
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7",
+                "name": "experimental rock"
+              },
+              {
+                "name": "idm",
+                "disambiguation": "",
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9",
+                "count": 1
+              },
+              {
+                "name": "indie rock",
+                "count": 5,
+                "disambiguation": "",
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7"
+              },
+              {
+                "name": "indietronica",
+                "count": 1,
+                "disambiguation": "",
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d"
+              },
+              {
+                "name": "post-britpop",
+                "id": "a493b79c-4072-4371-a14c-446b1027982a",
+                "disambiguation": "",
+                "count": 2
+              },
+              {
+                "name": "post-grunge",
+                "count": 1,
+                "disambiguation": "",
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2"
+              },
+              {
+                "name": "rock",
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798",
+                "disambiguation": "",
+                "count": 19
+              }
+            ],
+            "type": "Group",
+            "name": "Radiohead",
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+            "sort-name": "Radiohead",
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+            "disambiguation": "",
+            "country": "GB"
+          },
+          "joinphrase": "",
+          "name": "Radiohead"
+        }
+      ],
+      "quality": "normal",
+      "country": "AU",
+      "disambiguation": "",
+      "text-representation": { "language": "eng", "script": "Latn" },
+      "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+      "genres": []
+    },
+    {
+      "country": "AU",
+      "quality": "normal",
+      "disambiguation": "",
+      "text-representation": { "language": "eng", "script": "Latn" },
+      "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+      "genres": [],
+      "date": "2000",
+      "release-events": [
+        {
+          "area": {
+            "type": null,
+            "iso-3166-1-codes": ["AU"],
+            "sort-name": "Australia",
+            "id": "106e0bec-b638-3b37-b731-f53d507dc00e",
+            "disambiguation": "",
+            "type-id": null,
+            "name": "Australia"
+          },
+          "date": "2000"
+        }
+      ],
+      "id": "b35deffd-6af7-4e86-83d5-84e41aa83550",
+      "packaging": "Jewel Case",
+      "packaging-id": "ec27701a-4a22-37f4-bfac-6616e0f9750a",
+      "barcode": "9326165002361",
+      "artist-credit": [
+        {
+          "joinphrase": "",
+          "name": "Radiohead",
+          "artist": {
+            "type": "Group",
+            "genres": [
+              {
+                "name": "alternative rock",
+                "count": 43,
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+                "disambiguation": ""
+              },
+              {
+                "name": "ambient pop",
+                "disambiguation": "",
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+                "count": 1
+              },
+              {
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+                "disambiguation": "",
+                "count": 3,
+                "name": "art pop"
+              },
+              {
+                "name": "art rock",
+                "count": 30,
+                "disambiguation": "",
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b"
+              },
+              {
+                "count": 2,
+                "disambiguation": "",
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+                "name": "britpop"
+              },
+              {
+                "name": "chamber pop",
+                "count": 1,
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9",
+                "disambiguation": ""
+              },
+              {
+                "name": "crossover prog",
+                "count": 1,
+                "disambiguation": "",
+                "id": "eee90717-3eee-41bd-b463-003c180544bd"
+              },
+              {
+                "name": "electronic",
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4",
+                "disambiguation": "",
+                "count": 14
+              },
+              {
+                "name": "electronic rock",
+                "count": 1,
+                "disambiguation": "",
+                "id": "c4a69842-f891-4569-9506-1882aa5db433"
+              },
+              {
+                "name": "electronica",
+                "count": 2,
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+                "disambiguation": ""
+              },
+              {
+                "count": 3,
+                "disambiguation": "",
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99",
+                "name": "experimental"
+              },
+              {
+                "name": "experimental rock",
+                "disambiguation": "",
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7",
+                "count": 14
+              },
+              {
+                "count": 1,
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9",
+                "disambiguation": "",
+                "name": "idm"
+              },
+              {
+                "name": "indie rock",
+                "count": 5,
+                "disambiguation": "",
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7"
+              },
+              {
+                "name": "indietronica",
+                "count": 1,
+                "disambiguation": "",
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d"
+              },
+              {
+                "disambiguation": "",
+                "id": "a493b79c-4072-4371-a14c-446b1027982a",
+                "count": 2,
+                "name": "post-britpop"
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2",
+                "name": "post-grunge"
+              },
+              {
+                "name": "rock",
+                "count": 19,
+                "disambiguation": "",
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798"
+              }
+            ],
+            "country": "GB",
+            "sort-name": "Radiohead",
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+            "disambiguation": "",
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+            "name": "Radiohead"
+          }
+        }
+      ],
+      "title": "Kid A",
+      "status": "Official"
+    },
+    {
+      "release-events": [
+        {
+          "area": {
+            "name": "Europe",
+            "disambiguation": "",
+            "sort-name": "Europe",
+            "id": "89a675c2-3e37-3518-b83c-418bad59a85a",
+            "type-id": null,
+            "iso-3166-1-codes": ["XE"],
+            "type": null
+          },
+          "date": "2000"
+        }
+      ],
+      "date": "2000",
+      "id": "b9188837-f377-4f22-b4cb-e9a49719c9fe",
+      "packaging": "Jewel Case",
+      "packaging-id": "ec27701a-4a22-37f4-bfac-6616e0f9750a",
+      "barcode": "724352775323",
+      "title": "Kid A",
+      "artist-credit": [
+        {
+          "artist": {
+            "country": "GB",
+            "disambiguation": "",
+            "sort-name": "Radiohead",
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+            "name": "Radiohead",
+            "type": "Group",
+            "genres": [
+              {
+                "name": "alternative rock",
+                "disambiguation": "",
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+                "count": 43
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+                "name": "ambient pop"
+              },
+              {
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+                "disambiguation": "",
+                "count": 3,
+                "name": "art pop"
+              },
+              {
+                "name": "art rock",
+                "count": 30,
+                "disambiguation": "",
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b"
+              },
+              {
+                "name": "britpop",
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+                "disambiguation": "",
+                "count": 2
+              },
+              {
+                "name": "chamber pop",
+                "count": 1,
+                "disambiguation": "",
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9"
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "eee90717-3eee-41bd-b463-003c180544bd",
+                "name": "crossover prog"
+              },
+              {
+                "count": 14,
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4",
+                "disambiguation": "",
+                "name": "electronic"
+              },
+              {
+                "name": "electronic rock",
+                "count": 1,
+                "id": "c4a69842-f891-4569-9506-1882aa5db433",
+                "disambiguation": ""
+              },
+              {
+                "name": "electronica",
+                "count": 2,
+                "disambiguation": "",
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5"
+              },
+              {
+                "count": 3,
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99",
+                "disambiguation": "",
+                "name": "experimental"
+              },
+              {
+                "name": "experimental rock",
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7",
+                "disambiguation": "",
+                "count": 14
+              },
+              {
+                "name": "idm",
+                "count": 1,
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9",
+                "disambiguation": ""
+              },
+              {
+                "count": 5,
+                "disambiguation": "",
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7",
+                "name": "indie rock"
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d",
+                "name": "indietronica"
+              },
+              {
+                "name": "post-britpop",
+                "disambiguation": "",
+                "id": "a493b79c-4072-4371-a14c-446b1027982a",
+                "count": 2
+              },
+              {
+                "count": 1,
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2",
+                "disambiguation": "",
+                "name": "post-grunge"
+              },
+              {
+                "count": 19,
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798",
+                "disambiguation": "",
+                "name": "rock"
+              }
+            ]
+          },
+          "joinphrase": "",
+          "name": "Radiohead"
+        }
+      ],
+      "status": "Official",
+      "country": "XE",
+      "quality": "normal",
+      "disambiguation": "",
+      "text-representation": { "language": "eng", "script": "Latn" },
+      "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+      "genres": []
+    },
+    {
+      "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+      "genres": [],
+      "country": "XE",
+      "quality": "normal",
+      "disambiguation": "",
+      "text-representation": { "script": "Latn", "language": "eng" },
+      "packaging-id": null,
+      "barcode": "724352922024",
+      "status": "Official",
+      "title": "Kid A",
+      "artist-credit": [
+        {
+          "artist": {
+            "name": "Radiohead",
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+            "sort-name": "Radiohead",
+            "country": "GB",
+            "disambiguation": "",
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+            "genres": [
+              {
+                "name": "alternative rock",
+                "count": 43,
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+                "disambiguation": ""
+              },
+              {
+                "name": "ambient pop",
+                "disambiguation": "",
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+                "count": 1
+              },
+              {
+                "name": "art pop",
+                "count": 3,
+                "disambiguation": "",
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14"
+              },
+              {
+                "disambiguation": "",
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+                "count": 30,
+                "name": "art rock"
+              },
+              {
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+                "disambiguation": "",
+                "count": 2,
+                "name": "britpop"
+              },
+              {
+                "name": "chamber pop",
+                "count": 1,
+                "disambiguation": "",
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9"
+              },
+              {
+                "name": "crossover prog",
+                "id": "eee90717-3eee-41bd-b463-003c180544bd",
+                "disambiguation": "",
+                "count": 1
+              },
+              {
+                "count": 14,
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4",
+                "disambiguation": "",
+                "name": "electronic"
+              },
+              {
+                "name": "electronic rock",
+                "count": 1,
+                "id": "c4a69842-f891-4569-9506-1882aa5db433",
+                "disambiguation": ""
+              },
+              {
+                "name": "electronica",
+                "disambiguation": "",
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+                "count": 2
+              },
+              {
+                "count": 3,
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99",
+                "disambiguation": "",
+                "name": "experimental"
+              },
+              {
+                "name": "experimental rock",
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7",
+                "disambiguation": "",
+                "count": 14
+              },
+              {
+                "count": 1,
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9",
+                "disambiguation": "",
+                "name": "idm"
+              },
+              {
+                "disambiguation": "",
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7",
+                "count": 5,
+                "name": "indie rock"
+              },
+              {
+                "name": "indietronica",
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d",
+                "disambiguation": "",
+                "count": 1
+              },
+              {
+                "id": "a493b79c-4072-4371-a14c-446b1027982a",
+                "disambiguation": "",
+                "count": 2,
+                "name": "post-britpop"
+              },
+              {
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2",
+                "disambiguation": "",
+                "count": 1,
+                "name": "post-grunge"
+              },
+              {
+                "name": "rock",
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798",
+                "disambiguation": "",
+                "count": 19
+              }
+            ],
+            "type": "Group"
+          },
+          "joinphrase": "",
+          "name": "Radiohead"
+        }
+      ],
+      "date": "2000",
+      "release-events": [
+        {
+          "date": "2000",
+          "area": {
+            "type": null,
+            "iso-3166-1-codes": ["XE"],
+            "type-id": null,
+            "sort-name": "Europe",
+            "disambiguation": "",
+            "id": "89a675c2-3e37-3518-b83c-418bad59a85a",
+            "name": "Europe"
+          }
+        }
+      ],
+      "id": "b13f061a-bd3c-3aaf-9a60-64a0c6f7aee5",
+      "packaging": null
+    },
+    {
+      "genres": [],
+      "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+      "text-representation": { "language": "eng", "script": "Latn" },
+      "quality": "normal",
+      "disambiguation": "single booklet",
+      "country": "XE",
+      "title": "Kid A",
+      "artist-credit": [
+        {
+          "artist": {
+            "country": "GB",
+            "sort-name": "Radiohead",
+            "disambiguation": "",
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+            "name": "Radiohead",
+            "type": "Group",
+            "genres": [
+              {
+                "disambiguation": "",
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+                "count": 43,
+                "name": "alternative rock"
+              },
+              {
+                "name": "ambient pop",
+                "count": 1,
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+                "disambiguation": ""
+              },
+              {
+                "name": "art pop",
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+                "disambiguation": "",
+                "count": 3
+              },
+              {
+                "name": "art rock",
+                "disambiguation": "",
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+                "count": 30
+              },
+              {
+                "name": "britpop",
+                "count": 2,
+                "disambiguation": "",
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30"
+              },
+              {
+                "count": 1,
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9",
+                "disambiguation": "",
+                "name": "chamber pop"
+              },
+              {
+                "name": "crossover prog",
+                "count": 1,
+                "id": "eee90717-3eee-41bd-b463-003c180544bd",
+                "disambiguation": ""
+              },
+              {
+                "name": "electronic",
+                "count": 14,
+                "disambiguation": "",
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4"
+              },
+              {
+                "name": "electronic rock",
+                "id": "c4a69842-f891-4569-9506-1882aa5db433",
+                "disambiguation": "",
+                "count": 1
+              },
+              {
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+                "disambiguation": "",
+                "count": 2,
+                "name": "electronica"
+              },
+              {
+                "name": "experimental",
+                "count": 3,
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99",
+                "disambiguation": ""
+              },
+              {
+                "name": "experimental rock",
+                "disambiguation": "",
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7",
+                "count": 14
+              },
+              {
+                "name": "idm",
+                "count": 1,
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9",
+                "disambiguation": ""
+              },
+              {
+                "name": "indie rock",
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7",
+                "disambiguation": "",
+                "count": 5
+              },
+              {
+                "disambiguation": "",
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d",
+                "count": 1,
+                "name": "indietronica"
+              },
+              {
+                "disambiguation": "",
+                "id": "a493b79c-4072-4371-a14c-446b1027982a",
+                "count": 2,
+                "name": "post-britpop"
+              },
+              {
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2",
+                "disambiguation": "",
+                "count": 1,
+                "name": "post-grunge"
+              },
+              {
+                "name": "rock",
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798",
+                "disambiguation": "",
+                "count": 19
+              }
+            ]
+          },
+          "joinphrase": "",
+          "name": "Radiohead"
+        }
+      ],
+      "status": "Official",
+      "packaging-id": "ec27701a-4a22-37f4-bfac-6616e0f9750a",
+      "barcode": "724352959020",
+      "packaging": "Jewel Case",
+      "release-events": [
+        {
+          "area": {
+            "type": null,
+            "iso-3166-1-codes": ["XE"],
+            "sort-name": "Europe",
+            "id": "89a675c2-3e37-3518-b83c-418bad59a85a",
+            "disambiguation": "",
+            "type-id": null,
+            "name": "Europe"
+          },
+          "date": "2000"
+        }
+      ],
+      "date": "2000",
+      "id": "91965f34-d56b-4a2b-a8df-cc1291c55cfe"
+    },
+    {
+      "artist-credit": [
+        {
+          "name": "Radiohead",
+          "joinphrase": "",
+          "artist": {
+            "type": "Group",
+            "genres": [
+              {
+                "count": 43,
+                "disambiguation": "",
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+                "name": "alternative rock"
+              },
+              {
+                "count": 1,
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+                "disambiguation": "",
+                "name": "ambient pop"
+              },
+              {
+                "name": "art pop",
+                "count": 3,
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+                "disambiguation": ""
+              },
+              {
+                "disambiguation": "",
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+                "count": 30,
+                "name": "art rock"
+              },
+              {
+                "name": "britpop",
+                "count": 2,
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+                "disambiguation": ""
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9",
+                "name": "chamber pop"
+              },
+              {
+                "name": "crossover prog",
+                "disambiguation": "",
+                "id": "eee90717-3eee-41bd-b463-003c180544bd",
+                "count": 1
+              },
+              {
+                "name": "electronic",
+                "count": 14,
+                "disambiguation": "",
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4"
+              },
+              {
+                "id": "c4a69842-f891-4569-9506-1882aa5db433",
+                "disambiguation": "",
+                "count": 1,
+                "name": "electronic rock"
+              },
+              {
+                "name": "electronica",
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+                "disambiguation": "",
+                "count": 2
+              },
+              {
+                "count": 3,
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99",
+                "disambiguation": "",
+                "name": "experimental"
+              },
+              {
+                "disambiguation": "",
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7",
+                "count": 14,
+                "name": "experimental rock"
+              },
+              {
+                "name": "idm",
+                "count": 1,
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9",
+                "disambiguation": ""
+              },
+              {
+                "name": "indie rock",
+                "disambiguation": "",
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7",
+                "count": 5
+              },
+              {
+                "count": 1,
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d",
+                "disambiguation": "",
+                "name": "indietronica"
+              },
+              {
+                "name": "post-britpop",
+                "count": 2,
+                "disambiguation": "",
+                "id": "a493b79c-4072-4371-a14c-446b1027982a"
+              },
+              {
+                "name": "post-grunge",
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2",
+                "disambiguation": "",
+                "count": 1
+              },
+              {
+                "count": 19,
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798",
+                "disambiguation": "",
+                "name": "rock"
+              }
+            ],
+            "country": "GB",
+            "sort-name": "Radiohead",
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+            "disambiguation": "",
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+            "name": "Radiohead"
+          }
+        }
+      ],
+      "status": "Official",
+      "title": "Kid A",
+      "packaging-id": "ec27701a-4a22-37f4-bfac-6616e0f9750a",
+      "barcode": "724352775323",
+      "packaging": "Jewel Case",
+      "date": "2000",
+      "release-events": [
+        {
+          "date": "2000",
+          "area": {
+            "type": null,
+            "iso-3166-1-codes": ["NL"],
+            "type-id": null,
+            "sort-name": "Netherlands",
+            "disambiguation": "",
+            "id": "ef1b7cc0-cd26-36f4-8ea0-04d9623786c7",
+            "name": "Netherlands"
+          }
+        }
+      ],
+      "id": "e63fe164-3bab-4250-a3d9-a64704fe7c59",
+      "genres": [],
+      "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+      "text-representation": { "script": "Latn", "language": "eng" },
+      "quality": "normal",
+      "disambiguation": "misprint",
+      "country": "NL"
+    },
+    {
+      "status": "Official",
+      "title": "Kid A",
+      "artist-credit": [
+        {
+          "artist": {
+            "genres": [
+              {
+                "count": 43,
+                "disambiguation": "",
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+                "name": "alternative rock"
+              },
+              {
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+                "disambiguation": "",
+                "count": 1,
+                "name": "ambient pop"
+              },
+              {
+                "name": "art pop",
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+                "disambiguation": "",
+                "count": 3
+              },
+              {
+                "name": "art rock",
+                "disambiguation": "",
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+                "count": 30
+              },
+              {
+                "disambiguation": "",
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+                "count": 2,
+                "name": "britpop"
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9",
+                "name": "chamber pop"
+              },
+              {
+                "disambiguation": "",
+                "id": "eee90717-3eee-41bd-b463-003c180544bd",
+                "count": 1,
+                "name": "crossover prog"
+              },
+              {
+                "name": "electronic",
+                "count": 14,
+                "disambiguation": "",
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4"
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "c4a69842-f891-4569-9506-1882aa5db433",
+                "name": "electronic rock"
+              },
+              {
+                "disambiguation": "",
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+                "count": 2,
+                "name": "electronica"
+              },
+              {
+                "name": "experimental",
+                "disambiguation": "",
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99",
+                "count": 3
+              },
+              {
+                "disambiguation": "",
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7",
+                "count": 14,
+                "name": "experimental rock"
+              },
+              {
+                "name": "idm",
+                "count": 1,
+                "disambiguation": "",
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9"
+              },
+              {
+                "name": "indie rock",
+                "count": 5,
+                "disambiguation": "",
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7"
+              },
+              {
+                "name": "indietronica",
+                "count": 1,
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d",
+                "disambiguation": ""
+              },
+              {
+                "count": 2,
+                "disambiguation": "",
+                "id": "a493b79c-4072-4371-a14c-446b1027982a",
+                "name": "post-britpop"
+              },
+              {
+                "disambiguation": "",
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2",
+                "count": 1,
+                "name": "post-grunge"
+              },
+              {
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798",
+                "disambiguation": "",
+                "count": 19,
+                "name": "rock"
+              }
+            ],
+            "type": "Group",
+            "name": "Radiohead",
+            "sort-name": "Radiohead",
+            "disambiguation": "",
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+            "country": "GB",
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b"
+          },
+          "name": "Radiohead",
+          "joinphrase": ""
+        }
+      ],
+      "barcode": "724352775385",
+      "packaging-id": null,
+      "packaging": null,
+      "id": "8eeb86cf-7df8-34b4-accf-67f224a93dad",
+      "date": "2000",
+      "release-events": [
+        {
+          "date": "2000",
+          "area": {
+            "iso-3166-1-codes": ["GB"],
+            "type": null,
+            "name": "United Kingdom",
+            "type-id": null,
+            "sort-name": "United Kingdom",
+            "disambiguation": "",
+            "id": "8a754a16-0027-3a29-b6d7-2b40ea0481ed"
+          }
+        }
+      ],
+      "genres": [],
+      "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+      "text-representation": { "script": "Latn", "language": "eng" },
+      "quality": "normal",
+      "country": "GB",
+      "disambiguation": ""
+    },
+    {
+      "genres": [],
+      "status-id": "518ffc83-5cde-34df-8627-81bff5093d92",
+      "text-representation": { "script": "Latn", "language": "eng" },
+      "quality": "normal",
+      "disambiguation": "",
+      "country": "US",
+      "title": "Kid A",
+      "artist-credit": [
+        {
+          "name": "Radiohead",
+          "joinphrase": "",
+          "artist": {
+            "type": "Group",
+            "genres": [
+              {
+                "disambiguation": "",
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+                "count": 43,
+                "name": "alternative rock"
+              },
+              {
+                "count": 1,
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+                "disambiguation": "",
+                "name": "ambient pop"
+              },
+              {
+                "name": "art pop",
+                "count": 3,
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+                "disambiguation": ""
+              },
+              {
+                "name": "art rock",
+                "count": 30,
+                "disambiguation": "",
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b"
+              },
+              {
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+                "disambiguation": "",
+                "count": 2,
+                "name": "britpop"
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9",
+                "name": "chamber pop"
+              },
+              {
+                "id": "eee90717-3eee-41bd-b463-003c180544bd",
+                "disambiguation": "",
+                "count": 1,
+                "name": "crossover prog"
+              },
+              {
+                "name": "electronic",
+                "count": 14,
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4",
+                "disambiguation": ""
+              },
+              {
+                "name": "electronic rock",
+                "count": 1,
+                "id": "c4a69842-f891-4569-9506-1882aa5db433",
+                "disambiguation": ""
+              },
+              {
+                "name": "electronica",
+                "disambiguation": "",
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+                "count": 2
+              },
+              {
+                "count": 3,
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99",
+                "disambiguation": "",
+                "name": "experimental"
+              },
+              {
+                "count": 14,
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7",
+                "disambiguation": "",
+                "name": "experimental rock"
+              },
+              {
+                "count": 1,
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9",
+                "disambiguation": "",
+                "name": "idm"
+              },
+              {
+                "name": "indie rock",
+                "count": 5,
+                "disambiguation": "",
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7"
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d",
+                "name": "indietronica"
+              },
+              {
+                "name": "post-britpop",
+                "disambiguation": "",
+                "id": "a493b79c-4072-4371-a14c-446b1027982a",
+                "count": 2
+              },
+              {
+                "count": 1,
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2",
+                "disambiguation": "",
+                "name": "post-grunge"
+              },
+              {
+                "name": "rock",
+                "count": 19,
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798",
+                "disambiguation": ""
+              }
+            ],
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+            "sort-name": "Radiohead",
+            "disambiguation": "",
+            "country": "GB",
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+            "name": "Radiohead"
+          }
+        }
+      ],
+      "status": "Promotion",
+      "barcode": "724352775323",
+      "packaging-id": null,
+      "packaging": null,
+      "id": "af94b009-b110-4c50-8f7a-7a122d6a2257",
+      "date": "2000",
+      "release-events": [
+        {
+          "area": {
+            "iso-3166-1-codes": ["US"],
+            "type": null,
+            "name": "United States",
+            "disambiguation": "",
+            "sort-name": "United States",
+            "id": "489ce91b-6658-3307-9877-795b68554c98",
+            "type-id": null
+          },
+          "date": "2000"
+        }
+      ]
+    },
+    {
+      "artist-credit": [
+        {
+          "artist": {
+            "genres": [
+              {
+                "name": "alternative rock",
+                "count": 43,
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+                "disambiguation": ""
+              },
+              {
+                "disambiguation": "",
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+                "count": 1,
+                "name": "ambient pop"
+              },
+              {
+                "name": "art pop",
+                "count": 3,
+                "disambiguation": "",
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14"
+              },
+              {
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+                "disambiguation": "",
+                "count": 30,
+                "name": "art rock"
+              },
+              {
+                "name": "britpop",
+                "disambiguation": "",
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+                "count": 2
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9",
+                "name": "chamber pop"
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "eee90717-3eee-41bd-b463-003c180544bd",
+                "name": "crossover prog"
+              },
+              {
+                "name": "electronic",
+                "disambiguation": "",
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4",
+                "count": 14
+              },
+              {
+                "name": "electronic rock",
+                "id": "c4a69842-f891-4569-9506-1882aa5db433",
+                "disambiguation": "",
+                "count": 1
+              },
+              {
+                "name": "electronica",
+                "count": 2,
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+                "disambiguation": ""
+              },
+              {
+                "name": "experimental",
+                "disambiguation": "",
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99",
+                "count": 3
+              },
+              {
+                "name": "experimental rock",
+                "disambiguation": "",
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7",
+                "count": 14
+              },
+              {
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9",
+                "disambiguation": "",
+                "count": 1,
+                "name": "idm"
+              },
+              {
+                "name": "indie rock",
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7",
+                "disambiguation": "",
+                "count": 5
+              },
+              {
+                "count": 1,
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d",
+                "disambiguation": "",
+                "name": "indietronica"
+              },
+              {
+                "name": "post-britpop",
+                "id": "a493b79c-4072-4371-a14c-446b1027982a",
+                "disambiguation": "",
+                "count": 2
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2",
+                "name": "post-grunge"
+              },
+              {
+                "name": "rock",
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798",
+                "disambiguation": "",
+                "count": 19
+              }
+            ],
+            "type": "Group",
+            "name": "Radiohead",
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+            "disambiguation": "",
+            "sort-name": "Radiohead",
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+            "country": "GB"
+          },
+          "joinphrase": "",
+          "name": "Radiohead"
+        }
+      ],
+      "status": "Official",
+      "title": "Kid A",
+      "packaging-id": "c70b737a-0114-39a9-88f7-82843e54f906",
+      "barcode": "724352775347",
+      "packaging": "Cassette Case",
+      "date": "2000",
+      "release-events": [
+        {
+          "area": {
+            "name": "United States",
+            "type-id": null,
+            "sort-name": "United States",
+            "disambiguation": "",
+            "id": "489ce91b-6658-3307-9877-795b68554c98",
+            "iso-3166-1-codes": ["US"],
+            "type": null
+          },
+          "date": "2000"
+        }
+      ],
+      "id": "1c10e255-c03f-4e60-b957-7a86e71faa59",
+      "genres": [],
+      "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+      "text-representation": { "language": "eng", "script": "Latn" },
+      "quality": "normal",
+      "country": "US",
+      "disambiguation": ""
+    },
+    {
+      "status": "Official",
+      "artist-credit": [
+        {
+          "artist": {
+            "name": "Radiohead",
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+            "country": "GB",
+            "disambiguation": "",
+            "sort-name": "Radiohead",
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+            "genres": [
+              {
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+                "disambiguation": "",
+                "count": 43,
+                "name": "alternative rock"
+              },
+              {
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+                "disambiguation": "",
+                "count": 1,
+                "name": "ambient pop"
+              },
+              {
+                "name": "art pop",
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+                "disambiguation": "",
+                "count": 3
+              },
+              {
+                "name": "art rock",
+                "count": 30,
+                "disambiguation": "",
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b"
+              },
+              {
+                "count": 2,
+                "disambiguation": "",
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+                "name": "britpop"
+              },
+              {
+                "name": "chamber pop",
+                "disambiguation": "",
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9",
+                "count": 1
+              },
+              {
+                "name": "crossover prog",
+                "count": 1,
+                "id": "eee90717-3eee-41bd-b463-003c180544bd",
+                "disambiguation": ""
+              },
+              {
+                "count": 14,
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4",
+                "disambiguation": "",
+                "name": "electronic"
+              },
+              {
+                "count": 1,
+                "id": "c4a69842-f891-4569-9506-1882aa5db433",
+                "disambiguation": "",
+                "name": "electronic rock"
+              },
+              {
+                "name": "electronica",
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+                "disambiguation": "",
+                "count": 2
+              },
+              {
+                "disambiguation": "",
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99",
+                "count": 3,
+                "name": "experimental"
+              },
+              {
+                "name": "experimental rock",
+                "disambiguation": "",
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7",
+                "count": 14
+              },
+              {
+                "name": "idm",
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9",
+                "disambiguation": "",
+                "count": 1
+              },
+              {
+                "count": 5,
+                "disambiguation": "",
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7",
+                "name": "indie rock"
+              },
+              {
+                "name": "indietronica",
+                "count": 1,
+                "disambiguation": "",
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d"
+              },
+              {
+                "disambiguation": "",
+                "id": "a493b79c-4072-4371-a14c-446b1027982a",
+                "count": 2,
+                "name": "post-britpop"
+              },
+              {
+                "count": 1,
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2",
+                "disambiguation": "",
+                "name": "post-grunge"
+              },
+              {
+                "name": "rock",
+                "disambiguation": "",
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798",
+                "count": 19
+              }
+            ],
+            "type": "Group"
+          },
+          "joinphrase": "",
+          "name": "Radiohead"
+        }
+      ],
+      "title": "Kid A",
+      "packaging-id": "ec27701a-4a22-37f4-bfac-6616e0f9750a",
+      "barcode": "4988006846340",
+      "packaging": "Jewel Case",
+      "release-events": [
+        {
+          "date": "2006-09-06",
+          "area": {
+            "disambiguation": "",
+            "sort-name": "Japan",
+            "id": "2db42837-c832-3c27-b4a3-08198f75693c",
+            "type-id": null,
+            "name": "Japan",
+            "type": null,
+            "iso-3166-1-codes": ["JP"]
+          }
+        }
+      ],
+      "date": "2006-09-06",
+      "id": "9c968ded-bd2b-3f0b-a345-e68dd2918e35",
+      "genres": [],
+      "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+      "text-representation": { "language": "eng", "script": "Latn" },
+      "quality": "normal",
+      "disambiguation": "",
+      "country": "JP"
+    },
+    {
+      "status": "Official",
+      "title": "Kid A",
+      "artist-credit": [
+        {
+          "artist": {
+            "type": "Group",
+            "genres": [
+              {
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+                "disambiguation": "",
+                "count": 43,
+                "name": "alternative rock"
+              },
+              {
+                "name": "ambient pop",
+                "count": 1,
+                "disambiguation": "",
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b"
+              },
+              {
+                "name": "art pop",
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+                "disambiguation": "",
+                "count": 3
+              },
+              {
+                "name": "art rock",
+                "count": 30,
+                "disambiguation": "",
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b"
+              },
+              {
+                "disambiguation": "",
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+                "count": 2,
+                "name": "britpop"
+              },
+              {
+                "name": "chamber pop",
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9",
+                "disambiguation": "",
+                "count": 1
+              },
+              {
+                "id": "eee90717-3eee-41bd-b463-003c180544bd",
+                "disambiguation": "",
+                "count": 1,
+                "name": "crossover prog"
+              },
+              {
+                "name": "electronic",
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4",
+                "disambiguation": "",
+                "count": 14
+              },
+              {
+                "name": "electronic rock",
+                "count": 1,
+                "id": "c4a69842-f891-4569-9506-1882aa5db433",
+                "disambiguation": ""
+              },
+              {
+                "name": "electronica",
+                "count": 2,
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+                "disambiguation": ""
+              },
+              {
+                "name": "experimental",
+                "count": 3,
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99",
+                "disambiguation": ""
+              },
+              {
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7",
+                "disambiguation": "",
+                "count": 14,
+                "name": "experimental rock"
+              },
+              {
+                "name": "idm",
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9",
+                "disambiguation": "",
+                "count": 1
+              },
+              {
+                "count": 5,
+                "disambiguation": "",
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7",
+                "name": "indie rock"
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d",
+                "name": "indietronica"
+              },
+              {
+                "name": "post-britpop",
+                "count": 2,
+                "disambiguation": "",
+                "id": "a493b79c-4072-4371-a14c-446b1027982a"
+              },
+              {
+                "name": "post-grunge",
+                "disambiguation": "",
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2",
+                "count": 1
+              },
+              {
+                "name": "rock",
+                "count": 19,
+                "disambiguation": "",
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798"
+              }
+            ],
+            "sort-name": "Radiohead",
+            "country": "GB",
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+            "disambiguation": "",
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+            "name": "Radiohead"
+          },
+          "joinphrase": "",
+          "name": "Radiohead"
+        }
+      ],
+      "barcode": null,
+      "packaging-id": "119eba76-b343-3e02-a292-f0f00644bb9b",
+      "packaging": "None",
+      "id": "94ccfe26-223a-4591-8aaa-e985c146e4f2",
+      "date": "2007-09-25",
+      "release-events": [
+        {
+          "area": {
+            "iso-3166-1-codes": ["US"],
+            "type": null,
+            "name": "United States",
+            "type-id": null,
+            "sort-name": "United States",
+            "disambiguation": "",
+            "id": "489ce91b-6658-3307-9877-795b68554c98"
+          },
+          "date": "2007-09-25"
+        }
+      ],
+      "genres": [
+        {
+          "name": "alternative rock",
+          "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+          "disambiguation": "",
+          "count": 1
+        }
+      ],
+      "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+      "text-representation": { "script": "Latn", "language": "eng" },
+      "quality": "normal",
+      "disambiguation": "",
+      "country": "US"
+    },
+    {
+      "id": "fbf7f1b6-427f-4035-be1d-1b88064d8a62",
+      "date": "2008-09-02",
+      "release-events": [
+        {
+          "date": "2008-09-02",
+          "area": {
+            "id": "489ce91b-6658-3307-9877-795b68554c98",
+            "disambiguation": "",
+            "sort-name": "United States",
+            "type-id": null,
+            "name": "United States",
+            "type": null,
+            "iso-3166-1-codes": ["US"]
+          }
+        }
+      ],
+      "packaging": null,
+      "barcode": "724352775316",
+      "packaging-id": null,
+      "title": "Kid A",
+      "artist-credit": [
+        {
+          "artist": {
+            "disambiguation": "",
+            "sort-name": "Radiohead",
+            "country": "GB",
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+            "name": "Radiohead",
+            "type": "Group",
+            "genres": [
+              {
+                "name": "alternative rock",
+                "count": 43,
+                "disambiguation": "",
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18"
+              },
+              {
+                "name": "ambient pop",
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+                "disambiguation": "",
+                "count": 1
+              },
+              {
+                "disambiguation": "",
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+                "count": 3,
+                "name": "art pop"
+              },
+              {
+                "name": "art rock",
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+                "disambiguation": "",
+                "count": 30
+              },
+              {
+                "name": "britpop",
+                "count": 2,
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+                "disambiguation": ""
+              },
+              {
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9",
+                "disambiguation": "",
+                "count": 1,
+                "name": "chamber pop"
+              },
+              {
+                "disambiguation": "",
+                "id": "eee90717-3eee-41bd-b463-003c180544bd",
+                "count": 1,
+                "name": "crossover prog"
+              },
+              {
+                "name": "electronic",
+                "count": 14,
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4",
+                "disambiguation": ""
+              },
+              {
+                "name": "electronic rock",
+                "count": 1,
+                "disambiguation": "",
+                "id": "c4a69842-f891-4569-9506-1882aa5db433"
+              },
+              {
+                "name": "electronica",
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+                "disambiguation": "",
+                "count": 2
+              },
+              {
+                "count": 3,
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99",
+                "disambiguation": "",
+                "name": "experimental"
+              },
+              {
+                "name": "experimental rock",
+                "count": 14,
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7",
+                "disambiguation": ""
+              },
+              {
+                "name": "idm",
+                "count": 1,
+                "disambiguation": "",
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9"
+              },
+              {
+                "name": "indie rock",
+                "count": 5,
+                "disambiguation": "",
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7"
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d",
+                "name": "indietronica"
+              },
+              {
+                "id": "a493b79c-4072-4371-a14c-446b1027982a",
+                "disambiguation": "",
+                "count": 2,
+                "name": "post-britpop"
+              },
+              {
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2",
+                "disambiguation": "",
+                "count": 1,
+                "name": "post-grunge"
+              },
+              {
+                "disambiguation": "",
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798",
+                "count": 19,
+                "name": "rock"
+              }
+            ]
+          },
+          "joinphrase": "",
+          "name": "Radiohead"
+        }
+      ],
+      "status": "Official",
+      "quality": "normal",
+      "disambiguation": "",
+      "country": "US",
+      "text-representation": { "script": "Latn", "language": "eng" },
+      "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+      "genres": []
+    },
+    {
+      "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+      "genres": [],
+      "quality": "normal",
+      "disambiguation": "collector’s edition",
+      "country": "US",
+      "text-representation": { "language": "eng", "script": "Latn" },
+      "barcode": "5099969710629",
+      "packaging-id": null,
+      "artist-credit": [
+        {
+          "artist": {
+            "type": "Group",
+            "genres": [
+              {
+                "name": "alternative rock",
+                "disambiguation": "",
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+                "count": 43
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+                "name": "ambient pop"
+              },
+              {
+                "count": 3,
+                "disambiguation": "",
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+                "name": "art pop"
+              },
+              {
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+                "disambiguation": "",
+                "count": 30,
+                "name": "art rock"
+              },
+              {
+                "count": 2,
+                "disambiguation": "",
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+                "name": "britpop"
+              },
+              {
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9",
+                "disambiguation": "",
+                "count": 1,
+                "name": "chamber pop"
+              },
+              {
+                "name": "crossover prog",
+                "disambiguation": "",
+                "id": "eee90717-3eee-41bd-b463-003c180544bd",
+                "count": 1
+              },
+              {
+                "count": 14,
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4",
+                "disambiguation": "",
+                "name": "electronic"
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "c4a69842-f891-4569-9506-1882aa5db433",
+                "name": "electronic rock"
+              },
+              {
+                "name": "electronica",
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+                "disambiguation": "",
+                "count": 2
+              },
+              {
+                "count": 3,
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99",
+                "disambiguation": "",
+                "name": "experimental"
+              },
+              {
+                "name": "experimental rock",
+                "count": 14,
+                "disambiguation": "",
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7"
+              },
+              {
+                "name": "idm",
+                "disambiguation": "",
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9",
+                "count": 1
+              },
+              {
+                "count": 5,
+                "disambiguation": "",
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7",
+                "name": "indie rock"
+              },
+              {
+                "name": "indietronica",
+                "disambiguation": "",
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d",
+                "count": 1
+              },
+              {
+                "name": "post-britpop",
+                "id": "a493b79c-4072-4371-a14c-446b1027982a",
+                "disambiguation": "",
+                "count": 2
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2",
+                "name": "post-grunge"
+              },
+              {
+                "count": 19,
+                "disambiguation": "",
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798",
+                "name": "rock"
+              }
+            ],
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+            "sort-name": "Radiohead",
+            "disambiguation": "",
+            "country": "GB",
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+            "name": "Radiohead"
+          },
+          "joinphrase": "",
+          "name": "Radiohead"
+        }
+      ],
+      "status": "Official",
+      "title": "Kid A",
+      "id": "fbba9c88-6bec-4300-87ee-cb2ede5f200a",
+      "release-events": [
+        {
+          "date": "2009-08-25",
+          "area": {
+            "type-id": null,
+            "disambiguation": "",
+            "id": "489ce91b-6658-3307-9877-795b68554c98",
+            "sort-name": "United States",
+            "name": "United States",
+            "type": null,
+            "iso-3166-1-codes": ["US"]
+          }
+        }
+      ],
+      "date": "2009-08-25",
+      "packaging": null
+    },
+    {
+      "quality": "normal",
+      "country": "XE",
+      "disambiguation": "",
+      "text-representation": { "script": "Latn", "language": "eng" },
+      "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+      "genres": [],
+      "date": "2009-08-31",
+      "release-events": [
+        {
+          "area": {
+            "type": null,
+            "iso-3166-1-codes": ["XE"],
+            "type-id": null,
+            "sort-name": "Europe",
+            "disambiguation": "",
+            "id": "89a675c2-3e37-3518-b83c-418bad59a85a",
+            "name": "Europe"
+          },
+          "date": "2009-08-31"
+        }
+      ],
+      "id": "ce8327a8-cc18-3eed-a8aa-8a39b6df7e84",
+      "packaging": null,
+      "packaging-id": null,
+      "barcode": "5099969710827",
+      "artist-credit": [
+        {
+          "artist": {
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+            "disambiguation": "",
+            "sort-name": "Radiohead",
+            "country": "GB",
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+            "name": "Radiohead",
+            "type": "Group",
+            "genres": [
+              {
+                "count": 43,
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+                "disambiguation": "",
+                "name": "alternative rock"
+              },
+              {
+                "count": 1,
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+                "disambiguation": "",
+                "name": "ambient pop"
+              },
+              {
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+                "disambiguation": "",
+                "count": 3,
+                "name": "art pop"
+              },
+              {
+                "name": "art rock",
+                "disambiguation": "",
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+                "count": 30
+              },
+              {
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+                "disambiguation": "",
+                "count": 2,
+                "name": "britpop"
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9",
+                "name": "chamber pop"
+              },
+              {
+                "name": "crossover prog",
+                "count": 1,
+                "id": "eee90717-3eee-41bd-b463-003c180544bd",
+                "disambiguation": ""
+              },
+              {
+                "name": "electronic",
+                "count": 14,
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4",
+                "disambiguation": ""
+              },
+              {
+                "disambiguation": "",
+                "id": "c4a69842-f891-4569-9506-1882aa5db433",
+                "count": 1,
+                "name": "electronic rock"
+              },
+              {
+                "name": "electronica",
+                "count": 2,
+                "disambiguation": "",
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5"
+              },
+              {
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99",
+                "disambiguation": "",
+                "count": 3,
+                "name": "experimental"
+              },
+              {
+                "name": "experimental rock",
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7",
+                "disambiguation": "",
+                "count": 14
+              },
+              {
+                "count": 1,
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9",
+                "disambiguation": "",
+                "name": "idm"
+              },
+              {
+                "disambiguation": "",
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7",
+                "count": 5,
+                "name": "indie rock"
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d",
+                "name": "indietronica"
+              },
+              {
+                "name": "post-britpop",
+                "id": "a493b79c-4072-4371-a14c-446b1027982a",
+                "disambiguation": "",
+                "count": 2
+              },
+              {
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2",
+                "disambiguation": "",
+                "count": 1,
+                "name": "post-grunge"
+              },
+              {
+                "name": "rock",
+                "disambiguation": "",
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798",
+                "count": 19
+              }
+            ]
+          },
+          "joinphrase": "",
+          "name": "Radiohead"
+        }
+      ],
+      "status": "Official",
+      "title": "Kid A"
+    },
+    {
+      "title": "Kid A",
+      "artist-credit": [
+        {
+          "artist": {
+            "genres": [
+              {
+                "name": "alternative rock",
+                "count": 43,
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+                "disambiguation": ""
+              },
+              {
+                "disambiguation": "",
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+                "count": 1,
+                "name": "ambient pop"
+              },
+              {
+                "name": "art pop",
+                "disambiguation": "",
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+                "count": 3
+              },
+              {
+                "name": "art rock",
+                "count": 30,
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+                "disambiguation": ""
+              },
+              {
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+                "disambiguation": "",
+                "count": 2,
+                "name": "britpop"
+              },
+              {
+                "name": "chamber pop",
+                "count": 1,
+                "disambiguation": "",
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9"
+              },
+              {
+                "count": 1,
+                "id": "eee90717-3eee-41bd-b463-003c180544bd",
+                "disambiguation": "",
+                "name": "crossover prog"
+              },
+              {
+                "count": 14,
+                "disambiguation": "",
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4",
+                "name": "electronic"
+              },
+              {
+                "name": "electronic rock",
+                "count": 1,
+                "id": "c4a69842-f891-4569-9506-1882aa5db433",
+                "disambiguation": ""
+              },
+              {
+                "count": 2,
+                "disambiguation": "",
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+                "name": "electronica"
+              },
+              {
+                "count": 3,
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99",
+                "disambiguation": "",
+                "name": "experimental"
+              },
+              {
+                "name": "experimental rock",
+                "count": 14,
+                "disambiguation": "",
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7"
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9",
+                "name": "idm"
+              },
+              {
+                "name": "indie rock",
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7",
+                "disambiguation": "",
+                "count": 5
+              },
+              {
+                "count": 1,
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d",
+                "disambiguation": "",
+                "name": "indietronica"
+              },
+              {
+                "name": "post-britpop",
+                "count": 2,
+                "disambiguation": "",
+                "id": "a493b79c-4072-4371-a14c-446b1027982a"
+              },
+              {
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2",
+                "disambiguation": "",
+                "count": 1,
+                "name": "post-grunge"
+              },
+              {
+                "name": "rock",
+                "disambiguation": "",
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798",
+                "count": 19
+              }
+            ],
+            "type": "Group",
+            "name": "Radiohead",
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+            "disambiguation": "",
+            "sort-name": "Radiohead",
+            "country": "GB",
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711"
+          },
+          "name": "Radiohead",
+          "joinphrase": ""
+        }
+      ],
+      "status": "Official",
+      "barcode": "5099969710629",
+      "packaging-id": null,
+      "packaging": null,
+      "id": "8e34f14b-5aa7-30d9-89ce-f66c3b021700",
+      "date": "2009-08-31",
+      "release-events": [
+        {
+          "area": {
+            "name": "United Kingdom",
+            "type-id": null,
+            "id": "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
+            "sort-name": "United Kingdom",
+            "disambiguation": "",
+            "iso-3166-1-codes": ["GB"],
+            "type": null
+          },
+          "date": "2009-08-31"
+        }
+      ],
+      "genres": [],
+      "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+      "text-representation": { "script": "Latn", "language": "eng" },
+      "disambiguation": "special collector’s edition",
+      "quality": "normal",
+      "country": "GB"
+    },
+    {
+      "title": "Kid A",
+      "status": "Official",
+      "artist-credit": [
+        {
+          "artist": {
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+            "sort-name": "Radiohead",
+            "country": "GB",
+            "disambiguation": "",
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+            "name": "Radiohead",
+            "type": "Group",
+            "genres": [
+              {
+                "count": 43,
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+                "disambiguation": "",
+                "name": "alternative rock"
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+                "name": "ambient pop"
+              },
+              {
+                "disambiguation": "",
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+                "count": 3,
+                "name": "art pop"
+              },
+              {
+                "name": "art rock",
+                "count": 30,
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+                "disambiguation": ""
+              },
+              {
+                "name": "britpop",
+                "count": 2,
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+                "disambiguation": ""
+              },
+              {
+                "disambiguation": "",
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9",
+                "count": 1,
+                "name": "chamber pop"
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "eee90717-3eee-41bd-b463-003c180544bd",
+                "name": "crossover prog"
+              },
+              {
+                "name": "electronic",
+                "count": 14,
+                "disambiguation": "",
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4"
+              },
+              {
+                "disambiguation": "",
+                "id": "c4a69842-f891-4569-9506-1882aa5db433",
+                "count": 1,
+                "name": "electronic rock"
+              },
+              {
+                "name": "electronica",
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+                "disambiguation": "",
+                "count": 2
+              },
+              {
+                "name": "experimental",
+                "count": 3,
+                "disambiguation": "",
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99"
+              },
+              {
+                "count": 14,
+                "disambiguation": "",
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7",
+                "name": "experimental rock"
+              },
+              {
+                "name": "idm",
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9",
+                "disambiguation": "",
+                "count": 1
+              },
+              {
+                "name": "indie rock",
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7",
+                "disambiguation": "",
+                "count": 5
+              },
+              {
+                "count": 1,
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d",
+                "disambiguation": "",
+                "name": "indietronica"
+              },
+              {
+                "name": "post-britpop",
+                "id": "a493b79c-4072-4371-a14c-446b1027982a",
+                "disambiguation": "",
+                "count": 2
+              },
+              {
+                "name": "post-grunge",
+                "disambiguation": "",
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2",
+                "count": 1
+              },
+              {
+                "name": "rock",
+                "disambiguation": "",
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798",
+                "count": 19
+              }
+            ]
+          },
+          "name": "Radiohead",
+          "joinphrase": ""
+        }
+      ],
+      "barcode": "4988006873100",
+      "packaging-id": "ec27701a-4a22-37f4-bfac-6616e0f9750a",
+      "packaging": "Jewel Case",
+      "id": "f7c1ed90-d7df-4a99-85f4-2eee2d620505",
+      "date": "2009-09-01",
+      "release-events": [
+        {
+          "area": {
+            "type": null,
+            "iso-3166-1-codes": ["JP"],
+            "type-id": null,
+            "sort-name": "Japan",
+            "disambiguation": "",
+            "id": "2db42837-c832-3c27-b4a3-08198f75693c",
+            "name": "Japan"
+          },
+          "date": "2009-09-01"
+        }
+      ],
+      "genres": [],
+      "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+      "text-representation": { "script": "Latn", "language": "eng" },
+      "quality": "normal",
+      "disambiguation": "collector’s edition",
+      "country": "JP"
+    },
+    {
+      "status": "Official",
+      "artist-credit": [
+        {
+          "artist": {
+            "disambiguation": "",
+            "sort-name": "Radiohead",
+            "country": "GB",
+            "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+            "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+            "name": "Radiohead",
+            "type": "Group",
+            "genres": [
+              {
+                "disambiguation": "",
+                "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+                "count": 43,
+                "name": "alternative rock"
+              },
+              {
+                "name": "ambient pop",
+                "count": 1,
+                "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+                "disambiguation": ""
+              },
+              {
+                "name": "art pop",
+                "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+                "disambiguation": "",
+                "count": 3
+              },
+              {
+                "name": "art rock",
+                "disambiguation": "",
+                "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+                "count": 30
+              },
+              {
+                "count": 2,
+                "disambiguation": "",
+                "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+                "name": "britpop"
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9",
+                "name": "chamber pop"
+              },
+              {
+                "id": "eee90717-3eee-41bd-b463-003c180544bd",
+                "disambiguation": "",
+                "count": 1,
+                "name": "crossover prog"
+              },
+              {
+                "name": "electronic",
+                "id": "89255676-1f14-4dd8-bbad-fca839d6aff4",
+                "disambiguation": "",
+                "count": 14
+              },
+              {
+                "name": "electronic rock",
+                "count": 1,
+                "disambiguation": "",
+                "id": "c4a69842-f891-4569-9506-1882aa5db433"
+              },
+              {
+                "count": 2,
+                "disambiguation": "",
+                "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+                "name": "electronica"
+              },
+              {
+                "name": "experimental",
+                "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99",
+                "disambiguation": "",
+                "count": 3
+              },
+              {
+                "count": 14,
+                "disambiguation": "",
+                "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7",
+                "name": "experimental rock"
+              },
+              {
+                "count": 1,
+                "disambiguation": "",
+                "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9",
+                "name": "idm"
+              },
+              {
+                "name": "indie rock",
+                "disambiguation": "",
+                "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7",
+                "count": 5
+              },
+              {
+                "name": "indietronica",
+                "count": 1,
+                "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d",
+                "disambiguation": ""
+              },
+              {
+                "name": "post-britpop",
+                "disambiguation": "",
+                "id": "a493b79c-4072-4371-a14c-446b1027982a",
+                "count": 2
+              },
+              {
+                "disambiguation": "",
+                "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2",
+                "count": 1,
+                "name": "post-grunge"
+              },
+              {
+                "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798",
+                "disambiguation": "",
+                "count": 19,
+                "name": "rock"
+              }
+            ]
+          },
+          "joinphrase": "",
+          "name": "Radiohead"
+        }
+      ],
+      "title": "Kid A",
+      "barcode": "5099969710728",
+      "packaging-id": "815b7785-8284-3926-8f04-e48bc6c4d102",
+      "packaging": "Other",
+      "id": "d3bbdcaa-5a13-4285-80e4-09fac885b1ec",
+      "release-events": [
+        {
+          "area": {
+            "iso-3166-1-codes": ["US"],
+            "type": null,
+            "name": "United States",
+            "sort-name": "United States",
+            "disambiguation": "",
+            "id": "489ce91b-6658-3307-9877-795b68554c98",
+            "type-id": null
+          },
+          "date": "2009"
+        }
+      ],
+      "date": "2009",
+      "genres": [],
+      "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+      "text-representation": { "language": "eng", "script": "Latn" },
+      "country": "US",
+      "quality": "normal",
+      "disambiguation": ""
+    }
+  ],
+  "secondary-types": [],
+  "artist-credit": [
+    {
+      "name": "Radiohead",
+      "joinphrase": "",
+      "artist": {
+        "name": "Radiohead",
+        "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+        "country": "GB",
+        "disambiguation": "",
+        "id": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+        "sort-name": "Radiohead",
+        "genres": [
+          {
+            "disambiguation": "",
+            "id": "ceeaa283-5d7b-4202-8d1d-e25d116b2a18",
+            "count": 43,
+            "name": "alternative rock"
+          },
+          {
+            "disambiguation": "",
+            "id": "2cdcecfe-3e7c-4055-ab34-78eceabe4d9b",
+            "count": 1,
+            "name": "ambient pop"
+          },
+          {
+            "count": 3,
+            "id": "930ef127-3653-4677-9b95-ecc90c7c1a14",
+            "disambiguation": "",
+            "name": "art pop"
+          },
+          {
+            "name": "art rock",
+            "count": 30,
+            "disambiguation": "",
+            "id": "b7ef058e-6d83-4ca4-8123-9724bff4648b"
+          },
+          {
+            "count": 2,
+            "id": "f1c9b874-7ef2-4e79-9419-c0bcb5f33a30",
+            "disambiguation": "",
+            "name": "britpop"
+          },
+          {
+            "id": "f0843e91-c025-4dd7-8aef-6fe3d35470d9",
+            "disambiguation": "",
+            "count": 1,
+            "name": "chamber pop"
+          },
+          {
+            "name": "crossover prog",
+            "count": 1,
+            "disambiguation": "",
+            "id": "eee90717-3eee-41bd-b463-003c180544bd"
+          },
+          {
+            "name": "electronic",
+            "count": 14,
+            "id": "89255676-1f14-4dd8-bbad-fca839d6aff4",
+            "disambiguation": ""
+          },
+          {
+            "name": "electronic rock",
+            "count": 1,
+            "id": "c4a69842-f891-4569-9506-1882aa5db433",
+            "disambiguation": ""
+          },
+          {
+            "name": "electronica",
+            "count": 2,
+            "id": "53a3cea3-17af-4421-a07a-5824b540aeb5",
+            "disambiguation": ""
+          },
+          {
+            "id": "68c81274-5770-4e7b-a4bf-ab0d7d425d99",
+            "disambiguation": "",
+            "count": 3,
+            "name": "experimental"
+          },
+          {
+            "name": "experimental rock",
+            "disambiguation": "",
+            "id": "65c97e89-b42b-45c2-a70e-0eca1b8f0ff7",
+            "count": 14
+          },
+          {
+            "name": "idm",
+            "count": 1,
+            "disambiguation": "",
+            "id": "8eb583f1-4fd7-460c-8246-dcdccc0e3ef9"
+          },
+          {
+            "count": 5,
+            "id": "ccd19ebf-052c-4afe-8ad9-fbb0a73f94a7",
+            "disambiguation": "",
+            "name": "indie rock"
+          },
+          {
+            "name": "indietronica",
+            "disambiguation": "",
+            "id": "9e7ae1de-d5f2-46a5-b105-11c7367dc70d",
+            "count": 1
+          },
+          {
+            "name": "post-britpop",
+            "count": 2,
+            "disambiguation": "",
+            "id": "a493b79c-4072-4371-a14c-446b1027982a"
+          },
+          {
+            "name": "post-grunge",
+            "disambiguation": "",
+            "id": "bbb1310c-24cb-4fc9-97c4-f93e4549f1e2",
+            "count": 1
+          },
+          {
+            "name": "rock",
+            "count": 19,
+            "disambiguation": "",
+            "id": "0e3fc579-2d24-4f20-9dae-736e1ec78798"
+          }
+        ],
+        "type": "Group"
+      }
+    }
+  ],
+  "title": "Kid A"
+}

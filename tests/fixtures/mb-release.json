@@ -1,0 +1,199 @@
+{
+  "quality": "normal",
+  "title": "Kid A",
+  "release-events": [
+    {
+      "area": {
+        "iso-3166-1-codes": ["AU"],
+        "sort-name": "Australia",
+        "id": "106e0bec-b638-3b37-b731-f53d507dc00e",
+        "type": null,
+        "disambiguation": "",
+        "name": "Australia",
+        "type-id": null
+      },
+      "date": "2000"
+    }
+  ],
+  "barcode": "9326165002361",
+  "asin": null,
+  "text-representation": { "language": "eng", "script": "Latn" },
+  "media": [
+    {
+      "track-count": 10,
+      "format": "CD",
+      "position": 1,
+      "title": "",
+      "tracks": [
+        {
+          "recording": {
+            "disambiguation": "",
+            "id": "60bd9d53-01ff-4562-8058-eb44b3940317",
+            "first-release-date": "2000-08-03",
+            "title": "Everything in Its Right Place",
+            "video": false,
+            "length": 251426
+          },
+          "id": "cd4aa621-8cce-43a3-87a9-f80fa6e3a376",
+          "position": 1,
+          "length": 251426,
+          "number": "1",
+          "title": "Everything in Its Right Place"
+        },
+        {
+          "length": 284506,
+          "title": "Kid A",
+          "number": "2",
+          "recording": {
+            "video": false,
+            "title": "Kid A",
+            "length": 284506,
+            "disambiguation": "",
+            "first-release-date": "2000-08-03",
+            "id": "0852f01a-1832-453d-ae8e-345499ecc027"
+          },
+          "position": 2,
+          "id": "a158cdad-6268-4477-8677-b7384969f8fa"
+        },
+        {
+          "length": 351693,
+          "title": "The National Anthem",
+          "number": "3",
+          "recording": {
+            "disambiguation": "",
+            "first-release-date": "2000-08-03",
+            "id": "c7492f6e-adf3-4ff5-85dc-33d527dc81d8",
+            "video": false,
+            "title": "The National Anthem",
+            "length": 351693
+          },
+          "id": "83d9b053-0a76-42d0-84ab-9f926cc0b417",
+          "position": 3
+        },
+        {
+          "number": "4",
+          "title": "How to Disappear Completely",
+          "length": 356333,
+          "position": 4,
+          "id": "c05f65dd-b71b-41b8-8508-6a6cd7207cc9",
+          "recording": {
+            "video": false,
+            "title": "How to Disappear Completely",
+            "length": 356333,
+            "disambiguation": "",
+            "first-release-date": "2000-08-03",
+            "id": "740d324e-4356-4116-812d-17ea76a190ce"
+          }
+        },
+        {
+          "position": 5,
+          "id": "84014b0d-8b5f-4db7-96c5-5d26f2e5119f",
+          "recording": {
+            "length": 222600,
+            "video": false,
+            "title": "Treefingers",
+            "id": "31c89fdc-afdb-4d84-bc61-2dbabf0b4f23",
+            "first-release-date": "2000-08-03",
+            "disambiguation": ""
+          },
+          "number": "5",
+          "title": "Treefingers",
+          "length": 222600
+        },
+        {
+          "title": "Optimistic",
+          "number": "6",
+          "length": 315973,
+          "recording": {
+            "disambiguation": "",
+            "id": "4d7b8fcb-fafc-4416-9170-752f12e10a2e",
+            "first-release-date": "2000-08-03",
+            "video": false,
+            "title": "Optimistic",
+            "length": 315973
+          },
+          "id": "f4bfd8b3-3b0f-4662-927e-9790cc0399a4",
+          "position": 6
+        },
+        {
+          "id": "ece8dd31-20eb-457c-b9b2-502b9323d4da",
+          "position": 7,
+          "recording": {
+            "disambiguation": "",
+            "id": "27f5b46c-f749-40e7-bc10-1524393168f0",
+            "first-release-date": "2000-08-03",
+            "title": "In Limbo",
+            "video": false,
+            "length": 211000
+          },
+          "number": "7",
+          "title": "In Limbo",
+          "length": 211000
+        },
+        {
+          "length": 309093,
+          "title": "Idioteque",
+          "number": "8",
+          "id": "70c8943e-d358-46be-a79d-d29982ca71d0",
+          "position": 8,
+          "recording": {
+            "first-release-date": "2000-08-03",
+            "id": "1c0377bb-c00b-4bbe-b4b2-615f13324adc",
+            "disambiguation": "",
+            "length": 309093,
+            "title": "Idioteque",
+            "video": false
+          }
+        },
+        {
+          "title": "Morning Bell",
+          "number": "9",
+          "length": 275800,
+          "position": 9,
+          "id": "8b977809-3935-4b49-8e9b-62f787c777fd",
+          "recording": {
+            "length": 275800,
+            "title": "Morning Bell",
+            "video": false,
+            "id": "5616efb3-4c50-40ab-a792-e2e34faae75f",
+            "first-release-date": "2000-08-03",
+            "disambiguation": ""
+          }
+        },
+        {
+          "position": 10,
+          "id": "7ab3d14f-dbf5-4072-9e11-6fbb0cda681b",
+          "recording": {
+            "length": 419466,
+            "title": "Motion Picture Soundtrack / [untitled]",
+            "video": false,
+            "id": "f8764ab0-996b-40c8-9645-10f47e8c43d0",
+            "first-release-date": "2000-08-03",
+            "disambiguation": ""
+          },
+          "length": 419466,
+          "number": "10",
+          "title": "Motion Picture Soundtrack"
+        }
+      ],
+      "track-offset": 0,
+      "format-id": "9712d52a-4509-3d4b-a1a2-67c88c643e31",
+      "id": "05b9c70d-2f3b-3e92-8ed4-0cf21a95b762"
+    }
+  ],
+  "id": "b35deffd-6af7-4e86-83d5-84e41aa83550",
+  "cover-art-archive": {
+    "artwork": false,
+    "darkened": false,
+    "count": 0,
+    "front": false,
+    "back": false
+  },
+  "disambiguation": "",
+  "country": "AU",
+  "packaging": "Jewel Case",
+  "status": "Official",
+  "packaging-id": "ec27701a-4a22-37f4-bfac-6616e0f9750a",
+  "date": "2000",
+  "status-id": "4e304316-386d-3409-af2e-78857eec5cfe"
+}

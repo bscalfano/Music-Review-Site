@@ -33,6 +33,33 @@ pnpm dev                     # http://localhost:3000
 
 First time using Playwright: `pnpm exec playwright install chromium`.
 
+## Database
+
+Schema lives in `src/db/schema/` (Drizzle). Migrations are in `src/db/migrations/` and are generated, never hand-edited, except `0000_extensions.sql`, which enables `pg_trgm` for fuzzy search.
+
+```bash
+pnpm db:generate --name=describe_the_change   # after editing the schema
+pnpm db:migrate                               # apply to DATABASE_URL
+```
+
+## Seed data (development only)
+
+`pnpm db:seed` creates 4 fake users (one private account), follows, ~20 real albums fetched from MusicBrainz, reviews/logs, comments, reactions, favorites, a queue and a list. It takes a few minutes the first time because MusicBrainz allows one request per second. `pnpm db:unseed` removes the fake users and everything they made (albums and artists are kept). Seed users all have `@seed.invalid` emails. **Do not leave seed data in a database real people use.**
+
+## Music data
+
+- **Album identity** is the MusicBrainz release-group ID. Lookups go through `src/lib/music/`, which defines provider interfaces; each source is one file.
+- **MusicBrainz limit:** 1 request/second for the whole site. `throttle.ts` enforces it across all server instances via a row in Postgres, and responses are cached for 24h in `external_cache`. Set `MUSICBRAINZ_USER_AGENT` to your site name plus a real contact address (MusicBrainz asks for this and may block anonymous clients).
+- **Covers** are copied into Cloudflare R2 by a background job. Until R2 is configured (or the job has run), `albumCoverUrl()` falls back to the Cover Art Archive.
+- **Song clips:** Deezer first, iTunes as fallback. Deezer preview URLs are signed and expire within hours, so `isPreviewFresh()` checks the expiry and callers re-resolve stale URLs.
+
+## Background jobs
+
+Slow work (album tracklists, genres, covers) runs from a Postgres-backed queue (`jobs` table, `src/lib/jobs`). Jobs retry with backoff and are deduplicated by key.
+
+- `kickJobs()` runs due jobs right after a response is sent. This is what keeps the queue moving in practice.
+- `/api/cron/jobs` (protected by `CRON_SECRET`) sweeps the queue. `vercel.json` schedules it **once a day**, because that is the most Vercel's free plan allows. It's a safety net for retries, not the primary runner.
+
 ## Conventions
 
 - Never edit the database by hand; every schema change is a Drizzle migration.

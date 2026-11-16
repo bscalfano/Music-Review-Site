@@ -1,0 +1,86 @@
+import { desc, sql } from "drizzle-orm";
+import { check, index, pgTable, primaryKey, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import {
+  followStatus,
+  notificationTarget,
+  notificationType,
+  reportStatus,
+  reportTarget,
+} from "./enums";
+import { users } from "./users";
+
+export const follows = pgTable(
+  "follows",
+  {
+    followerId: uuid()
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    followeeId: uuid()
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    /** 'pending' only when the followee is a private account. */
+    status: followStatus().notNull().default("accepted"),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+    acceptedAt: timestamp({ withTimezone: true }),
+  },
+  (t) => [
+    primaryKey({ columns: [t.followerId, t.followeeId] }),
+    index("follows_followee_status_idx").on(t.followeeId, t.status),
+    check("follows_not_self", sql`${t.followerId} <> ${t.followeeId}`),
+  ],
+);
+
+export const blocks = pgTable(
+  "blocks",
+  {
+    blockerId: uuid()
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    blockedId: uuid()
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    primaryKey({ columns: [t.blockerId, t.blockedId] }),
+    index("blocks_blocked_idx").on(t.blockedId),
+    check("blocks_not_self", sql`${t.blockerId} <> ${t.blockedId}`),
+  ],
+);
+
+export const notifications = pgTable(
+  "notifications",
+  {
+    id: uuid().primaryKey().defaultRandom(),
+    recipientId: uuid()
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    actorId: uuid()
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    type: notificationType().notNull(),
+    targetType: notificationTarget().notNull(),
+    targetId: uuid().notNull(),
+    readAt: timestamp({ withTimezone: true }),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index("notifications_recipient_created_idx").on(t.recipientId, desc(t.createdAt))],
+);
+
+export const reports = pgTable(
+  "reports",
+  {
+    id: uuid().primaryKey().defaultRandom(),
+    reporterId: uuid()
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    targetType: reportTarget().notNull(),
+    targetId: uuid().notNull(),
+    reason: text().notNull(),
+    status: reportStatus().notNull().default("open"),
+    resolvedById: uuid().references(() => users.id, { onDelete: "set null" }),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+    resolvedAt: timestamp({ withTimezone: true }),
+  },
+  (t) => [index("reports_status_created_idx").on(t.status, t.createdAt)],
+);
