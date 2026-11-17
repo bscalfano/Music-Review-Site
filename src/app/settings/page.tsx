@@ -10,6 +10,8 @@ import {
   ProfileDetailsForm,
   ViewerThemePref,
 } from "@/components/settings/forms";
+import { YourDataSection } from "@/components/settings/account-forms";
+import { DELETION_GRACE_DAYS } from "@/lib/account/account";
 import { BlockedList, NotificationPrefsForm } from "@/components/settings/social-forms";
 import { requireUser } from "@/lib/auth/session";
 import { listBlocked } from "@/lib/social/blocks";
@@ -161,6 +163,10 @@ export default async function SettingsPage() {
       <Section id="account" title="Account">
         <HandleForm handle={user.handle} />
         <p className="text-muted-foreground text-sm">Signed in as {user.email}.</p>
+      </Section>
+
+      <Section id="data" title="Your data">
+        <YourDataSection handle={user.handle} graceDays={DELETION_GRACE_DAYS} />
       </Section>
 
       <Section id="viewing" title="Viewing">

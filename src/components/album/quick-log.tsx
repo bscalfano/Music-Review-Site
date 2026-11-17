@@ -11,7 +11,7 @@ export type MyState = {
   id: string;
   rating: number | null;
   hasBody: boolean;
-  status: "draft" | "published";
+  status: "draft" | "published" | "hidden";
 } | null;
 
 /**
@@ -35,6 +35,7 @@ export function QuickLog({
   const [message, setMessage] = useState<string>();
   const [pending, startTransition] = useTransition();
   const isDraft = mine?.status === "draft";
+  const isHidden = mine?.status === "hidden";
 
   function rate(next: number | null) {
     const before = { rating, logged };
@@ -65,6 +66,14 @@ export function QuickLog({
 
   const editHref = mine ? `/write/${mine.id}` : `/write?album=${albumMbid}`;
   const editLabel = mine?.hasBody ? "Edit review" : "Write a review";
+
+  if (isHidden) {
+    return (
+      <p className="text-muted-foreground text-sm" role="status">
+        Your review of this album was taken down by a moderator, so it can&apos;t be changed here.
+      </p>
+    );
+  }
 
   return (
     <div

@@ -5,7 +5,11 @@ import { REVIEW_IMAGE_PREFIX } from "@/lib/images/process";
 import { storagePublicUrl } from "@/lib/storage/r2";
 
 /** Everything the editor component needs, built on the server. */
-export async function loadEditor(albumMbid: string, review: OwnReview | null, handle: string) {
+export async function loadEditor(
+  albumMbid: string,
+  review: (Omit<OwnReview, "status"> & { status: "draft" | "published" }) | null,
+  handle: string,
+) {
   const album = await getAlbumByMbid(albumMbid);
   if (!album) return null;
   const tracks = await getAlbumTracks(album.id);

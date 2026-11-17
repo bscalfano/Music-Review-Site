@@ -386,7 +386,7 @@ Each phase ends with the app building, lint and tests passing, a commit, and a s
 3. `/feed`, `/discover` (with the new-user empty state), and the home behavior per Q1.
 4. Notifications (in-app + optional email via a job), comments + replies, reactions, rate limits.
 
-**Phase 5 — Safety + deploy**
+**Phase 5 — Safety + deploy** *(built: reports, /admin, hide/suspend, account export + 30-day deletion, legal pages, RSS/sitemap, deploy guide in docs/DEPLOY.md. The Vercel deploy, domain and production smoke test are yours to run from that guide: they need your accounts.)*
 1. Reports, admin queue, suspend/hide, account export + deletion, Terms/Privacy/Guidelines pages, upload limits.
 2. Deploy to Vercel, run production migrations, attach the custom domain (S20).
 3. Playwright smoke tests against the deployment: sign-up → write a review → second user follows → it appears in their feed → comment → notification.

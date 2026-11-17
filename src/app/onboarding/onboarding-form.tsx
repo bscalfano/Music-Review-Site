@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState } from "react";
 import { Button } from "@/components/ui/button";
 import { Field, Input } from "@/components/ui/field";
@@ -42,6 +43,31 @@ export function OnboardingForm({ defaultName }: { defaultName: string }) {
           />
         </div>
       </Field>
+      <div className="space-y-1.5">
+        <label className="flex items-start gap-2 text-sm">
+          <input type="checkbox" name="agree" required className="mt-1 size-4" />
+          <span>
+            I&apos;m at least 13 years old and I agree to the{" "}
+            <Link href="/terms" target="_blank" className="underline">
+              Terms
+            </Link>
+            ,{" "}
+            <Link href="/privacy" target="_blank" className="underline">
+              Privacy Policy
+            </Link>{" "}
+            and{" "}
+            <Link href="/guidelines" target="_blank" className="underline">
+              Community Guidelines
+            </Link>
+            .
+          </span>
+        </label>
+        {state.errors?.agree && (
+          <p role="alert" className="text-destructive text-xs">
+            {state.errors.agree}
+          </p>
+        )}
+      </div>
       <Button type="submit" size="lg" className="w-full" disabled={pending}>
         {pending ? "Creating profile…" : "Create my profile"}
       </Button>

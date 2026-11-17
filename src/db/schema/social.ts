@@ -95,11 +95,35 @@ export const reports = pgTable(
       .references(() => users.id, { onDelete: "cascade" }),
     targetType: reportTarget().notNull(),
     targetId: uuid().notNull(),
+    /** A category slug (see lib/moderation/reasons.ts). */
     reason: text().notNull(),
+    details: text(),
     status: reportStatus().notNull().default("open"),
     resolvedById: uuid().references(() => users.id, { onDelete: "set null" }),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
     resolvedAt: timestamp({ withTimezone: true }),
   },
-  (t) => [index("reports_status_created_idx").on(t.status, t.createdAt)],
+  (t) => [
+    index("reports_status_created_idx").on(t.status, t.createdAt),
+    index("reports_target_idx").on(t.targetType, t.targetId),
+    // One open report per person per target: reporting twice doesn't flood the queue.
+    uniqueIndex("reports_open_unique")
+      .on(t.reporterId, t.targetType, t.targetId)
+      .where(sql`${t.status} = 'open'`),
+  ],
+);
+
+/** Everything admins do to other people's content or accounts, for accountability. */
+export const adminActions = pgTable(
+  "admin_actions",
+  {
+    id: uuid().primaryKey().defaultRandom(),
+    adminId: uuid().references(() => users.id, { onDelete: "set null" }),
+    action: text().notNull(),
+    targetType: text().notNull(),
+    targetId: uuid().notNull(),
+    note: text(),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index("admin_actions_created_idx").on(desc(t.createdAt))],
 );

@@ -252,3 +252,17 @@ export async function getSuggestedReviewers(
     reviews: r.reviews,
   }));
 }
+
+/** Written reviews for RSS: public accounts only, newest first. Anonymous viewer, so never private. */
+export async function getPublicReviewsForRss(opts: { authorId?: string; limit?: number } = {}) {
+  const { items } = await queryItems({
+    viewer: null,
+    limit: opts.limit ?? 30,
+    where: and(
+      eq(users.isPrivate, false),
+      sql`${reviews.body} <> ''`,
+      opts.authorId ? eq(reviews.authorId, opts.authorId) : undefined,
+    ),
+  });
+  return items;
+}

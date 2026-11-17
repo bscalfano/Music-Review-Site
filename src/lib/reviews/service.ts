@@ -7,9 +7,12 @@ import { normalizeTags, ratingSchema } from "./schema";
 
 const { reviews, albums, tracks, tags, reviewTags } = schema;
 
+const HIDDEN_MESSAGE =
+  "A moderator took this review down, so it can't be edited or republished. Contact us if you think that was a mistake.";
+
 export class ReviewError extends Error {
   constructor(
-    public code: "not_found" | "bad_clip" | "bad_rating",
+    public code: "not_found" | "bad_clip" | "bad_rating" | "hidden",
     message: string,
   ) {
     super(message);
@@ -36,7 +39,10 @@ export type SavedReview = {
   albumId: string;
 };
 
-type Tx = Pick<ReturnType<typeof getDb>, "select" | "insert" | "update" | "delete" | "execute">;
+type Tx = Pick<
+  ReturnType<typeof getDb>,
+  "select" | "selectDistinct" | "insert" | "update" | "delete" | "execute"
+>;
 
 /** A slug unique among this author's live reviews: the album title, then -2, -3... */
 async function uniqueSlug(db: DbLike, authorId: string, albumTitle: string): Promise<string> {
@@ -116,6 +122,7 @@ export async function saveReview(authorId: string, input: SaveReviewInput): Prom
     if (input.reviewId && (!existing || existing.albumId !== album.id)) {
       throw new ReviewError("not_found", "That review doesn't exist.");
     }
+    if (existing?.status === "hidden") throw new ReviewError("hidden", HIDDEN_MESSAGE);
 
     const now = new Date();
     const published = input.status === "published";
@@ -165,7 +172,13 @@ export async function deleteReview(authorId: string, reviewId: string): Promise<
       .update(reviews)
       .set({ deletedAt: new Date() })
       .where(
-        and(eq(reviews.id, reviewId), eq(reviews.authorId, authorId), isNull(reviews.deletedAt)),
+        and(
+          eq(reviews.id, reviewId),
+          eq(reviews.authorId, authorId),
+          isNull(reviews.deletedAt),
+          // A taken-down review stays put, so deleting it can't be used to dodge the takedown.
+          sql`${reviews.status} <> 'hidden'`,
+        ),
       )
       .returning({ albumId: reviews.albumId });
     if (!row) return false;
@@ -196,6 +209,7 @@ export async function setQuickRating(
     if (!album) throw new ReviewError("not_found", "That album doesn't exist.");
     const existing = await findExisting(tx, authorId, albumId);
     const now = new Date();
+    if (existing?.status === "hidden") throw new ReviewError("hidden", HIDDEN_MESSAGE);
 
     if (existing) {
       await tx
@@ -236,6 +250,7 @@ export async function removeLog(authorId: string, albumId: string): Promise<bool
           eq(reviews.albumId, albumId),
           isNull(reviews.deletedAt),
           sql`${reviews.body} = ''`,
+          sql`${reviews.status} <> 'hidden'`,
         ),
       )
       .returning({ id: reviews.id });

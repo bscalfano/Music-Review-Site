@@ -38,6 +38,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: user.isPrivate ? undefined : (user.bio ?? undefined),
     // Private accounts shouldn't be indexed or previewed.
     robots: user.isPrivate ? { index: false, follow: false } : undefined,
+    // Private accounts have no feed.
+    alternates: user.isPrivate
+      ? undefined
+      : { types: { "application/rss+xml": `/u/${user.handle}/rss.xml` } },
   };
 }
 

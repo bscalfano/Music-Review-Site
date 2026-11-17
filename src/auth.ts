@@ -5,6 +5,7 @@ import Google from "next-auth/providers/google";
 import Resend from "next-auth/providers/resend";
 import { getDb, schema } from "@/db";
 import { siteConfig } from "@/config/site";
+import { isWithinGrace, restoreAccount } from "@/lib/account/account";
 import { createAdapter } from "@/lib/auth/adapter";
 
 const { users } = schema;
@@ -73,7 +74,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth(() => ({
     async signIn({ user }) {
       if (!user.id) return true; // new user: created after this callback
       const [row] = await getDb().select().from(users).where(eq(users.id, user.id)).limit(1);
-      return !row || (row.status === "active" && !row.deletedAt);
+      if (!row) return true;
+      if (row.status !== "active") return false;
+      // A deleted account can come back by signing in during the grace period (see events below).
+      return !row.deletedAt || isWithinGrace(row.deletedAt);
     },
     jwt({ token, user }) {
       if (user?.id) token.uid = user.id;
@@ -88,6 +92,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth(() => ({
     async signIn({ user, isNewUser }) {
       if (!user.id) return;
       const db = getDb();
+      await restoreAccount(user.id);
       // Owner role comes from OWNER_EMAIL; granted at first sign-in (and re-checked each time).
       if (isOwnerEmail(user.email)) {
         await db.update(users).set({ role: "owner" }).where(eq(users.id, user.id));

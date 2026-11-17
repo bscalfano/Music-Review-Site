@@ -8,7 +8,9 @@ import { validateHandle } from "@/lib/auth/handles";
 import { isUniqueViolation } from "@/lib/db-errors";
 import { requireUser, safeRedirectPath } from "@/lib/auth/session";
 
-export type OnboardingState = { errors?: { handle?: string; displayName?: string } };
+export type OnboardingState = {
+  errors?: { handle?: string; displayName?: string; agree?: string };
+};
 
 const displayNameSchema = z
   .string()
@@ -25,9 +27,12 @@ export async function completeOnboarding(
 
   const handle = validateHandle(String(formData.get("handle") ?? ""));
   const displayName = displayNameSchema.safeParse(formData.get("displayName"));
-  if (!handle.ok || !displayName.success) {
+  // Minimum age 13 and acceptance of the Terms, Privacy Policy and Guidelines (PLAN 2.9).
+  const agreed = formData.get("agree") === "on";
+  if (!handle.ok || !displayName.success || !agreed) {
     return {
       errors: {
+        agree: agreed ? undefined : "Please confirm to continue.",
         handle: handle.ok ? undefined : handle.error,
         displayName: displayName.success ? undefined : displayName.error.issues[0]?.message,
       },

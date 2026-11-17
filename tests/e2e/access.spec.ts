@@ -193,3 +193,74 @@ test.describe("social pages", () => {
     expect(html).not.toContain("sam_private");
   });
 });
+
+test.describe("safety, legal and SEO pages", () => {
+  for (const path of ["/terms", "/privacy", "/guidelines", "/about"]) {
+    test(`${path} is public`, async ({ request }) => {
+      const res = await request.get(path);
+      expect(res.status()).toBe(200);
+      expect(await res.text()).toContain("<h1");
+    });
+  }
+
+  test("admin pages and the data export don't exist for anonymous visitors", async ({
+    request,
+  }) => {
+    for (const path of ["/admin", "/admin/users", "/admin/activity"]) {
+      expect((await request.get(path)).status(), path).toBe(404);
+    }
+    expect((await request.get("/api/account/export")).status()).toBe(401);
+  });
+
+  test("the health check reaches the database", async ({ request }) => {
+    const res = await request.get("/api/health");
+    expect(res.status()).toBe(200);
+    expect(await res.json()).toEqual({ ok: true });
+  });
+
+  test("robots.txt hides private areas and links the sitemap", async ({ request }) => {
+    const text = await (await request.get("/robots.txt")).text();
+    expect(text).toContain("Disallow: /admin");
+    expect(text).toContain("Disallow: /settings");
+    expect(text).toMatch(/Sitemap: .*\/sitemap\.xml/);
+  });
+
+  test("security headers are set", async ({ request }) => {
+    const headers = (await request.get("/about")).headers();
+    expect(headers["x-content-type-options"]).toBe("nosniff");
+    expect(headers["x-frame-options"]).toBe("DENY");
+    expect(headers["referrer-policy"]).toBeTruthy();
+    expect(headers["x-powered-by"]).toBeUndefined();
+  });
+
+  test("the sitemap and RSS never include private accounts (needs seed data)", async ({
+    request,
+  }) => {
+    const probe = await request.get("/u/maya");
+    test.skip(probe.status() === 404, "seed data not present");
+
+    const sitemap = await (await request.get("/sitemap.xml")).text();
+    expect(sitemap).toContain("/u/maya");
+    expect(sitemap).not.toContain("sam_private");
+
+    const site = await request.get("/rss.xml");
+    expect(site.headers()["content-type"]).toContain("application/rss+xml");
+    expect(await site.text()).not.toContain("sam_private");
+
+    const maya = await request.get("/u/maya/rss.xml");
+    expect(maya.status()).toBe(200);
+    expect(await maya.text()).toContain("<item>");
+    expect((await request.get("/u/sam_private/rss.xml")).status()).toBe(404);
+  });
+
+  test("a private profile has no RSS link and stays noindex (needs seed data)", async ({
+    request,
+  }) => {
+    const probe = await request.get("/u/maya");
+    test.skip(probe.status() === 404, "seed data not present");
+    expect(await (await request.get("/u/maya")).text()).toContain("/u/maya/rss.xml");
+    expect(await (await request.get("/u/sam_private")).text()).not.toContain(
+      "/u/sam_private/rss.xml",
+    );
+  });
+});

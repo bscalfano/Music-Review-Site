@@ -3,7 +3,8 @@ import { pgEnum } from "drizzle-orm/pg-core";
 export const userRole = pgEnum("user_role", ["owner", "admin", "member"]);
 export const userStatus = pgEnum("user_status", ["active", "suspended"]);
 export const followStatus = pgEnum("follow_status", ["pending", "accepted"]);
-export const reviewStatus = pgEnum("review_status", ["draft", "published"]);
+/** `hidden`: taken down by a moderator. Every public query already filters on `published`. */
+export const reviewStatus = pgEnum("review_status", ["draft", "published", "hidden"]);
 export const reactionTarget = pgEnum("reaction_target", ["review", "comment"]);
 export const queueStatus = pgEnum("queue_status", ["queued", "reviewed", "dismissed"]);
 export const notificationType = pgEnum("notification_type", [

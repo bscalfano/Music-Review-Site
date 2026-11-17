@@ -29,6 +29,7 @@ pnpm dev                     # http://localhost:3000
 | `pnpm test`                         | Unit tests (Vitest)                                                                                                              |
 | `pnpm e2e`                          | Access-control tests over HTTP (Playwright; uses a running `pnpm dev` or starts one). Set `E2E_BASE_URL` to test a deployed site |
 | `pnpm db:generate`                  | Generate a migration from schema changes                                                                                         |
+| `pnpm check:env`                    | Check an env file has everything production needs (`--file=...`)                                                                 |
 | `pnpm db:migrate`                   | Apply migrations to `DATABASE_URL`                                                                                               |
 
 Browser-based Playwright tests would need `pnpm exec playwright install chromium` first; the current tests do not.
@@ -94,6 +95,17 @@ Avatars, banners and album covers are stored in Cloudflare R2 when the `R2_*` va
 - **Comments, hearts and notifications:** comments are one level deep (`comments.ts`); a comment by someone the viewer can't see is hidden. Hearts and notifications are de-duplicated, and un-hearting or unfollowing retracts the notification. In-app notifications are always on; emails (`notification-email.ts`, a background job) are per type in Settings, default comments and replies only, and are skipped until `RESEND_API_KEY` is set.
 - **Rate limits** (`ratelimit.ts`, fixed windows in the `rate_limits` table): 50 follows/hour, 10 comments/minute, 30 hearts/minute, 20 publishes/day, 120 quick ratings/hour.
 - **Client components must not import `<UserAvatar>`** (it reads storage and the database through `profiles/queries`). Resolve the URL on the server and use `<AvatarView src=…>`.
+
+## Safety, moderation and accounts
+
+- **Reports:** anyone signed in can report a review, comment or profile they can see (`ReportButton`, `src/lib/moderation/reports.ts`). You can't report what you can't see, your own content, and each person has one open report per target.
+- **/admin** (owner and admins; everyone else gets a 404) has three tabs: the reports queue (hide a review, remove a comment, suspend the author, dismiss), Users (search, suspend/unsuspend, reset avatar/banner; only the owner can promote admins) and an Activity log of every admin action with an undo for takedowns. Logic lives in `src/lib/moderation/service.ts`; every action is logged to `admin_actions`.
+- **Takedowns:** a hidden review has status `hidden`, which every public query already excludes (they all filter on `published`). The author sees a notice and can't edit, republish or delete it, so deleting can't dodge a takedown. Suspended and deleted accounts stop counting toward album averages (`recomputeAlbumStats` joins the author), and count again if restored.
+- **Account deletion** (`src/lib/account/account.ts`): deleting hides the account at once; signing in again within 30 days restores it; the daily cron (`/api/cron/jobs`) then permanently deletes the user, their rows (foreign keys cascade) and their stored files. **Download my data** (`/api/account/export`) returns everything as JSON, drafts included.
+- **Sign-up** requires confirming 13+ and the Terms/Privacy/Guidelines (`/terms`, `/privacy`, `/guidelines`, `/about`). These are plain-language templates; have them reviewed and bump `LEGAL_UPDATED`. Set `NEXT_PUBLIC_CONTACT_EMAIL` so they show a real address.
+- **Uploads:** 4 MB, JPEG/PNG/WebP, re-encoded; avatar and banner replace the old file; 40 uploads per user per day; review images are removed when an account is purged.
+- **SEO and feeds:** `/sitemap.xml`, `/robots.txt`, `/rss.xml` and `/u/<handle>/rss.xml` include public accounts only (private, suspended and deleted accounts get no feed and no sitemap entries). Security headers are set in `next.config.ts`.
+- **Deploying:** see [docs/DEPLOY.md](docs/DEPLOY.md). `pnpm check:env` checks your environment file, and `/api/health` is the uptime check.
 
 ## Profile themes
 

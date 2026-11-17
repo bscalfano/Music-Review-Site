@@ -2,7 +2,7 @@ import { and, count, eq, isNull } from "drizzle-orm";
 import { schema } from "@/db";
 import type { DbLike } from "@/db/types";
 
-const { reviews, favoriteAlbums, albumStats } = schema;
+const { reviews, favoriteAlbums, albumStats, users } = schema;
 
 export type AlbumStatsValues = {
   ratingCount: number;
@@ -40,8 +40,16 @@ export async function recomputeAlbumStats(db: DbLike, albumId: string): Promise<
   const rows = await db
     .select({ rating: reviews.rating, body: reviews.body })
     .from(reviews)
+    .innerJoin(users, eq(reviews.authorId, users.id))
     .where(
-      and(eq(reviews.albumId, albumId), eq(reviews.status, "published"), isNull(reviews.deletedAt)),
+      and(
+        eq(reviews.albumId, albumId),
+        eq(reviews.status, "published"),
+        isNull(reviews.deletedAt),
+        // Suspended and deleted accounts stop counting toward averages (and count again if restored).
+        eq(users.status, "active"),
+        isNull(users.deletedAt),
+      ),
     );
   const [fans] = await db
     .select({ n: count() })
@@ -53,4 +61,13 @@ export async function recomputeAlbumStats(db: DbLike, albumId: string): Promise<
     .insert(albumStats)
     .values({ albumId, ...values })
     .onConflictDoUpdate({ target: albumStats.albumId, set: values });
+}
+
+/** Recompute stats for every album a user has rated: call after suspending, deleting or restoring them. */
+export async function recomputeStatsForUser(db: DbLike, userId: string): Promise<void> {
+  const rows = await db
+    .selectDistinct({ albumId: reviews.albumId })
+    .from(reviews)
+    .where(and(eq(reviews.authorId, userId), eq(reviews.status, "published")));
+  for (const { albumId } of rows) await recomputeAlbumStats(db, albumId);
 }

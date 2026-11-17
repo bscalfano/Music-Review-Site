@@ -30,7 +30,20 @@ export default async function EditReviewPage({ params }: Props) {
   if (!album) notFound();
   kickJobs();
 
-  const props = await loadEditor(album.mbid, review, user.handle);
+  if (review.status === "hidden") {
+    return (
+      <main className="mx-auto max-w-xl space-y-3 px-4 py-12">
+        <h1 className="text-2xl font-bold">This review was taken down</h1>
+        <p className="text-muted-foreground text-sm">
+          A moderator removed it for breaking the community guidelines, so it can&apos;t be edited
+          or republished. If you think that was a mistake, get in touch using the contact address on
+          the About page.
+        </p>
+      </main>
+    );
+  }
+
+  const props = await loadEditor(album.mbid, { ...review, status: review.status }, user.handle);
   if (!props) notFound();
   return <ReviewEditor {...props} />;
 }

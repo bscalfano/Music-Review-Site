@@ -8,6 +8,9 @@ export const LIMITS = {
   reaction: { limit: 30, windowSec: 60 },
   publish: { limit: 20, windowSec: 24 * 60 * 60 },
   quickRate: { limit: 120, windowSec: 60 * 60 },
+  report: { limit: 20, windowSec: 24 * 60 * 60 },
+  upload: { limit: 40, windowSec: 24 * 60 * 60 },
+  export: { limit: 5, windowSec: 24 * 60 * 60 },
 } as const;
 
 export type LimitedAction = keyof typeof LIMITS;

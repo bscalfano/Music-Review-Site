@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { addCommentAction, deleteCommentAction, editCommentAction } from "@/app/social/actions";
 import { HeartButton } from "@/components/social/heart-button";
+import { ReportButton } from "@/components/social/report-button";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/field";
 import { AvatarView } from "@/components/avatar-view";
@@ -166,6 +167,16 @@ function CommentItem({
             >
               Edit
             </button>
+          )}
+          {!c.canEdit && (
+            <ReportButton
+              targetType="comment"
+              targetId={c.id}
+              subject={`comment by ${name}`}
+              signInHref={
+                viewerId ? undefined : `/sign-in?callbackUrl=${encodeURIComponent(reviewPath)}`
+              }
+            />
           )}
           {c.canDelete && (
             <button

@@ -1,6 +1,7 @@
 import { timingSafeEqual } from "node:crypto";
 import { deleteExpiredCacheEntries } from "@/lib/music/cache";
 import { runDueJobs } from "@/lib/jobs";
+import { purgeDeletedAccounts } from "@/lib/account/account";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -18,5 +19,7 @@ export async function GET(req: Request) {
   if (!authorized(req)) return new Response("Unauthorized", { status: 401 });
   const summary = await runDueJobs({ budgetMs: 45_000, maxJobs: 50 });
   await deleteExpiredCacheEntries();
-  return Response.json(summary);
+  // Accounts deleted more than 30 days ago are erased for good.
+  const purged = await purgeDeletedAccounts();
+  return Response.json({ ...summary, purgedAccounts: purged });
 }

@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import { ClipButton } from "@/components/clip-button";
 import { CommentSection } from "@/components/social/comment-section";
 import { HeartButton } from "@/components/social/heart-button";
+import { ReportButton } from "@/components/social/report-button";
 import { ReviewBody } from "@/components/review-body";
 import { StarRating } from "@/components/star-rating";
 import { buttonVariants } from "@/components/ui/button";
@@ -203,6 +204,16 @@ export default async function ReviewPage({ params }: Props) {
                   current ? undefined : `/sign-in?callbackUrl=${encodeURIComponent(reviewPath)}`
                 }
               />
+              {!isOwner && (
+                <ReportButton
+                  targetType="review"
+                  targetId={review.id}
+                  subject={`review of ${album.title}`}
+                  signInHref={
+                    current ? undefined : `/sign-in?callbackUrl=${encodeURIComponent(reviewPath)}`
+                  }
+                />
+              )}
             </div>
           )}
         </article>

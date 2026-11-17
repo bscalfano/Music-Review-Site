@@ -1,6 +1,12 @@
 import { mkdir, rm, writeFile } from "node:fs/promises";
 import { dirname, resolve, sep } from "node:path";
-import { DeleteObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import {
+  DeleteObjectCommand,
+  DeleteObjectsCommand,
+  ListObjectsV2Command,
+  PutObjectCommand,
+  S3Client,
+} from "@aws-sdk/client-s3";
 
 /**
  * File storage for covers, avatars and banners.
@@ -40,6 +46,8 @@ export interface Storage {
   put(args: { key: string; body: Uint8Array; contentType: string }): Promise<void>;
   /** Best effort: a failed delete must never fail the request that triggered it. */
   delete(key: string): Promise<void>;
+  /** Deletes every object whose key starts with `prefix` (e.g. all of one user's uploads). */
+  deletePrefix(prefix: string): Promise<void>;
   publicUrl(key: string): string;
 }
 
@@ -69,6 +77,29 @@ export function createR2Storage(config: StorageConfig): Storage {
         console.error("[storage] delete failed", key, err);
       }
     },
+    async deletePrefix(prefix) {
+      try {
+        let token: string | undefined;
+        do {
+          const page = await client.send(
+            new ListObjectsV2Command({
+              Bucket: config.bucket,
+              Prefix: prefix,
+              ContinuationToken: token,
+            }),
+          );
+          const keys = (page.Contents ?? []).flatMap((o) => (o.Key ? [{ Key: o.Key }] : []));
+          if (keys.length > 0) {
+            await client.send(
+              new DeleteObjectsCommand({ Bucket: config.bucket, Delete: { Objects: keys } }),
+            );
+          }
+          token = page.IsTruncated ? page.NextContinuationToken : undefined;
+        } while (token);
+      } catch (err) {
+        console.error("[storage] deletePrefix failed", prefix, err);
+      }
+    },
     publicUrl: (key) => `${config.publicUrl}/${key}`,
   };
 }
@@ -89,6 +120,11 @@ export function createLocalStorage(dir = LOCAL_DIR): Storage {
     },
     async delete(key) {
       await rm(pathFor(key), { force: true }).catch(() => {});
+    },
+    async deletePrefix(prefix) {
+      await rm(pathFor(prefix.replace(/\/+$/, "")), { recursive: true, force: true }).catch(
+        () => {},
+      );
     },
     publicUrl: (key) => `/uploads/${key}`,
   };

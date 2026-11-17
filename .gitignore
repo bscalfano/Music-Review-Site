@@ -51,3 +51,6 @@ next-env.d.ts
 
 # local dev uploads (storage fallback when R2 is not configured)
 /public/uploads
+
+# alternate build output
+/.next-build/

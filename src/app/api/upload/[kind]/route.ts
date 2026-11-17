@@ -15,6 +15,7 @@ import {
   reviewImageKey,
 } from "@/lib/images/process";
 import { avatarUrl, bannerUrl } from "@/lib/profiles/queries";
+import { checkRateLimit } from "@/lib/social/ratelimit";
 import { getStorage } from "@/lib/storage/r2";
 
 export const dynamic = "force-dynamic";
@@ -56,6 +57,11 @@ export async function POST(req: Request, ctx: Ctx) {
 
   const storage = getStorage();
   if (!storage) return json({ error: "File storage isn't configured yet." }, 503);
+
+  // Per-user daily cap on uploads (avatars and banners replace the old file, but each upload costs work).
+  const limit = await checkRateLimit(user.id, "upload");
+  if (!limit.ok)
+    return json({ error: "You've uploaded a lot today. Please try again tomorrow." }, 429);
 
   // Reject oversized bodies before buffering them (multipart adds a little overhead).
   const declared = Number(req.headers.get("content-length"));

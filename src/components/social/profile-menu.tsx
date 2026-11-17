@@ -4,6 +4,7 @@ import { MoreHorizontal } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { blockAction, unblockAction } from "@/app/social/actions";
+import { ReportButton } from "@/components/social/report-button";
 
 /** The "…" menu on someone else's profile: block / unblock. */
 export function ProfileMenu({
@@ -52,6 +53,7 @@ export function ProfileMenu({
         >
           {blocked ? `Unblock @${handle}` : `Block @${handle}`}
         </button>
+        <ReportButton targetType="user" targetId={targetId} subject={`@${handle}`} variant="menu" />
         {error && (
           <p role="alert" className="text-destructive px-3 py-1 text-xs">
             {error}

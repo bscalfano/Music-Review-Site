@@ -176,7 +176,7 @@ export async function getReviewPage(
 
   const { review, author } = row;
   const isAuthor = viewer?.id === author.id;
-  if (review.status !== "published" && !isAuthor) return null;
+  if (review.status !== "published" && !isAuthor && !viewer?.isAdmin) return null;
   const relation = await loadRelation(viewer, author.id);
   if (!canViewContent(viewer, authorFacts(author), relation)) return null;
 
@@ -308,7 +308,7 @@ export async function getMyAlbumState(
   slug: string;
   rating: number | null;
   hasBody: boolean;
-  status: "draft" | "published";
+  status: "draft" | "published" | "hidden";
 } | null> {
   const row = await getOwnReviewForAlbum(userId, albumId);
   return row
