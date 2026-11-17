@@ -31,6 +31,11 @@ export const users = pgTable(
     role: userRole().notNull().default("member"),
     status: userStatus().notNull().default("active"),
     isPrivate: boolean().notNull().default(false),
+    /** Notification types that also send an email. Off by default except comments and replies. */
+    emailNotifications: text()
+      .array()
+      .notNull()
+      .default(sql`ARRAY['comment','reply']::text[]`),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
     deletedAt: timestamp({ withTimezone: true }),
   },

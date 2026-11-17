@@ -9,6 +9,8 @@ import { getDb, schema } from "@/db";
 import {
   authorVisibleTo,
   canViewContent,
+  canViewProfileHeader,
+  profileVisibleTo,
   type FollowState,
   type Viewer,
 } from "@/lib/social/visibility";
@@ -129,6 +131,42 @@ describe.skipIf(!process.env.DATABASE_URL)(
       const ids = await visibleIds(viewer);
       expect(ids).toEqual(expected(viewer));
       expect(ids.size).toBe(authorCases.length);
+    });
+
+    describe("profileVisibleTo (lists of people) agrees with canViewProfileHeader", () => {
+      const header = (viewer: Viewer) =>
+        new Set(
+          authorCases
+            .filter((c) =>
+              canViewProfileHeader(
+                viewer,
+                { id: c.id!, isPrivate: c.isPrivate, active: c.status === "active" && !c.deleted },
+                { followState: c.followState, blockedEitherWay: c.block !== "none" },
+              ),
+            )
+            .map((c) => c.id!),
+        );
+      const ids = async (viewer: Viewer) =>
+        new Set(
+          (
+            await db
+              .select({ id: users.id })
+              .from(users)
+              .where(and(like(users.email, `author%${DOMAIN}`), profileVisibleTo(viewer, users)))
+          ).map((r) => r.id),
+        );
+
+      it("for a signed-in viewer", async () => {
+        const viewer = { id: viewerId, isAdmin: false };
+        expect(await ids(viewer)).toEqual(header(viewer));
+      });
+      it("for an anonymous viewer", async () => {
+        expect(await ids(null)).toEqual(header(null));
+      });
+      it("for an admin", async () => {
+        const viewer = { id: adminId, isAdmin: true };
+        expect(await ids(viewer)).toEqual(header(viewer));
+      });
     });
 
     it("an author always sees themselves, even if suspended", async () => {

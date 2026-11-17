@@ -11,6 +11,8 @@ import {
   MAX_UPLOAD_BYTES,
   processAvatar,
   processBanner,
+  processInlineImage,
+  reviewImageKey,
 } from "@/lib/images/process";
 import { avatarUrl, bannerUrl } from "@/lib/profiles/queries";
 import { getStorage } from "@/lib/storage/r2";
@@ -38,7 +40,7 @@ function sameOrigin(req: Request): boolean {
 
 async function authorize(req: Request, ctx: Ctx) {
   const { kind } = await ctx.params;
-  if (kind !== "avatar" && kind !== "banner")
+  if (kind !== "avatar" && kind !== "banner" && kind !== "review-image")
     return { error: json({ error: "Not found" }, 404) } as const;
   if (!sameOrigin(req)) return { error: json({ error: "Forbidden" }, 403) } as const;
   const user = await getCurrentUser();
@@ -78,6 +80,13 @@ export async function POST(req: Request, ctx: Ctx) {
   const db = getDb();
   try {
     const input = Buffer.from(await file.arrayBuffer());
+
+    if (kind === "review-image") {
+      const img = await processInlineImage(input);
+      const key = reviewImageKey(user.id, img.hash);
+      await storage.put({ key, body: img.bytes, contentType: img.contentType });
+      return json({ url: storage.publicUrl(key) });
+    }
 
     if (kind === "avatar") {
       const img = await processAvatar(input, crop);
@@ -136,6 +145,7 @@ export async function DELETE(req: Request, ctx: Ctx) {
   const auth = await authorize(req, ctx);
   if ("error" in auth) return auth.error;
   const { kind, user } = auth;
+  if (kind === "review-image") return json({ error: "Not found" }, 404);
   const storage = getStorage();
   const db = getDb();
 

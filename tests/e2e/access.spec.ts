@@ -83,3 +83,113 @@ test.describe("profiles (needs `pnpm db:seed` data)", () => {
     expect(await res.text()).toContain("FAVORITE ALBUMS");
   });
 });
+
+test.describe("reviews and album pages (need `pnpm db:seed` data)", () => {
+  const RUMOURS = "/albums/rumours-416bb5e5-c7d1-3977-8fd7-7c9daf6c2be6";
+
+  test("writing requires sign-in", async ({ request }) => {
+    for (const path of ["/write", "/write/00000000-0000-4000-8000-000000000000"]) {
+      const res = await request.get(path, { maxRedirects: 0 });
+      expect(res.status(), path).toBe(307);
+      expect(res.headers()["location"]).toContain("/sign-in");
+    }
+    expect((await request.post("/api/upload/review-image")).status()).toBe(401);
+  });
+
+  test("a public review is readable by anyone and gets a share image", async ({ request }) => {
+    const res = await request.get("/u/maya/discovery");
+    test.skip(res.status() === 404, "seed data not present");
+    expect(res.status()).toBe(200);
+    expect(await res.text()).not.toContain("noindex");
+
+    const image = await request.get("/u/maya/discovery/opengraph-image");
+    expect(image.status()).toBe(200);
+    expect(image.headers()["content-type"]).toContain("image/png");
+  });
+
+  test("a private account's review looks like it doesn't exist to strangers", async ({
+    request,
+  }) => {
+    const probe = await request.get("/u/maya/discovery");
+    test.skip(probe.status() === 404, "seed data not present");
+    expect((await request.get("/u/sam_private/rumours")).status()).toBe(404);
+    // The share image must not reveal anything either: it falls back to the generic site image.
+    const image = await request.get("/u/sam_private/rumours/opengraph-image");
+    expect(image.status()).toBe(200);
+  });
+
+  test("drafts are invisible to everyone but their author", async ({ request }) => {
+    const probe = await request.get("/u/maya/discovery");
+    test.skip(probe.status() === 404, "seed data not present");
+    expect((await request.get("/u/maya/kid-a")).status()).toBe(404);
+  });
+
+  test("an album page lists public reviewers but never private ones", async ({ request }) => {
+    const res = await request.get(RUMOURS);
+    test.skip(res.status() === 404, "seed data not present");
+    const html = await res.text();
+    expect(html).toContain("Ratings");
+    expect(html).toContain("/u/maya");
+    expect(html).not.toContain("sam_private");
+
+    const all = await request.get(`${RUMOURS}/reviews?sort=popular`);
+    expect(all.status()).toBe(200);
+    expect(await all.text()).not.toContain("sam_private");
+  });
+
+  test("album URLs: a wrong slug redirects, junk 404s", async ({ request }) => {
+    const probe = await request.get(RUMOURS);
+    test.skip(probe.status() === 404, "seed data not present");
+    const wrong = await request.get("/albums/wrong-slug-416bb5e5-c7d1-3977-8fd7-7c9daf6c2be6", {
+      maxRedirects: 0,
+    });
+    expect(wrong.status()).toBe(308);
+    expect(wrong.headers()["location"]).toContain(RUMOURS);
+    expect((await request.get("/albums/not-an-album")).status()).toBe(404);
+    expect((await request.get("/albums/ghost-00000000-0000-4000-8000-000000000000")).status()).toBe(
+      404,
+    );
+  });
+});
+
+test.describe("social pages", () => {
+  test("the feed and notifications need sign-in", async ({ request }) => {
+    for (const path of ["/feed", "/notifications"]) {
+      const res = await request.get(path, { maxRedirects: 0 });
+      expect(res.status(), path).toBe(307);
+      expect(res.headers()["location"]).toContain(
+        `/sign-in?callbackUrl=${encodeURIComponent(path)}`,
+      );
+    }
+  });
+
+  test("home sends signed-out visitors to Discover, which is public", async ({ request }) => {
+    const home = await request.get("/", { maxRedirects: 0 });
+    expect(home.status()).toBe(307);
+    expect(home.headers()["location"]).toBe("/discover");
+    const discover = await request.get("/discover");
+    expect(discover.status()).toBe(200);
+    expect(await discover.text()).toContain("Sign in");
+  });
+
+  test("a private account's follower lists are hidden from strangers (needs seed data)", async ({
+    request,
+  }) => {
+    const probe = await request.get("/u/maya");
+    test.skip(probe.status() === 404, "seed data not present");
+    const priv = await request.get("/u/sam_private/followers");
+    expect(priv.status()).toBe(200);
+    const html = await priv.text();
+    expect(html).toContain("This account is private");
+    expect(html).toContain("noindex");
+    expect((await request.get("/u/maya/followers")).status()).toBe(200);
+    expect((await request.get("/u/nobody_here_123/following")).status()).toBe(404);
+  });
+
+  test("private accounts never appear on Discover (needs seed data)", async ({ request }) => {
+    const probe = await request.get("/u/maya");
+    test.skip(probe.status() === 404, "seed data not present");
+    const html = await (await request.get("/discover")).text();
+    expect(html).not.toContain("sam_private");
+  });
+});

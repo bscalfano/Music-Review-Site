@@ -122,3 +122,17 @@ export const avatarKey = (userId: string, hash: string) => `avatars/${userId}/${
 export const bannerKey = (userId: string, hash: string) => `banners/${userId}/${hash}.webp`;
 /** The 750px version of a banner lives next to the full one. */
 export const bannerSmallKey = (key: string) => key.replace(/\.webp$/, "-sm.webp");
+
+/** Inline review images: fit inside 1600x1600, re-encoded (EXIF stripped), never enlarged. */
+export async function processInlineImage(input: Buffer): Promise<ProcessedImage> {
+  const { oriented } = await open(input);
+  const bytes = await sharp(oriented)
+    .resize(1600, 1600, { fit: "inside", withoutEnlargement: true })
+    .webp({ quality: 82 })
+    .toBuffer();
+  return { bytes, contentType: "image/webp", hash: digest(bytes) };
+}
+
+export const REVIEW_IMAGE_PREFIX = "review-images/";
+export const reviewImageKey = (userId: string, hash: string) =>
+  `${REVIEW_IMAGE_PREFIX}${userId}/${hash}.webp`;

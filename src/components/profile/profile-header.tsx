@@ -3,7 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { LinkifiedText } from "@/components/linkified-text";
+import { FollowButton } from "@/components/social/follow-button";
+import { ProfileMenu } from "@/components/social/profile-menu";
 import { UserAvatar } from "@/components/user-avatar";
+import type { FollowState } from "@/lib/social/visibility";
 import { bannerUrl, type ProfileRow, type UserRow } from "@/lib/profiles/queries";
 
 export function ProfileHeader({
@@ -12,12 +15,20 @@ export function ProfileHeader({
   counts,
   reviewCount,
   isOwner,
+  viewerId,
+  followState,
+  countsVisible = true,
 }: {
   user: UserRow;
   profile: ProfileRow | null;
   counts: { followers: number; following: number };
   reviewCount: number;
   isOwner: boolean;
+  /** Null when nobody is signed in. */
+  viewerId: string | null;
+  followState: FollowState;
+  /** Follower/following lists are hidden for private accounts you can't see. */
+  countsVisible?: boolean;
 }) {
   const banner = bannerUrl(profile?.bannerKey ?? null, "full");
   const details = [profile?.pronouns, profile?.location].filter(Boolean);
@@ -56,14 +67,25 @@ export function ProfileHeader({
             size={96}
             className="ring-background size-24 text-3xl ring-4 sm:size-28"
           />
-          {isOwner && (
-            <Link
-              href="/settings"
-              className={buttonVariants({ variant: "outline", size: "sm", className: "mb-2" })}
-            >
-              Edit profile
-            </Link>
-          )}
+          <div className="mb-2 flex items-center gap-2">
+            {isOwner ? (
+              <Link href="/settings" className={buttonVariants({ variant: "outline", size: "sm" })}>
+                Edit profile
+              </Link>
+            ) : viewerId ? (
+              <>
+                <FollowButton targetId={user.id} initial={followState} isPrivate={user.isPrivate} />
+                <ProfileMenu targetId={user.id} handle={user.handle ?? ""} blocked={false} />
+              </>
+            ) : (
+              <Link
+                href={`/sign-in?callbackUrl=${encodeURIComponent(`/u/${user.handle}`)}`}
+                className={buttonVariants({ size: "sm" })}
+              >
+                {user.isPrivate ? "Request to follow" : "Follow"}
+              </Link>
+            )}
+          </div>
         </div>
 
         <div className="mt-3 space-y-2">
@@ -105,8 +127,25 @@ export function ProfileHeader({
 
           <p className="text-muted-foreground text-sm">
             <span className="text-foreground font-semibold">{reviewCount}</span> reviews ·{" "}
-            <span className="text-foreground font-semibold">{counts.followers}</span> followers ·{" "}
-            <span className="text-foreground font-semibold">{counts.following}</span> following
+            {countsVisible ? (
+              <>
+                <Link href={`/u/${user.handle}/followers`} className="hover:underline">
+                  <span className="text-foreground font-semibold">{counts.followers}</span>{" "}
+                  followers
+                </Link>{" "}
+                ·{" "}
+                <Link href={`/u/${user.handle}/following`} className="hover:underline">
+                  <span className="text-foreground font-semibold">{counts.following}</span>{" "}
+                  following
+                </Link>
+              </>
+            ) : (
+              <>
+                <span className="text-foreground font-semibold">{counts.followers}</span> followers
+                · <span className="text-foreground font-semibold">{counts.following}</span>{" "}
+                following
+              </>
+            )}
           </p>
         </div>
       </div>

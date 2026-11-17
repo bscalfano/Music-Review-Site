@@ -2,6 +2,7 @@ import { sql } from "drizzle-orm";
 import {
   index,
   integer,
+  primaryKey,
   jsonb,
   pgTable,
   text,
@@ -62,3 +63,14 @@ export const throttleSlots = pgTable("throttle_slots", {
   key: text().primaryKey(),
   nextAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
 });
+
+/** Fixed-window rate limit counters (see src/lib/social/ratelimit.ts). Old windows are swept. */
+export const rateLimits = pgTable(
+  "rate_limits",
+  {
+    key: text().notNull(),
+    windowStart: timestamp({ withTimezone: true }).notNull(),
+    count: integer().notNull().default(0),
+  },
+  (t) => [primaryKey({ columns: [t.key, t.windowStart] })],
+);

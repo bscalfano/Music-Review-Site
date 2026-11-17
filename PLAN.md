@@ -248,7 +248,8 @@ Signed-out users see sections 3 only, with the prompt "Sign in to see what peopl
 **Data & rendering:**
 - **Averages and histogram** come from `album_stats` (no aggregation at request time).
 - **Followed activity** is one query: `follows` (viewer, `accepted`) → `reviews` for this album (published, not deleted) ∪ `queue_items` for this album, with the block filter applied. It returns the user, rating, whether there's a body, and the date. The S24 average is computed from the same rows.
-- **Public parts** (album info, stats, popular/recent reviews) are cached with ISR and `revalidateTag('album:<id>')`.
+- **Build note (Phase 3):** the album page is rendered per request, not cached with ISR. Review lists depend on the viewer (private accounts, blocks), so a shared cache would need to be split into a cacheable shell plus per-viewer parts. Revisit if traffic ever warrants it.
+- ~~**Public parts** cached with ISR~~ (see note above).
 - **Personalized parts** (your panel, following activity, following reviews, following average) are rendered dynamically inside `<Suspense>`, so the public page stays cacheable and fast.
 - **Components** (reusable later on artist pages and lists): `<RatingHistogram>`, `<FollowingActivityStrip>`, `<ReviewCard variant="excerpt">`, `<StarRating size="xs">`.
 

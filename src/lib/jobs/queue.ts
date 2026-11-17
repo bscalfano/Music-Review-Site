@@ -5,6 +5,7 @@ import type { DbLike } from "@/db/types";
 /** Every job type and its payload. Add new types here and register a handler in handlers.ts. */
 export type JobPayloads = {
   enrich_album: { albumId: string };
+  notification_email: { notificationId: string };
 };
 export type JobType = keyof JobPayloads;
 

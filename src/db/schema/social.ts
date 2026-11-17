@@ -1,5 +1,14 @@
 import { desc, sql } from "drizzle-orm";
-import { check, index, pgTable, primaryKey, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import {
+  check,
+  index,
+  pgTable,
+  primaryKey,
+  text,
+  timestamp,
+  uniqueIndex,
+  uuid,
+} from "drizzle-orm/pg-core";
 import {
   followStatus,
   notificationTarget,
@@ -64,7 +73,17 @@ export const notifications = pgTable(
     readAt: timestamp({ withTimezone: true }),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
   },
-  (t) => [index("notifications_recipient_created_idx").on(t.recipientId, desc(t.createdAt))],
+  (t) => [
+    index("notifications_recipient_created_idx").on(t.recipientId, desc(t.createdAt)),
+    // The same actor doing the same thing to the same target notifies once (no like/unlike spam).
+    uniqueIndex("notifications_dedupe_key").on(
+      t.recipientId,
+      t.actorId,
+      t.type,
+      t.targetType,
+      t.targetId,
+    ),
+  ],
 );
 
 export const reports = pgTable(

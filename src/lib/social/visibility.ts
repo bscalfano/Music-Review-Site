@@ -115,3 +115,21 @@ export function authorFacts(user: {
     active: user.status === "active" && !user.deletedAt,
   };
 }
+
+/**
+ * SQL condition for lists of *people* (followers, search, suggestions): the author's profile
+ * header may be shown to `viewer`. Looser than `authorVisibleTo`: a private account still
+ * appears, but suspended/deleted accounts and blocks (either way) do not. Mirrors
+ * `canViewProfileHeader`; tests/unit/visibility-sql.test.ts checks the two agree.
+ */
+export function profileVisibleTo(viewer: Viewer, author: AuthorColumns): SQL {
+  if (viewer?.isAdmin) return sql`true`;
+  const active = and(eq(author.status, "active"), isNull(author.deletedAt));
+  if (!viewer) return active!;
+  const blockedEitherWay = exists(sql`(
+    SELECT 1 FROM blocks b
+    WHERE (b.blocker_id = ${viewer.id} AND b.blocked_id = ${author.id})
+       OR (b.blocker_id = ${author.id} AND b.blocked_id = ${viewer.id})
+  )`);
+  return or(eq(author.id, viewer.id), and(active, not(blockedEitherWay)))!;
+}

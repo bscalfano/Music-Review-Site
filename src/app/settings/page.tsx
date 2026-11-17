@@ -10,7 +10,10 @@ import {
   ProfileDetailsForm,
   ViewerThemePref,
 } from "@/components/settings/forms";
+import { BlockedList, NotificationPrefsForm } from "@/components/settings/social-forms";
 import { requireUser } from "@/lib/auth/session";
+import { listBlocked } from "@/lib/social/blocks";
+import { NOTIFICATION_LABELS } from "@/lib/social/notifications";
 import { albumCoverUrl } from "@/lib/music";
 import { VIEWER_DEFAULT_THEME_COOKIE } from "@/lib/profiles/prefs";
 import { avatarUrl, bannerUrl, getFavorites, getProfileByHandle } from "@/lib/profiles/queries";
@@ -126,6 +129,33 @@ export default async function SettingsPage() {
 
       <Section id="privacy" title="Privacy">
         <PrivacyForm isPrivate={user.isPrivate} />
+      </Section>
+
+      <Section
+        id="notifications"
+        title="Notifications"
+        description="Choose which activity also reaches your inbox."
+      >
+        <NotificationPrefsForm
+          options={Object.entries(NOTIFICATION_LABELS)
+            .filter(([type]) => type !== "suggestion")
+            .map(([type, label]) => ({ type, label }))}
+          enabled={user.emailNotifications}
+          emailConfigured={!!process.env.RESEND_API_KEY}
+        />
+      </Section>
+
+      <Section
+        id="blocked"
+        title="Blocked accounts"
+        description="Blocked people can't see your reviews, follow you, comment or like, and you won't see theirs."
+      >
+        <BlockedList
+          people={(await listBlocked(user.id)).map(({ image, ...p }) => ({
+            ...p,
+            avatar: avatarUrl(image),
+          }))}
+        />
       </Section>
 
       <Section id="account" title="Account">

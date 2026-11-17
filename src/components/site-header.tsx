@@ -1,3 +1,4 @@
+import { Bell } from "lucide-react";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { buttonVariants } from "@/components/ui/button";
@@ -5,6 +6,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { UserAvatar } from "@/components/user-avatar";
 import { signOutAction } from "@/app/sign-in/actions";
 import { getCurrentUser, isAdminRole } from "@/lib/auth/session";
+import { unreadCount } from "@/lib/social/notifications";
 
 /** The wordmark. Text, not an image, so a rename is one setting (src/config/site.ts). */
 export function SiteLogo() {
@@ -19,11 +21,43 @@ const menuItem = "hover:bg-muted block w-full rounded-md px-3 py-1.5 text-left t
 
 export async function SiteHeader() {
   const user = await getCurrentUser();
+  const unread = user?.handle ? await unreadCount(user.id) : 0;
   return (
     <header className="bg-background/80 sticky top-0 z-40 border-b backdrop-blur">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4">
-        <SiteLogo />
+        <div className="flex items-center gap-4">
+          <SiteLogo />
+          <nav aria-label="Main" className="text-muted-foreground flex items-center gap-3 text-sm">
+            {user?.handle && (
+              <Link href="/feed" className="hover:text-foreground">
+                Feed
+              </Link>
+            )}
+            <Link href="/discover" className="hover:text-foreground">
+              Discover
+            </Link>
+          </nav>
+        </div>
         <div className="flex items-center gap-1">
+          {user?.handle && (
+            <Link href="/write" className={buttonVariants({ size: "sm", variant: "outline" })}>
+              Write
+            </Link>
+          )}
+          {user?.handle && (
+            <Link
+              href="/notifications"
+              aria-label={unread > 0 ? `Notifications, ${unread} unread` : "Notifications"}
+              className="hover:bg-muted relative inline-flex size-8 items-center justify-center rounded-lg"
+            >
+              <Bell className="size-4" aria-hidden />
+              {unread > 0 && (
+                <span className="bg-primary text-primary-foreground absolute -top-0.5 -right-0.5 flex min-w-4 items-center justify-center rounded-full px-1 text-[10px] leading-4 font-semibold">
+                  {unread > 99 ? "99+" : unread}
+                </span>
+              )}
+            </Link>
+          )}
           <ThemeToggle />
           {user ? (
             <details className="relative">

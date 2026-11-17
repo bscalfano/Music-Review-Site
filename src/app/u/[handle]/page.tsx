@@ -85,6 +85,9 @@ export default async function ProfilePage({ params, searchParams }: Props) {
         counts={counts}
         reviewCount={grid.total}
         isOwner={isOwner}
+        viewerId={current?.id ?? null}
+        followState={relation.followState}
+        countsVisible={canSeeContent}
       />
 
       <main className="mx-auto mt-8 max-w-5xl space-y-8 px-4">
