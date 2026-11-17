@@ -206,7 +206,7 @@ test.describe("safety, legal and SEO pages", () => {
   test("admin pages and the data export don't exist for anonymous visitors", async ({
     request,
   }) => {
-    for (const path of ["/admin", "/admin/users", "/admin/activity"]) {
+    for (const path of ["/admin", "/admin/users", "/admin/activity", "/admin/import"]) {
       expect((await request.get(path)).status(), path).toBe(404);
     }
     expect((await request.get("/api/account/export")).status()).toBe(401);

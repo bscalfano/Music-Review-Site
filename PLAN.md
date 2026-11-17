@@ -391,7 +391,7 @@ Each phase ends with the app building, lint and tests passing, a commit, and a s
 2. Deploy to Vercel, run production migrations, attach the custom domain (S20).
 3. Playwright smoke tests against the deployment: sign-up → write a review → second user follows → it appears in their feed → comment → notification.
 
-**Phase 6 — Owner's back catalog:** S3 Instagram import.
+**Phase 6 — Owner's back catalog:** S3 Instagram import *(built: `/admin/import` (owner only) + `pnpm import:instagram <posts_1.json>`; staging table `import_items`, mojibake repair, album guessing, per-post confirm, publish keeps the original post date. Not tried against your real export yet.)*
 
 **Phase 7 — Discovery:** S13 platform links → S8 sort/filter → S4 genre/tag filters → S9 search → S12 artist pages.
 

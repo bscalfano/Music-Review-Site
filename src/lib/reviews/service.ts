@@ -30,6 +30,9 @@ export type SaveReviewInput = {
   clipTrackId: string | null;
   tags: string[];
   status: "draft" | "published";
+  /** Only for imports (S3): keep the original posting date and mark where it came from. */
+  publishedAt?: Date;
+  importedFrom?: string;
 };
 
 export type SavedReview = {
@@ -153,7 +156,8 @@ export async function saveReview(authorId: string, input: SaveReviewInput): Prom
           albumId: album.id,
           authorId,
           slug,
-          publishedAt: published ? now : null,
+          publishedAt: published ? (input.publishedAt ?? now) : null,
+          importedFrom: input.importedFrom ?? null,
         })
         .returning({ id: reviews.id });
       id = row.id;

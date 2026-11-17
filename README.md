@@ -118,3 +118,12 @@ Profiles are customized with fixed options only (preset + accent color); users c
 - Every mutation validates input with Zod and checks authorization on the server.
 - Feature flags live in `src/features.ts`.
 - The site name appears only in `src/config/site.ts` (a unit test enforces this).
+
+## Instagram import (owner only)
+
+1. Request your Instagram data as **JSON** and unzip it. The file you need is `posts_1.json`.
+2. Sign in as the owner and open `/admin/import`, then upload it (up to 4 MB). Larger files:
+   `pnpm import:instagram path/to/posts_1.json` (add `--match` to look up albums for every post).
+3. For each post, confirm the album ("Find matches" or "Search by hand"), tidy the text and rating,
+   then Publish. Reviews keep the original post date and are marked `importedFrom = instagram`.
+   Re-uploading the same file adds nothing twice.

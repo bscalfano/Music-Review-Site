@@ -63,3 +63,10 @@ export async function requireAdmin(): Promise<OnboardedUser> {
   if (!user || !user.handle || !isAdminRole(user.role)) notFound();
   return user as OnboardedUser;
 }
+
+/** Owner only (the Instagram import is the owner's back catalog). Anyone else gets a 404. */
+export async function requireOwner(): Promise<OnboardedUser> {
+  const user = await getCurrentUser();
+  if (!user || !user.handle || user.role !== "owner") notFound();
+  return user as OnboardedUser;
+}
