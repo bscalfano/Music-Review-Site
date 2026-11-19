@@ -12,3 +12,6 @@ export function parseAlbumSegment(segment: string): { slug: string; mbid: string
     return null;
   return { slug: decoded.slice(0, -37), mbid };
 }
+
+/** /artists/<slug>: artist slugs are unique, so no MusicBrainz ID is needed in the URL. */
+export const artistPath = (artist: { slug: string }) => `/artists/${artist.slug}`;

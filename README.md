@@ -127,3 +127,15 @@ Profiles are customized with fixed options only (preset + accent color); users c
 3. For each post, confirm the album ("Find matches" or "Search by hand"), tidy the text and rating,
    then Publish. Reviews keep the original post date and are marked `importedFrom = instagram`.
    Re-uploading the same file adds nothing twice.
+
+## Discovery
+
+- **Search** (`/search`, also the header box): albums, artists, people and review text, with the same
+  privacy rules as everywhere else (blocked, suspended and private content never appears).
+- **Sort and filter** on profile grids and Discover: by date, rating or release year; filter by
+  release years, genre, tag and star range. It all lives in the URL, so views are shareable.
+  Genres and tags on album and review pages link straight into it.
+- **Artist pages** (`/artists/<slug>`): discography from MusicBrainz with community averages.
+- **Listen on** links on album pages: Deezer and Apple Music are found automatically. Set
+  `ODESLI_API_KEY` to add Spotify, YouTube Music and Tidal (Odesli rejected keyless requests when
+  last tried). Admins get a "Fix links" button on each album.

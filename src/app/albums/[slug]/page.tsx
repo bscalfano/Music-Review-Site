@@ -3,13 +3,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import { FollowingActivityStrip, FollowingAverage } from "@/components/album/following-activity";
+import { FixLinksButton } from "@/components/album/fix-links-button";
 import { QuickLog } from "@/components/album/quick-log";
 import { RatingHistogram } from "@/components/album/rating-histogram";
 import { ClipButton } from "@/components/clip-button";
 import { ReviewCard } from "@/components/review-card";
-import { albumPath, parseAlbumSegment } from "@/lib/albums/paths";
+import { albumPath, artistPath, parseAlbumSegment } from "@/lib/albums/paths";
 import { getCurrentUser, toViewer } from "@/lib/auth/session";
 import { kickJobs } from "@/lib/jobs";
+import { queueLinkResolution } from "@/lib/albums/links";
+import { platformUrls } from "@/lib/music";
+import { isAdminRole } from "@/lib/auth/session";
 import { getFollowingActivity, type FollowingActivity } from "@/lib/social/album-activity";
 import { albumCoverUrl } from "@/lib/music";
 import {
@@ -54,6 +58,11 @@ export default async function AlbumPage({ params }: Props) {
   // Old or hand-typed slugs still work; send them to the canonical URL.
   if (parsed.slug !== album.slug) permanentRedirect(albumPath(album));
   if (!album.enrichedAt) kickJobs();
+  else if (!album.linksResolvedAt) {
+    // Looked up once per album, in the background (S13).
+    await queueLinkResolution(album.id);
+    kickJobs();
+  }
 
   const current = await getCurrentUser();
   const viewer = toViewer(current);
@@ -91,6 +100,8 @@ export default async function AlbumPage({ params }: Props) {
   });
 
   const year = album.releaseDate?.slice(0, 4);
+  const listenLinks = platformUrls(album);
+  const canFixLinks = !!current && isAdminRole(current.role);
   const reviewsHref = `${albumPath(album)}/reviews`;
 
   return (
@@ -220,6 +231,39 @@ export default async function AlbumPage({ params }: Props) {
             </p>
           )}
 
+          {(listenLinks.length > 0 || canFixLinks) && (
+            <section aria-labelledby="listen-heading">
+              <h2
+                id="listen-heading"
+                className="border-b pb-2 text-sm font-semibold tracking-wide uppercase"
+              >
+                Listen on
+              </h2>
+              <ul className="flex flex-wrap items-center gap-2 py-3">
+                {listenLinks.map((l) => (
+                  <li key={l.key}>
+                    <a
+                      href={l.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:bg-muted inline-block rounded-full border px-3 py-1 text-sm"
+                    >
+                      {l.label}
+                    </a>
+                  </li>
+                ))}
+                {listenLinks.length === 0 && (
+                  <li className="text-muted-foreground text-sm">No links found yet.</li>
+                )}
+                {canFixLinks && (
+                  <li>
+                    <FixLinksButton albumId={album.id} />
+                  </li>
+                )}
+              </ul>
+            </section>
+          )}
+
           <section aria-labelledby="tracks-heading">
             <h2
               id="tracks-heading"
@@ -265,7 +309,11 @@ export default async function AlbumPage({ params }: Props) {
             </h2>
             <dl className="grid grid-cols-[8rem_1fr] gap-y-1.5 py-3 text-sm">
               <dt className="text-muted-foreground">Artist</dt>
-              <dd>{album.artist.name}</dd>
+              <dd>
+                <Link href={artistPath(album.artist)} className="underline underline-offset-2">
+                  {album.artist.name}
+                </Link>
+              </dd>
               {album.primaryType && (
                 <>
                   <dt className="text-muted-foreground">Type</dt>
@@ -345,14 +393,21 @@ function AlbumTitle({
     <div className="space-y-2">
       <h1 className="text-2xl leading-tight font-bold sm:text-3xl">{album.title}</h1>
       <p className="text-muted-foreground">
-        {album.artist.name}
+        <Link href={artistPath(album.artist)} className="hover:underline">
+          {album.artist.name}
+        </Link>
         {year ? ` · ${year}` : ""}
       </p>
       {album.genres.length > 0 && (
         <ul className="flex flex-wrap gap-1.5" aria-label="Genres">
           {album.genres.slice(0, 8).map((g) => (
-            <li key={g} className="bg-muted rounded-full px-2.5 py-0.5 text-xs">
-              {g}
+            <li key={g}>
+              <Link
+                href={`/discover?genre=${encodeURIComponent(g)}`}
+                className="bg-muted hover:bg-muted/70 inline-block rounded-full px-2.5 py-0.5 text-xs"
+              >
+                {g}
+              </Link>
             </li>
           ))}
         </ul>

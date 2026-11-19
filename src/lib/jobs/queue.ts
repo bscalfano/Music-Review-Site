@@ -6,6 +6,7 @@ import type { DbLike } from "@/db/types";
 export type JobPayloads = {
   enrich_album: { albumId: string };
   notification_email: { notificationId: string };
+  resolve_links: { albumId: string };
 };
 export type JobType = keyof JobPayloads;
 

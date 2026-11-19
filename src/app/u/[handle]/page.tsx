@@ -3,10 +3,12 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
+import { FilterBar } from "@/components/filter-bar";
 import { CoverGrid } from "@/components/profile/cover-grid";
 import { FourFavorites } from "@/components/profile/four-favorites";
 import { ProfileHeader } from "@/components/profile/profile-header";
 import { getCurrentUser, toViewer } from "@/lib/auth/session";
+import { filtersToQuery, hasActiveFilters, parseFilters } from "@/lib/discovery/filters";
 import { VIEWER_DEFAULT_THEME_COOKIE } from "@/lib/profiles/prefs";
 import {
   getFavorites,
@@ -24,7 +26,7 @@ import {
 
 type Props = {
   params: Promise<{ handle: string }>;
-  searchParams: Promise<{ cursor?: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -47,7 +49,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProfilePage({ params, searchParams }: Props) {
   const { handle } = await params;
-  const { cursor } = await searchParams;
+  const sp = await searchParams;
+  const cursor = typeof sp.cursor === "string" ? sp.cursor : undefined;
+  const filters = parseFilters(sp);
+  const page = Number.parseInt(typeof sp.page === "string" ? sp.page : "1", 10) || 1;
   if (handle !== handle.toLowerCase()) permanentRedirect(`/u/${handle.toLowerCase()}`);
 
   const [data, current] = await Promise.all([getProfileByHandle(handle), getCurrentUser()]);
@@ -61,6 +66,7 @@ export default async function ProfilePage({ params, searchParams }: Props) {
   if (!canViewProfileHeader(viewer, facts, relation)) notFound();
   const canSeeContent = canViewContent(viewer, facts, relation);
   const isOwner = current?.id === user.id;
+  const active = hasActiveFilters(filters);
 
   const forceDefault = (await cookies()).get(VIEWER_DEFAULT_THEME_COOKIE)?.value === "1";
   const theme = resolveProfileTheme({
@@ -73,8 +79,8 @@ export default async function ProfilePage({ params, searchParams }: Props) {
     getFollowCounts(user.id),
     canSeeContent ? getFavorites(user.id) : Promise.resolve([]),
     canSeeContent
-      ? getProfileGrid({ userId: user.id, viewer, cursor })
-      : Promise.resolve({ items: [], nextCursor: null, total: 0 }),
+      ? getProfileGrid({ userId: user.id, viewer, cursor, filters, page })
+      : Promise.resolve({ items: [], nextCursor: null, nextPage: null, total: 0, overall: 0 }),
   ]);
 
   return (
@@ -87,7 +93,7 @@ export default async function ProfilePage({ params, searchParams }: Props) {
         user={user}
         profile={profile}
         counts={counts}
-        reviewCount={grid.total}
+        reviewCount={grid.overall}
         isOwner={isOwner}
         viewerId={current?.id ?? null}
         followState={relation.followState}
@@ -106,9 +112,16 @@ export default async function ProfilePage({ params, searchParams }: Props) {
                   aria-current="page"
                   className="-mb-px border-b-2 border-(--profile-accent) pb-2 text-sm font-semibold"
                 >
-                  Reviews <span className="text-muted-foreground font-normal">{grid.total}</span>
+                  Reviews <span className="text-muted-foreground font-normal">{grid.overall}</span>
                 </span>
               </nav>
+
+              {grid.overall > 1 && <FilterBar basePath={`/u/${user.handle}`} filters={filters} />}
+              {active && grid.overall > 0 && (
+                <p role="status" className="text-muted-foreground text-sm">
+                  {grid.total} of {grid.overall} {grid.overall === 1 ? "review" : "reviews"}
+                </p>
+              )}
 
               {grid.items.length > 0 ? (
                 <CoverGrid
@@ -116,6 +129,10 @@ export default async function ProfilePage({ params, searchParams }: Props) {
                   items={grid.items}
                   showRatings={profile?.gridShowRatings ?? true}
                 />
+              ) : active && grid.overall > 0 ? (
+                <p className="text-muted-foreground py-12 text-center text-sm">
+                  Nothing matches those filters.
+                </p>
               ) : (
                 <p className="text-muted-foreground py-12 text-center text-sm">
                   {isOwner
@@ -124,13 +141,18 @@ export default async function ProfilePage({ params, searchParams }: Props) {
                 </p>
               )}
 
-              {grid.nextCursor && (
+              {(grid.nextCursor || grid.nextPage) && (
                 <div className="flex justify-center pt-2">
                   <Link
-                    href={`/u/${user.handle}?cursor=${encodeURIComponent(grid.nextCursor)}`}
+                    href={`/u/${user.handle}?${filtersToQuery(
+                      filters,
+                      grid.nextCursor
+                        ? { cursor: grid.nextCursor }
+                        : { page: String(grid.nextPage) },
+                    )}`}
                     className="text-sm underline underline-offset-4"
                   >
-                    Older reviews →
+                    {grid.nextCursor ? "Older reviews →" : "More →"}
                   </Link>
                 </div>
               )}

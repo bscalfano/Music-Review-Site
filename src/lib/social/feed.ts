@@ -1,6 +1,7 @@
 import { and, desc, eq, isNull, sql, type SQL } from "drizzle-orm";
 import { getDb, schema } from "@/db";
 import { usablePreviewUrl } from "@/lib/albums/previews";
+import { filterConditions, sortOrder, type Filters } from "@/lib/discovery/filters";
 import { decodeCursor, encodeCursor } from "@/lib/profiles/queries";
 import { countComments } from "./comments";
 import { authorVisibleTo, profileVisibleTo, type Viewer } from "./visibility";
@@ -35,9 +36,15 @@ async function queryItems(opts: {
   viewer: Viewer;
   cursor?: string;
   limit?: number;
-}): Promise<{ items: FeedItem[]; nextCursor: string | null }> {
+  /** S8: non-default sorts page by `page` (offset); newest-first pages by `cursor`. */
+  filters?: Filters;
+  page?: number;
+}): Promise<{ items: FeedItem[]; nextCursor: string | null; nextPage: number | null }> {
   const limit = opts.limit ?? PAGE_SIZE;
-  const cursor = decodeCursor(opts.cursor);
+  const filters = opts.filters ?? { sort: "recent" as const };
+  const byCursor = filters.sort === "recent";
+  const page = Math.max(1, Math.floor(opts.page ?? 1));
+  const cursor = byCursor ? decodeCursor(opts.cursor) : null;
   const rows = await getDb()
     .select({
       id: reviews.id,
@@ -71,17 +78,19 @@ async function queryItems(opts: {
         isNull(reviews.deletedAt),
         authorVisibleTo(opts.viewer, users),
         opts.where,
+        ...filterConditions(filters),
         cursor
           ? sql`(${reviews.publishedAt}, ${reviews.id}) < (${cursor.at}::timestamptz, ${cursor.id}::uuid)`
           : undefined,
       ),
     )
-    .orderBy(desc(reviews.publishedAt), desc(reviews.id))
-    .limit(limit + 1);
+    .orderBy(...sortOrder(filters.sort))
+    .limit(limit + 1)
+    .offset(byCursor ? 0 : (page - 1) * limit);
 
-  const page = rows.slice(0, limit);
-  const commentCounts = await countComments(page.map((r) => r.id));
-  const items = page.map((r): FeedItem => ({
+  const shown = rows.slice(0, limit);
+  const commentCounts = await countComments(shown.map((r) => r.id));
+  const items = shown.map((r): FeedItem => ({
     id: r.id,
     slug: r.slug,
     title: r.title,
@@ -104,15 +113,17 @@ async function queryItems(opts: {
         }
       : null,
   }));
+  const more = rows.length > limit;
   return {
     items,
     nextCursor:
-      rows.length > limit
+      more && byCursor
         ? encodeCursor({
-            id: page[page.length - 1].id,
-            publishedAt: page[page.length - 1].publishedAt,
+            id: shown[shown.length - 1].id,
+            publishedAt: shown[shown.length - 1].publishedAt,
           })
         : null,
+    nextPage: more && !byCursor ? page + 1 : null,
   };
 }
 
@@ -133,12 +144,40 @@ export function getFollowingFeed(viewer: NonNullable<Viewer>, cursor?: string) {
 }
 
 /** Discover: recent written reviews from everyone. Private accounts never appear here. */
-export function getDiscoverFeed(viewer: Viewer, cursor?: string) {
+export function getDiscoverFeed(
+  viewer: Viewer,
+  cursor?: string,
+  opts: { filters?: Filters; page?: number } = {},
+) {
   return queryItems({
     viewer,
     cursor,
+    ...opts,
     where: and(eq(users.isPrivate, false), sql`${reviews.body} <> ''`),
   });
+}
+
+/**
+ * S9: reviews whose title or text match a search. Uses Postgres full-text search with
+ * websearch syntax (quotes, -exclusions) and the usual visibility rule.
+ */
+export async function getSearchReviews(viewer: Viewer, query: string, limit = 8) {
+  const { items } = await queryItems({
+    viewer,
+    limit,
+    where: sql`${reviews.searchVector} @@ websearch_to_tsquery('english', ${query})`,
+  });
+  return items;
+}
+
+/** S12: recent written reviews of any album by one artist. */
+export async function getArtistReviews(viewer: Viewer, artistId: string, limit = 8) {
+  const { items } = await queryItems({
+    viewer,
+    limit,
+    where: and(eq(artists.id, artistId), sql`${reviews.body} <> ''`),
+  });
+  return items;
 }
 
 export async function countFollowing(userId: string): Promise<number> {

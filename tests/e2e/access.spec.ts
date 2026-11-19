@@ -264,3 +264,33 @@ test.describe("safety, legal and SEO pages", () => {
     );
   });
 });
+
+test.describe("discovery pages", () => {
+  test("search works signed out and isn't indexed", async ({ request }) => {
+    const empty = await request.get("/search");
+    expect(empty.status()).toBe(200);
+    const res = await request.get("/search?q=radiohead");
+    expect(res.status()).toBe(200);
+    const html = await res.text();
+    expect(html).toContain('role="search"');
+    expect(html).toMatch(/<meta name="robots" content="noindex/);
+  });
+
+  test("search shrugs off hostile input", async ({ request }) => {
+    for (const q of ["'; DROP TABLE users;--", "%%%", "a & b | !c :*", "x".repeat(400)]) {
+      expect((await request.get(`/search?q=${encodeURIComponent(q)}`)).status()).toBe(200);
+    }
+  });
+
+  test("an unknown artist is a 404", async ({ request }) => {
+    expect((await request.get("/artists/no-such-artist-here")).status()).toBe(404);
+  });
+
+  test("discover accepts sort and filters, and ignores junk", async ({ request }) => {
+    const ok = await request.get("/discover?sort=rating&genre=jazz&from=1990&to=1999&min=3.5");
+    expect(ok.status()).toBe(200);
+    expect(await ok.text()).toContain("Sort and filter");
+    const junk = await request.get("/discover?sort=%27%3B--&from=abc&min=99&page=-5&cursor=zzz");
+    expect(junk.status()).toBe(200);
+  });
+});

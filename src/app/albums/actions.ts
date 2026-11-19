@@ -2,7 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { requireUser } from "@/lib/auth/session";
+import { resetAlbumLinks } from "@/lib/albums/links";
+import { requireAdmin, requireUser } from "@/lib/auth/session";
+import { kickJobs } from "@/lib/jobs";
 import { ratingSchema } from "@/lib/reviews/schema";
 import { checkRateLimit, rateLimitMessage } from "@/lib/social/ratelimit";
 import { removeLog, ReviewError, setQuickRating } from "@/lib/reviews/service";
@@ -46,4 +48,14 @@ export async function removeLogAction(albumId: string): Promise<QuickLogState> {
   return removed
     ? { ok: true }
     : { ok: false, message: "Only rating-only logs can be removed here." };
+}
+
+/** Admin "Fix links" (S13): forget the stored streaming links and look them up again. */
+export async function fixLinksAction(albumId: string): Promise<{ ok: boolean }> {
+  await requireAdmin();
+  if (!albumIdSchema.safeParse(albumId).success) return { ok: false };
+  await resetAlbumLinks(albumId);
+  kickJobs();
+  revalidatePath("/albums/[slug]", "page");
+  return { ok: true };
 }

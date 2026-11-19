@@ -1,6 +1,7 @@
-import { and, asc, count, desc, eq, isNull, sql } from "drizzle-orm";
+import { and, asc, count, eq, isNull, sql } from "drizzle-orm";
 import { cache } from "react";
 import { getDb, schema } from "@/db";
+import { filterConditions, sortOrder, type Filters } from "@/lib/discovery/filters";
 import { authorVisibleTo, type Viewer } from "@/lib/social/visibility";
 import { storagePublicUrl } from "@/lib/storage/r2";
 import { bannerSmallKey } from "@/lib/images/process";
@@ -107,9 +108,23 @@ export async function getProfileGrid(opts: {
   viewer: Viewer;
   cursor?: string;
   limit?: number;
-}): Promise<{ items: GridItem[]; nextCursor: string | null; total: number }> {
+  /** S8: sort and filters. Newest-first pages with `cursor`; other sorts page with `page`. */
+  filters?: Filters;
+  page?: number;
+}): Promise<{
+  items: GridItem[];
+  nextCursor: string | null;
+  nextPage: number | null;
+  /** Matches for the current filters. */
+  total: number;
+  /** All of this person's visible reviews, ignoring filters. */
+  overall: number;
+}> {
   const { userId, viewer, limit = GRID_PAGE_SIZE } = opts;
-  const cursor = decodeCursor(opts.cursor);
+  const filters = opts.filters ?? { sort: "recent" as const };
+  const byCursor = filters.sort === "recent";
+  const page = Math.max(1, Math.floor(opts.page ?? 1));
+  const cursor = byCursor ? decodeCursor(opts.cursor) : null;
   const db = getDb();
   const visible = and(
     eq(reviews.authorId, userId),
@@ -117,8 +132,9 @@ export async function getProfileGrid(opts: {
     isNull(reviews.deletedAt),
     authorVisibleTo(viewer, users),
   );
+  const matching = and(visible, ...filterConditions(filters));
 
-  const [rows, [totalRow]] = await Promise.all([
+  const [rows, [totalRow], [overallRow]] = await Promise.all([
     db
       .select({
         id: reviews.id,
@@ -135,14 +151,21 @@ export async function getProfileGrid(opts: {
       .innerJoin(artists, eq(albums.artistId, artists.id))
       .where(
         and(
-          visible,
+          matching,
           cursor
             ? sql`(${reviews.publishedAt}, ${reviews.id}) < (${cursor.at}::timestamptz, ${cursor.id}::uuid)`
             : undefined,
         ),
       )
-      .orderBy(desc(reviews.publishedAt), desc(reviews.id))
-      .limit(limit + 1),
+      .orderBy(...sortOrder(filters.sort))
+      .limit(limit + 1)
+      .offset(byCursor ? 0 : (page - 1) * limit),
+    db
+      .select({ n: count() })
+      .from(reviews)
+      .innerJoin(users, eq(reviews.authorId, users.id))
+      .innerJoin(albums, eq(reviews.albumId, albums.id))
+      .where(matching),
     db
       .select({ n: count() })
       .from(reviews)
@@ -151,10 +174,13 @@ export async function getProfileGrid(opts: {
   ]);
 
   const items = rows.slice(0, limit);
+  const more = rows.length > limit;
   return {
     items,
-    nextCursor: rows.length > limit ? encodeCursor(items[items.length - 1]) : null,
+    nextCursor: more && byCursor ? encodeCursor(items[items.length - 1]) : null,
+    nextPage: more && !byCursor ? page + 1 : null,
     total: totalRow.n,
+    overall: overallRow.n,
   };
 }
 

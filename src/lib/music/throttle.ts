@@ -42,3 +42,6 @@ export const musicBrainzThrottle = () => createDbThrottle("musicbrainz", { inter
 /** iTunes Search allows roughly 20 requests/minute per IP. */
 export const itunesThrottle = () =>
   createDbThrottle("itunes", { intervalMs: 3200, maxWaitMs: 10_000 });
+/** Odesli allows roughly 10 requests/minute without an API key. */
+export const odesliThrottle = () =>
+  createDbThrottle("odesli", { intervalMs: 7000, maxWaitMs: 12_000 });

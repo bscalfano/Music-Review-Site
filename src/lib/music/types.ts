@@ -47,6 +47,8 @@ export interface AlbumCatalogProvider {
   searchAlbums(query: string, opts?: { limit?: number }): Promise<AlbumSearchResult[]>;
   getAlbum(mbid: string): Promise<AlbumDetails | null>;
   getTracks(mbid: string): Promise<TrackInfo[]>;
+  /** S12: an artist's studio albums and EPs (no live/compilation/remix releases), newest first. */
+  getDiscography(artistMbid: string): Promise<AlbumSearchResult[]>;
 }
 
 export interface PreviewProvider {
@@ -58,7 +60,7 @@ export interface CoverProvider {
   fetchFrontCover(mbid: string, opts?: { size?: 250 | 500 | 1200 }): Promise<CoverImage | null>;
 }
 
-/** Implemented in Phase 7 (S13, Odesli/song.link). Declared now so callers can depend on it. */
+/** S13: ids on other streaming services, from Odesli/song.link. */
 export type PlatformLinks = {
   spotifyId?: string;
   appleMusicId?: string;

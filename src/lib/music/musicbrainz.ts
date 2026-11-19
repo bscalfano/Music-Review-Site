@@ -129,6 +129,15 @@ export function parseSearch(json: unknown): AlbumSearchResult[] {
   return parsed.data["release-groups"].map(toSearchResult);
 }
 
+/** Browse results have the same shape as search results; keep studio albums and EPs, newest first. */
+export function parseDiscography(json: unknown): AlbumSearchResult[] {
+  return parseSearch(json)
+    .filter(
+      (a) => (a.primaryType === "Album" || a.primaryType === "EP") && a.secondaryTypes.length === 0,
+    )
+    .sort((a, b) => (b.releaseDate ?? "").localeCompare(a.releaseDate ?? ""));
+}
+
 export function parseReleaseGroup(json: unknown): { details: AlbumDetails; raw: RawReleaseGroup } {
   const parsed = releaseGroupSchema.safeParse(json);
   if (!parsed.success) throw new MusicBrainzParseError("release-group lookup", parsed.error);
@@ -231,6 +240,18 @@ export function createMusicBrainzProvider(deps: MusicBrainzDeps): AlbumCatalogPr
     async getAlbum(mbid) {
       const json = await fetchReleaseGroupJson(mbid);
       return json ? parseReleaseGroup(json).details : null;
+    },
+
+    async getDiscography(artistMbid) {
+      const json = await cached(cache, `mb:discography:${artistMbid}`, DAY_MS, () =>
+        get("release-group", {
+          artist: artistMbid,
+          type: "album|ep",
+          inc: "artist-credits",
+          limit: "100",
+        }),
+      );
+      return parseDiscography(json);
     },
 
     async getTracks(mbid) {

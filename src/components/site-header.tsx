@@ -1,7 +1,8 @@
-import { Bell } from "lucide-react";
+import { Bell, Search } from "lucide-react";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { buttonVariants } from "@/components/ui/button";
+import { SearchBox } from "@/components/search-box";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { UserAvatar } from "@/components/user-avatar";
 import { signOutAction } from "@/app/sign-in/actions";
@@ -38,7 +39,17 @@ export async function SiteHeader() {
             </Link>
           </nav>
         </div>
+        <div className="hidden w-56 sm:block lg:w-72">
+          <SearchBox compact />
+        </div>
         <div className="flex items-center gap-1">
+          <Link
+            href="/search"
+            aria-label="Search"
+            className="hover:bg-muted inline-flex size-8 items-center justify-center rounded-lg sm:hidden"
+          >
+            <Search className="size-4" aria-hidden />
+          </Link>
           {user?.handle && (
             <Link href="/write" className={buttonVariants({ size: "sm", variant: "outline" })}>
               Write

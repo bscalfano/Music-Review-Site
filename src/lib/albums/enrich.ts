@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm";
 import { getDb, schema } from "@/db";
 import { coverStorageKey, getMusic, type MusicServices } from "@/lib/music";
 import { getStorage, type Storage } from "@/lib/storage/r2";
+import { queueLinkResolution } from "./links";
 
 const { albums, tracks } = schema;
 
@@ -53,4 +54,6 @@ export async function enrichAlbum(
       })
       .where(eq(albums.id, albumId));
   });
+  // Streaming-service links are a separate job: Odesli is slow and tightly rate limited.
+  await queueLinkResolution(albumId);
 }

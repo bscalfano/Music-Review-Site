@@ -22,6 +22,12 @@ export type AlbumCore = {
   primaryType: string | null;
   genres: string[];
   enrichedAt: Date | null;
+  linksResolvedAt: Date | null;
+  spotifyId: string | null;
+  appleMusicId: string | null;
+  deezerId: string | null;
+  youtubeMusicId: string | null;
+  tidalId: string | null;
   artist: { id: string; name: string; slug: string };
 };
 
@@ -48,6 +54,12 @@ export const getAlbumByMbid = cache(async (mbid: string): Promise<AlbumCore | nu
       primaryType: albums.primaryType,
       genres: albums.genres,
       enrichedAt: albums.enrichedAt,
+      linksResolvedAt: albums.linksResolvedAt,
+      spotifyId: albums.spotifyId,
+      appleMusicId: albums.appleMusicId,
+      deezerId: albums.deezerId,
+      youtubeMusicId: albums.youtubeMusicId,
+      tidalId: albums.tidalId,
       artist: { id: artists.id, name: artists.name, slug: artists.slug },
     })
     .from(albums)

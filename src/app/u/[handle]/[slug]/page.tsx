@@ -12,7 +12,7 @@ import { ReviewBody } from "@/components/review-body";
 import { StarRating } from "@/components/star-rating";
 import { buttonVariants } from "@/components/ui/button";
 import { UserAvatar } from "@/components/user-avatar";
-import { albumPath } from "@/lib/albums/paths";
+import { albumPath, artistPath } from "@/lib/albums/paths";
 import { getCurrentUser, toViewer } from "@/lib/auth/session";
 import { REVIEW_IMAGE_PREFIX } from "@/lib/images/process";
 import { markdownExcerpt } from "@/lib/markdown/directives";
@@ -117,7 +117,10 @@ export default async function ReviewPage({ params }: Props) {
                 >
                   {album.title}
                 </Link>{" "}
-                · {album.artist.name}
+                ·{" "}
+                <Link href={artistPath(album.artist)} className="hover:underline">
+                  {album.artist.name}
+                </Link>
                 {album.releaseDate ? ` · ${album.releaseDate.slice(0, 4)}` : ""}
               </p>
               {review.title && (
@@ -186,8 +189,13 @@ export default async function ReviewPage({ params }: Props) {
           {tags.length > 0 && (
             <ul className="mt-6 flex flex-wrap gap-2" aria-label="Tags">
               {tags.map((tag) => (
-                <li key={tag} className="bg-muted rounded-full px-3 py-1 text-sm">
-                  {tag}
+                <li key={tag}>
+                  <Link
+                    href={`/discover?tag=${encodeURIComponent(tag)}`}
+                    className="bg-muted hover:bg-muted/70 inline-block rounded-full px-3 py-1 text-sm"
+                  >
+                    {tag}
+                  </Link>
                 </li>
               ))}
             </ul>
