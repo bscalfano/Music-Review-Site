@@ -106,7 +106,7 @@ export default async function ProfilePage({ params, searchParams }: Props) {
   ]);
   const tabData = canSeeContent
     ? {
-        lists: tab === "lists" ? await listsForUser(user.id, isOwner) : [],
+        lists: tab === "shelves" ? await listsForUser(user.id, isOwner) : [],
         queue: tab === "queue" ? await listQueue(user.id) : [],
         suggestions: tab === "queue" && isOwner ? await listSuggestions(user.id) : [],
         stats: tab === "stats" ? await getUserStats(user.id, viewer) : null,
@@ -140,7 +140,7 @@ export default async function ProfilePage({ params, searchParams }: Props) {
               <ProfileTabs
                 handle={user.handle!}
                 active={tab}
-                counts={{ reviews: grid.overall, lists: listCount, queue: queueCount }}
+                counts={{ reviews: grid.overall, shelves: listCount, queue: queueCount }}
               />
 
               {tab === "reviews" && (
@@ -189,7 +189,7 @@ export default async function ProfilePage({ params, searchParams }: Props) {
                   )}
                 </>
               )}
-              {tab === "lists" && tabData && (
+              {tab === "shelves" && tabData && (
                 <ListsTab handle={user.handle!} lists={tabData.lists} isOwner={isOwner} />
               )}
               {tab === "queue" && tabData && (

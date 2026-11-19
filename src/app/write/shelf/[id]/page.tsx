@@ -6,13 +6,13 @@ import { requireUser } from "@/lib/auth/session";
 import { albumCoverUrl } from "@/lib/music";
 import { getListForEdit } from "@/lib/lists/service";
 
-export const metadata: Metadata = { title: "Edit list", robots: { index: false } };
+export const metadata: Metadata = { title: "Edit shelf", robots: { index: false } };
 
 type Props = { params: Promise<{ id: string }> };
 
 export default async function EditListPage({ params }: Props) {
   const { id } = await params;
-  const user = await requireUser({ returnTo: `/write/list/${id}` });
+  const user = await requireUser({ returnTo: `/write/shelf/${id}` });
   if (!z.uuid().safeParse(id).success) notFound();
   // Only the author can open the editor; anyone else gets a 404.
   const found = await getListForEdit(user.id, id);

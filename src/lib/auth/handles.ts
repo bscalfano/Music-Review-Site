@@ -19,6 +19,8 @@ export const RESERVED_HANDLES = new Set([
   "artists",
   "artist",
   "lists",
+  "shelves",
+  "shelf",
   "list",
   "reviews",
   "review",

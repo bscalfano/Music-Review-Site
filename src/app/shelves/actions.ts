@@ -16,9 +16,9 @@ export async function saveListAction(
   listId: string | null,
   input: unknown,
 ): Promise<SaveListResult> {
-  const user = await requireUser({ returnTo: "/write/list" });
+  const user = await requireUser({ returnTo: "/write/shelf" });
   if (listId !== null && !z.uuid().safeParse(listId).success) {
-    return { ok: false, message: "Invalid list." };
+    return { ok: false, message: "Invalid shelf." };
   }
   const parsed = listInputSchema.safeParse(input);
   if (!parsed.success) {
@@ -31,12 +31,12 @@ export async function saveListAction(
     kickJobs(); // new albums get their tracklists and covers in the background
     const saved = await saveList(user.id, listId, parsed.data);
     revalidatePath(`/u/${user.handle}`);
-    revalidatePath(`/lists/${user.handle}/${saved.slug}`);
+    revalidatePath(`/shelves/${user.handle}/${saved.slug}`);
     return { ok: true, ...saved, handle: user.handle };
   } catch (err) {
     if (err instanceof ListError) return { ok: false, message: err.message };
     console.error("[lists] save failed", err);
-    return { ok: false, message: "Something went wrong saving your list. Please try again." };
+    return { ok: false, message: "Something went wrong saving your shelf. Please try again." };
   }
 }
 

@@ -4,7 +4,7 @@ import { ArrowDown, ArrowUp, X } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import { deleteListAction, saveListAction } from "@/app/lists/actions";
+import { deleteListAction, saveListAction } from "@/app/shelves/actions";
 import { AlbumPicker } from "@/components/album-picker";
 import { Button } from "@/components/ui/button";
 import { Input, Label, Textarea } from "@/components/ui/field";
@@ -78,7 +78,9 @@ export function ListEditor({
         return;
       }
       router.push(
-        status === "published" ? `/lists/${res.handle}/${res.slug}` : `/u/${res.handle}?tab=lists`,
+        status === "published"
+          ? `/shelves/${res.handle}/${res.slug}`
+          : `/u/${res.handle}?tab=shelves`,
       );
       router.refresh();
     });
@@ -86,7 +88,7 @@ export function ListEditor({
 
   return (
     <main className="mx-auto max-w-2xl space-y-6 px-4 py-8">
-      <h1 className="text-2xl font-bold">{listId ? "Edit list" : "New list"}</h1>
+      <h1 className="text-2xl font-bold">{listId ? "Edit shelf" : "New shelf"}</h1>
 
       <div className="space-y-1.5">
         <Label htmlFor="list-title">Title</Label>
@@ -227,7 +229,7 @@ export function ListEditor({
           </div>
         ) : (
           <p className="text-muted-foreground text-sm">
-            Lists can have up to {MAX_LIST_ITEMS} albums.
+            Shelves can hold up to {MAX_LIST_ITEMS} albums.
           </p>
         )}
       </section>
@@ -250,7 +252,7 @@ export function ListEditor({
             variant="ghost"
             disabled={pending}
             onClick={() => {
-              if (!window.confirm("Delete this list? This can't be undone.")) return;
+              if (!window.confirm("Delete this shelf? This can't be undone.")) return;
               start(async () => {
                 await deleteListAction(listId);
                 router.push("/");

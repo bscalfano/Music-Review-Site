@@ -312,7 +312,7 @@ describe.skipIf(!process.env.DATABASE_URL)("lists, queue and stats", () => {
       const saved = await saveList(owner, null, input({ title: "Taken down" }));
       await db.update(schema.lists).set({ status: "hidden" }).where(eq(schema.lists.id, saved.id));
       await expect(saveList(owner, saved.id, input({ title: "Taken down" }))).rejects.toThrow(
-        /took this list down/,
+        /took this shelf down/,
       );
       expect(await getList("x_owner", saved.slug, null)).toBeNull();
     });

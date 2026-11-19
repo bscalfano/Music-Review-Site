@@ -1,6 +1,7 @@
 import { Bell, Search } from "lucide-react";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
+import { AccountMenu } from "@/components/account-menu";
 import { buttonVariants } from "@/components/ui/button";
 import { SearchBox } from "@/components/search-box";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -71,14 +72,8 @@ export async function SiteHeader() {
           )}
           <ThemeToggle />
           {user ? (
-            <details className="relative">
-              <summary
-                className="focus-visible:ring-ring/50 flex cursor-pointer list-none items-center rounded-full outline-none focus-visible:ring-3 [&::-webkit-details-marker]:hidden"
-                aria-label="Account menu"
-              >
-                <UserAvatar user={user} size={32} />
-              </summary>
-              <div className="bg-popover absolute right-0 z-50 mt-2 w-48 rounded-lg border p-1 shadow-md">
+            <AccountMenu avatar={<UserAvatar user={user} size={32} />}>
+              <>
                 <p className="text-muted-foreground truncate px-3 py-1.5 text-xs">
                   {user.handle ? `@${user.handle}` : user.email}
                 </p>
@@ -106,8 +101,8 @@ export async function SiteHeader() {
                     Sign out
                   </button>
                 </form>
-              </div>
-            </details>
+              </>
+            </AccountMenu>
           ) : (
             <Link href="/sign-in" className={buttonVariants({ size: "sm" })}>
               Sign in

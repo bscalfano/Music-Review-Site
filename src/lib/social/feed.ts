@@ -4,6 +4,7 @@ import { usablePreviewUrl } from "@/lib/albums/previews";
 import { filterConditions, sortOrder, type Filters } from "@/lib/discovery/filters";
 import { decodeCursor, encodeCursor } from "@/lib/profiles/queries";
 import { countComments } from "./comments";
+import { getReviewHearts } from "./reactions";
 import { authorVisibleTo, profileVisibleTo, type Viewer } from "./visibility";
 
 const { reviews, users, albums, artists, tracks, follows } = schema;
@@ -16,6 +17,8 @@ export type FeedItem = {
   rating: number | null;
   publishedAt: Date | null;
   hearts: number;
+  /** Whether the viewer has liked it; null when nobody is signed in. */
+  viewerHearted: boolean | null;
   comments: number;
   author: { handle: string; displayName: string | null; image: string | null };
   album: { mbid: string; slug: string; title: string; coverKey: string | null };
@@ -89,7 +92,11 @@ async function queryItems(opts: {
     .offset(byCursor ? 0 : (page - 1) * limit);
 
   const shown = rows.slice(0, limit);
-  const commentCounts = await countComments(shown.map((r) => r.id));
+  const ids = shown.map((r) => r.id);
+  const [commentCounts, heartInfo] = await Promise.all([
+    countComments(ids),
+    opts.viewer ? getReviewHearts(ids, opts.viewer.id) : Promise.resolve(null),
+  ]);
   const items = shown.map((r): FeedItem => ({
     id: r.id,
     slug: r.slug,
@@ -98,6 +105,7 @@ async function queryItems(opts: {
     rating: r.rating,
     publishedAt: r.publishedAt,
     hearts: r.hearts,
+    viewerHearted: heartInfo ? (heartInfo.get(r.id)?.hearted ?? false) : null,
     comments: commentCounts.get(r.id) ?? 0,
     author: { handle: r.handle!, displayName: r.displayName, image: r.image },
     album: { mbid: r.albumMbid, slug: r.albumSlug, title: r.albumTitle, coverKey: r.coverKey },
@@ -135,11 +143,11 @@ export function getFollowingFeed(viewer: NonNullable<Viewer>, cursor?: string) {
   return queryItems({
     viewer,
     cursor,
-    where: sql`EXISTS (
+    where: sql`(${reviews.authorId} = ${viewer.id} OR EXISTS (
       SELECT 1 FROM follows f
       WHERE f.follower_id = ${viewer.id} AND f.followee_id = ${reviews.authorId}
         AND f.status = 'accepted'
-    )`,
+    ))`,
   });
 }
 

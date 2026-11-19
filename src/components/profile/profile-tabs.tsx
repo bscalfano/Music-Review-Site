@@ -6,6 +6,7 @@ import {
   SuggestForm,
   SuggestionActions,
 } from "@/components/queue/queue-controls";
+import { MiniShelf } from "@/components/lists/shelf-row";
 import { StatsView } from "@/components/stats/stats-view";
 import { buttonVariants } from "@/components/ui/button";
 import { albumPath, artistPath } from "@/lib/albums/paths";
@@ -14,12 +15,12 @@ import { albumCoverUrl } from "@/lib/music";
 import type { QueueEntry } from "@/lib/queue/service";
 import type { UserStats } from "@/lib/stats/user-stats";
 
-export const PROFILE_TABS = ["reviews", "lists", "queue", "stats"] as const;
+export const PROFILE_TABS = ["reviews", "shelves", "queue", "stats"] as const;
 export type ProfileTab = (typeof PROFILE_TABS)[number];
 const LABELS: Record<ProfileTab, string> = {
   reviews: "Reviews",
-  lists: "Lists",
-  queue: "Up next",
+  shelves: "Shelves",
+  queue: "In rotation",
   stats: "Stats",
 };
 
@@ -54,30 +55,6 @@ export function ProfileTabs({
   );
 }
 
-function Collage({ covers }: { covers: ListSummary["covers"] }) {
-  return (
-    <div className="bg-muted grid aspect-square grid-cols-2 grid-rows-2 gap-px overflow-hidden rounded-md">
-      {[0, 1, 2, 3].map((i) => {
-        const c = covers[i];
-        return c ? (
-          <div key={c.mbid} className="relative">
-            <Image
-              src={albumCoverUrl(c, 250)}
-              alt=""
-              fill
-              sizes="120px"
-              unoptimized
-              className="object-cover"
-            />
-          </div>
-        ) : (
-          <div key={i} />
-        );
-      })}
-    </div>
-  );
-}
-
 export function ListsTab({
   handle,
   lists,
@@ -90,24 +67,24 @@ export function ListsTab({
   return (
     <div className="space-y-4">
       {isOwner && (
-        <Link href="/write/list" className={buttonVariants({ size: "sm", variant: "outline" })}>
-          New list
+        <Link href="/write/shelf" className={buttonVariants({ size: "sm", variant: "outline" })}>
+          New shelf
         </Link>
       )}
       {lists.length === 0 ? (
         <p className="text-muted-foreground py-12 text-center text-sm">
-          {isOwner ? "You haven't made any lists yet." : "No lists yet."}
+          {isOwner ? "You haven't made any shelves yet." : "No shelves yet."}
         </p>
       ) : (
-        <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           {lists.map((l) => (
             <li key={l.id} className="space-y-2">
-              <Link href={`/lists/${handle}/${l.slug}`} className="block">
-                <Collage covers={l.covers} />
+              <Link href={`/shelves/${handle}/${l.slug}`} className="group block">
+                <MiniShelf covers={l.covers} />
               </Link>
               <div className="text-sm">
                 <Link
-                  href={`/lists/${handle}/${l.slug}`}
+                  href={`/shelves/${handle}/${l.slug}`}
                   className="line-clamp-2 font-medium hover:underline"
                 >
                   {l.title}
@@ -208,7 +185,7 @@ export function QueueTab({
       ) : (
         <section aria-labelledby="up-next-heading" className="space-y-3">
           <h2 id="up-next-heading" className="sr-only">
-            Up next
+            In rotation
           </h2>
           <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
             {queue.map((q) => (

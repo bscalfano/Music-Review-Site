@@ -2,6 +2,7 @@ import { MessageCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { ClipButton } from "@/components/clip-button";
+import { HeartButton } from "@/components/social/heart-button";
 import { StarRating } from "@/components/star-rating";
 import { UserAvatar } from "@/components/user-avatar";
 import { albumPath } from "@/lib/albums/paths";
@@ -20,6 +21,20 @@ function date(d: Date | null) {
 export function FeedCard({ item }: { item: FeedItem }) {
   const name = item.author.displayName ?? `@${item.author.handle}`;
   const reviewHref = `/u/${item.author.handle}/${item.slug}`;
+  const heart = (
+    <HeartButton
+      targetType="review"
+      targetId={item.id}
+      count={item.hearts}
+      hearted={item.viewerHearted ?? false}
+      label={`review of ${item.album.title} by ${name}`}
+      signInHref={
+        item.viewerHearted === null
+          ? `/sign-in?callbackUrl=${encodeURIComponent(reviewHref)}`
+          : undefined
+      }
+    />
+  );
 
   if (item.body.trim() === "") {
     return (
@@ -38,6 +53,7 @@ export function FeedCard({ item }: { item: FeedItem }) {
           <span className="text-muted-foreground">by {item.artistName}</span>
         </p>
         <StarRating rating={item.rating} size={14} />
+        {heart}
         <time
           dateTime={item.publishedAt?.toISOString()}
           className="text-muted-foreground hidden text-xs sm:block"
@@ -109,8 +125,8 @@ export function FeedCard({ item }: { item: FeedItem }) {
               label={item.clip.title}
             />
           )}
-          <span className="text-muted-foreground flex items-center gap-3 text-xs">
-            {item.hearts > 0 && <span>♥ {item.hearts}</span>}
+          <span className="text-muted-foreground -ml-2 flex items-center gap-3 text-xs">
+            {heart}
             {item.comments > 0 && (
               <Link
                 href={`${reviewHref}#comments`}

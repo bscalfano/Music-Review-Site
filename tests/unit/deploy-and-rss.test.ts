@@ -93,6 +93,7 @@ const item = (over: Partial<FeedItem> = {}): FeedItem => ({
   rating: 9,
   publishedAt: new Date("2026-03-03T12:00:00Z"),
   hearts: 0,
+  viewerHearted: null,
   comments: 0,
   author: { handle: "bri", displayName: "Bri <script>", image: null },
   album: { mbid: "m", slug: "kid-a", title: "Kid A", coverKey: null },

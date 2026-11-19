@@ -7,12 +7,7 @@ export const followStatus = pgEnum("follow_status", ["pending", "accepted"]);
 export const reviewStatus = pgEnum("review_status", ["draft", "published", "hidden"]);
 export const reactionTarget = pgEnum("reaction_target", ["review", "comment"]);
 /** `suggested`: someone else proposed it and the owner hasn't decided yet (S14). */
-export const queueStatus = pgEnum("queue_status", [
-  "queued",
-  "reviewed",
-  "dismissed",
-  "suggested",
-]);
+export const queueStatus = pgEnum("queue_status", ["queued", "reviewed", "dismissed", "suggested"]);
 export const notificationType = pgEnum("notification_type", [
   "follow",
   "follow_request",

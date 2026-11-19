@@ -297,7 +297,7 @@ test.describe("discovery pages", () => {
 
 test.describe("lists, queue and stats", () => {
   test("list editors require sign-in", async ({ request }) => {
-    for (const path of ["/write/list", "/write/list/00000000-0000-4000-8000-000000000000"]) {
+    for (const path of ["/write/shelf", "/write/shelf/00000000-0000-4000-8000-000000000000"]) {
       const res = await request.get(path, { maxRedirects: 0 });
       expect(res.status()).toBe(307);
       expect(res.headers()["location"]).toContain("/sign-in");
@@ -305,7 +305,7 @@ test.describe("lists, queue and stats", () => {
   });
 
   test("a missing list is a 404", async ({ request }) => {
-    expect((await request.get("/lists/nobody/no-such-list")).status()).toBe(404);
+    expect((await request.get("/shelves/nobody/no-such-list")).status()).toBe(404);
   });
 
   test("profile tabs render for visitors, and bad tab names fall back (needs seed data)", async ({
@@ -313,7 +313,7 @@ test.describe("lists, queue and stats", () => {
   }) => {
     const probe = await request.get("/u/maya");
     test.skip(probe.status() === 404, "seed data not present");
-    for (const tab of ["lists", "queue", "stats", "nonsense"]) {
+    for (const tab of ["shelves", "queue", "stats", "nonsense"]) {
       expect((await request.get(`/u/maya?tab=${tab}`)).status()).toBe(200);
     }
     const stats = await (await request.get("/u/maya?tab=stats")).text();
@@ -326,7 +326,7 @@ test.describe("lists, queue and stats", () => {
   test("a private profile's tabs reveal nothing (needs seed data)", async ({ request }) => {
     const probe = await request.get("/u/sam_private");
     test.skip(probe.status() === 404, "seed data not present");
-    for (const tab of ["lists", "queue", "stats"]) {
+    for (const tab of ["shelves", "queue", "stats"]) {
       const html = await (await request.get(`/u/sam_private?tab=${tab}`)).text();
       expect(html).toContain("This account is private");
       expect(html).not.toContain("Average by decade");

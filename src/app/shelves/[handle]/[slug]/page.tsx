@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
+import { ShelfRow } from "@/components/lists/shelf-row";
 import { StarRating } from "@/components/star-rating";
 import { UserAvatar } from "@/components/user-avatar";
 import { albumPath, artistPath } from "@/lib/albums/paths";
@@ -15,14 +16,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { handle, slug } = await params;
   const viewer = toViewer(await getCurrentUser());
   const list = await getList(handle, slug, viewer);
-  if (!list) return { title: "List not found" };
+  if (!list) return { title: "Shelf not found" };
   const indexable = list.status === "published" && !list.author.isPrivate;
   const first = list.items[0];
   return {
     title: `${list.title} by ${list.author.displayName ?? `@${list.author.handle}`}`,
     description:
       list.description ??
-      `A list of ${list.items.length} albums${first ? `, starting with ${first.album.title}` : ""}.`,
+      `A shelf of ${list.items.length} albums${first ? `, starting with ${first.album.title}` : ""}.`,
     robots: indexable ? undefined : { index: false, follow: false },
     openGraph: first ? { images: [{ url: albumCoverUrl(first.album, 500) }] } : undefined,
   };
@@ -30,7 +31,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ListPage({ params }: Props) {
   const { handle, slug } = await params;
-  if (handle !== handle.toLowerCase()) permanentRedirect(`/lists/${handle.toLowerCase()}/${slug}`);
+  if (handle !== handle.toLowerCase())
+    permanentRedirect(`/shelves/${handle.toLowerCase()}/${slug}`);
   const current = await getCurrentUser();
   const list = await getList(handle, slug, toViewer(current));
   if (!list) notFound();
@@ -43,7 +45,7 @@ export default async function ListPage({ params }: Props) {
         <p role="status" className="bg-muted mb-4 rounded-md px-3 py-2 text-sm">
           {list.status === "draft"
             ? "This is a draft. Only you can see it."
-            : "A moderator took this list down. Only you and moderators can see it."}
+            : "A moderator took this shelf down. Only you and moderators can see it."}
         </p>
       )}
       <header className="space-y-2 border-b pb-5">
@@ -64,7 +66,7 @@ export default async function ListPage({ params }: Props) {
           {isOwner && list.status !== "hidden" && (
             <>
               <span aria-hidden>·</span>
-              <Link href={`/write/list/${list.id}`} className="underline underline-offset-2">
+              <Link href={`/write/shelf/${list.id}`} className="underline underline-offset-2">
                 Edit
               </Link>
             </>
@@ -75,9 +77,15 @@ export default async function ListPage({ params }: Props) {
         )}
       </header>
 
+      {list.items.length > 0 && (
+        <div className="py-4">
+          <ShelfRow albums={list.items.map((i) => ({ ...i.album, artistName: i.artist.name }))} />
+        </div>
+      )}
+
       {list.items.length === 0 ? (
         <p className="text-muted-foreground py-12 text-center text-sm">
-          No albums in this list yet.
+          Nothing on this shelf yet.
         </p>
       ) : (
         <ol className="divide-y">

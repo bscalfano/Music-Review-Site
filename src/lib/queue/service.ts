@@ -32,7 +32,7 @@ async function hasPublishedReview(userId: string, albumId: string): Promise<bool
   return !!row;
 }
 
-/** Puts an album in your own "Up next" queue. */
+/** Puts an album in your own "In rotation" queue. */
 export async function addToQueue(
   ownerId: string,
   albumId: string,
@@ -262,7 +262,7 @@ async function listByStatus(
   });
 }
 
-/** The public "Up next" queue, oldest first. The caller decides whether the viewer may see it. */
+/** The public "In rotation" queue, oldest first. The caller decides whether the viewer may see it. */
 export const listQueue = (ownerId: string) => listByStatus(ownerId, "queued");
 
 /** Suggestions awaiting the owner's decision. Only ever shown to the owner. */

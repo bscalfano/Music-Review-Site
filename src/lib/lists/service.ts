@@ -18,7 +18,7 @@ const { lists, listItems, albums, artists, users, reviews } = schema;
 export * from "./limits";
 
 export const listInputSchema = z.object({
-  title: z.string().trim().min(1, "Give your list a title.").max(MAX_LIST_TITLE),
+  title: z.string().trim().min(1, "Give your shelf a title.").max(MAX_LIST_TITLE),
   description: z
     .string()
     .trim()
@@ -58,7 +58,7 @@ async function uniqueListSlug(
   title: string,
   exceptId?: string,
 ): Promise<string> {
-  const base = slugify(title, 60) || "list";
+  const base = slugify(title, 60) || "shelf";
   const rows = await db
     .select({ slug: lists.slug })
     .from(lists)
@@ -104,9 +104,9 @@ export async function saveList(
         .from(lists)
         .where(and(eq(lists.id, listId), eq(lists.authorId, authorId)))
         .limit(1);
-      if (!mine) throw new ListError("not_found", "That list doesn't exist.");
+      if (!mine) throw new ListError("not_found", "That shelf doesn't exist.");
       if (mine.status === "hidden") {
-        throw new ListError("invalid", "A moderator took this list down, so it can't be edited.");
+        throw new ListError("invalid", "A moderator took this shelf down, so it can't be edited.");
       }
     } else {
       const [{ n }] = await tx
@@ -114,7 +114,7 @@ export async function saveList(
         .from(lists)
         .where(eq(lists.authorId, authorId));
       if (n >= MAX_LISTS_PER_USER) {
-        throw new ListError("limit", `You can have up to ${MAX_LISTS_PER_USER} lists.`);
+        throw new ListError("limit", `You can have up to ${MAX_LISTS_PER_USER} shelves.`);
       }
     }
 
@@ -307,7 +307,7 @@ export type ListSummary = {
   year: number | null;
   status: "draft" | "published" | "hidden";
   itemCount: number;
-  /** Up to four covers for a collage. */
+  /** Up to five covers for the mini shelf. */
   covers: { mbid: string; title: string; coverKey: string | null }[];
   updatedAt: Date;
 };
@@ -355,7 +355,7 @@ export async function listsForUser(userId: string, includeDrafts: boolean): Prom
       year: l.year,
       status: l.status,
       itemCount: mine.length,
-      covers: mine.slice(0, 4).map((i) => ({ mbid: i.mbid, title: i.title, coverKey: i.coverKey })),
+      covers: mine.slice(0, 5).map((i) => ({ mbid: i.mbid, title: i.title, coverKey: i.coverKey })),
       updatedAt: l.updatedAt,
     };
   });
