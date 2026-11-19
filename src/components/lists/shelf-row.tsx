@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Bump } from "@/components/lists/bump";
 import { albumPath } from "@/lib/albums/paths";
 import { albumCoverUrl } from "@/lib/music";
 
@@ -31,23 +32,25 @@ export function ShelfRow({ albums }: { albums: (Cover & { artistName: string })[
         {albums.map((a) => (
           <li
             key={a.mbid}
-            className="group relative -ml-10 w-36 shrink-0 snap-start transition-transform duration-200 first:ml-0 focus-within:z-10 focus-within:-translate-y-4 hover:z-10 hover:-translate-y-4 sm:w-40"
+            className="group relative -ml-10 w-36 shrink-0 snap-start transition-transform duration-200 first:ml-0 focus-within:z-10 focus-within:-translate-y-4 hover:z-10 sm:w-40"
           >
-            <Link
-              href={albumPath(a)}
-              aria-label={`${a.title} by ${a.artistName}`}
-              title={`${a.title}, ${a.artistName}`}
-              className="bg-muted relative block aspect-square overflow-hidden rounded-[3px] shadow-[2px_0_8px_rgb(0_0_0/0.4)] ring-offset-2 outline-none focus-visible:ring-2"
-            >
-              <Image
-                src={albumCoverUrl(a, 500)}
-                alt=""
-                fill
-                sizes="160px"
-                unoptimized
-                className="object-cover"
-              />
-            </Link>
+            <Bump lift="-1rem">
+              <Link
+                href={albumPath(a)}
+                aria-label={`${a.title} by ${a.artistName}`}
+                title={`${a.title}, ${a.artistName}`}
+                className="bg-muted relative block aspect-square overflow-hidden rounded-[3px] shadow-[2px_0_8px_rgb(0_0_0/0.4)] ring-offset-2 outline-none focus-visible:ring-2"
+              >
+                <Image
+                  src={albumCoverUrl(a, 500)}
+                  alt=""
+                  fill
+                  sizes="160px"
+                  unoptimized
+                  className="object-cover"
+                />
+              </Link>
+            </Bump>
           </li>
         ))}
       </ul>
@@ -56,16 +59,32 @@ export function ShelfRow({ albums }: { albums: (Cover & { artistName: string })[
   );
 }
 
-/** A small shelf for profile tabs: up to five sleeves on a thin board. */
+/** Most sleeves a mini shelf shows. */
+export const MINI_SHELF_MAX = 12;
+
+/**
+ * A small shelf for profile tabs and the feed. The board is always full width, and sleeves stand
+ * on it inset a little so the board overhangs both ends. A short shelf keeps its sleeves together
+ * at the left; a long one is spread so the first and last sleeves sit at the inset edges.
+ */
 export function MiniShelf({ covers }: { covers: Omit<Cover, "slug">[] }) {
+  const shown = covers.slice(0, MINI_SHELF_MAX);
+  const n = shown.length;
+  if (n === 0) return null;
+  const size = "4rem"; // one sleeve
+  const step = "2.5rem"; // how far apart sleeves sit when there's room
   return (
     <div>
-      <div className="flex h-20 items-end px-1" aria-hidden>
-        {covers.slice(0, 5).map((c, i) => (
-          <div
+      <div className="relative mx-3 h-20" aria-hidden>
+        {shown.map((c, i) => (
+          <Bump
             key={c.mbid}
-            className={`bg-muted relative size-16 shrink-0 overflow-hidden rounded-[2px] shadow-[2px_0_6px_rgb(0_0_0/0.4)] transition-transform group-hover:-translate-y-1.5 ${i > 0 ? "-ml-7" : ""}`}
-            style={{ zIndex: i }}
+            lift="-0.4rem"
+            className="bg-muted absolute bottom-0 size-16 overflow-hidden rounded-[2px] shadow-[2px_0_6px_rgb(0_0_0/0.4)]"
+            style={{
+              left:
+                n === 1 ? 0 : `min(calc(${i} * ${step}), calc((100% - ${size}) * ${i} / ${n - 1}))`,
+            }}
           >
             <Image
               src={albumCoverUrl(c, 250)}
@@ -75,7 +94,7 @@ export function MiniShelf({ covers }: { covers: Omit<Cover, "slug">[] }) {
               unoptimized
               className="object-cover"
             />
-          </div>
+          </Bump>
         ))}
       </div>
       <Board thin />

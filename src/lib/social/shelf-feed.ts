@@ -92,7 +92,7 @@ async function getFollowingShelves(
             listItems.listId,
             shown.map((r) => r.id),
           ),
-          lte(listItems.position, 8),
+          lte(listItems.position, 12),
         ),
       )
       .orderBy(asc(listItems.position));
