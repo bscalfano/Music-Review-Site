@@ -16,9 +16,9 @@ const base = {
 };
 
 describe("review input validation", () => {
-  it("accepts a rating-only log (no title, no body)", () => {
+  it("accepts a rating-only log (no body)", () => {
     const parsed = reviewInputSchema.parse({ ...base, rating: 7 });
-    expect(parsed.title).toBeNull();
+    expect(parsed.favoriteTrackId).toBeNull();
     expect(parsed.rating).toBe(7);
   });
 
@@ -31,9 +31,10 @@ describe("review input validation", () => {
     expect(reviewInputSchema.safeParse({ ...base, rating }).success).toBe(false);
   });
 
-  it("rejects a bad album id, a bad clip id and an unknown status", () => {
+  it("rejects a bad album id, a bad clip or favorite id and an unknown status", () => {
     expect(reviewInputSchema.safeParse({ ...base, albumMbid: "nope" }).success).toBe(false);
     expect(reviewInputSchema.safeParse({ ...base, clipTrackId: "nope" }).success).toBe(false);
+    expect(reviewInputSchema.safeParse({ ...base, favoriteTrackId: "nope" }).success).toBe(false);
     expect(reviewInputSchema.safeParse({ ...base, status: "hidden" }).success).toBe(false);
   });
 

@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { review, author, album } = data;
   const name = author.displayName ?? `@${author.handle}`;
   const heading = `${album.title} by ${album.artist.name}`;
-  const title = review.title ? `${review.title} (${heading})` : `${name} on ${heading}`;
+  const title = `${name} on ${heading}`;
   const excerpt = markdownExcerpt(review.body, 200);
   const stars = review.rating === null ? "" : `${ratingLabel(review.rating)}. `;
   const isPrivate = author.isPrivate;
@@ -56,7 +56,7 @@ export default async function ReviewPage({ params }: Props) {
   const data = await getReviewPage(handle, slug, toViewer(current));
   if (!data) notFound();
 
-  const { review, author, authorProfile, album, tracks, clipTrack, tags } = data;
+  const { review, author, authorProfile, album, tracks, clipTrack, favoriteTrack, tags } = data;
   const isOwner = current?.id === author.id;
   const forceDefault = (await cookies()).get(VIEWER_DEFAULT_THEME_COOKIE)?.value === "1";
   const theme = resolveProfileTheme({
@@ -123,10 +123,7 @@ export default async function ReviewPage({ params }: Props) {
                 </Link>
                 {album.releaseDate ? ` · ${album.releaseDate.slice(0, 4)}` : ""}
               </p>
-              {review.title && (
-                <h1 className="text-2xl leading-tight font-bold sm:text-3xl">{review.title}</h1>
-              )}
-              {!review.title && <h1 className="sr-only">Review of {album.title}</h1>}
+              <h1 className="sr-only">Review of {album.title}</h1>
               <div className="flex items-center gap-2">
                 <StarRating rating={review.rating} size={22} />
                 {review.rating === null && (
@@ -184,6 +181,25 @@ export default async function ReviewPage({ params }: Props) {
                 imagePrefixes={imagePrefix ? [imagePrefix] : []}
               />
             </div>
+          )}
+
+          {favoriteTrack && (
+            <section
+              aria-labelledby="favorite-song"
+              className="mt-8 flex flex-nowrap items-center gap-3 border-t pt-4"
+            >
+              <h2
+                id="favorite-song"
+                className="text-muted-foreground shrink-0 text-xs font-semibold tracking-wide whitespace-nowrap uppercase"
+              >
+                Favorite song:
+              </h2>
+              <ClipButton
+                trackId={favoriteTrack.id}
+                previewUrl={favoriteTrack.previewUrl}
+                label={favoriteTrack.title}
+              />
+            </section>
           )}
 
           {tags.length > 0 && (

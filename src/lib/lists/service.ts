@@ -98,13 +98,21 @@ export async function saveList(
   }
 
   return db.transaction(async (tx) => {
+    let firstPublishedAt: Date | null = null;
     if (listId) {
       const [mine] = await tx
-        .select({ id: lists.id, status: lists.status, title: lists.title, slug: lists.slug })
+        .select({
+          id: lists.id,
+          status: lists.status,
+          title: lists.title,
+          slug: lists.slug,
+          publishedAt: lists.publishedAt,
+        })
         .from(lists)
         .where(and(eq(lists.id, listId), eq(lists.authorId, authorId)))
         .limit(1);
       if (!mine) throw new ListError("not_found", "That shelf doesn't exist.");
+      firstPublishedAt = mine.publishedAt;
       if (mine.status === "hidden") {
         throw new ListError("invalid", "A moderator took this shelf down, so it can't be edited.");
       }
@@ -126,6 +134,8 @@ export async function saveList(
       ranked: input.ranked,
       year: input.year,
       status: input.status,
+      // The feed shows a shelf from the moment it first goes public.
+      publishedAt: firstPublishedAt ?? (input.status === "published" ? new Date() : null),
       updatedAt: new Date(),
     };
     let id: string;

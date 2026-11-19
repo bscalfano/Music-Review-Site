@@ -33,7 +33,10 @@ export function HeartButton({
   const body = (
     <>
       <Heart className={cn("size-4", hearted && "fill-current")} aria-hidden />
-      <span className="tabular-nums">{count > 0 ? count : ""}</span>
+      {/* Fixed line height and a minimum width so the first like doesn't change the button's size. */}
+      <span className="inline-block h-4 min-w-[1.5ch] leading-4 tabular-nums">
+        {count > 0 ? count : ""}
+      </span>
     </>
   );
   const classes = cn(

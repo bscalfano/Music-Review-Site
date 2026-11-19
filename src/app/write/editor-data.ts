@@ -32,10 +32,10 @@ export async function loadEditor(
       ? {
           id: review.id,
           slug: review.slug,
-          title: review.title,
           body: review.body,
           rating: review.rating,
           clipTrackId: review.clipTrackId,
+          favoriteTrackId: review.favoriteTrackId,
           tags: review.tags,
           status: review.status,
         }

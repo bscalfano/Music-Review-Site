@@ -3,7 +3,10 @@ import { getDb, schema } from "@/db";
 import type { ImportMatch } from "@/db/schema/import";
 import { ensureAlbum } from "@/lib/albums/ensure-album";
 import { searchAlbums } from "@/lib/albums/search";
-import { normalizeTags, ratingSchema, MAX_BODY, MAX_TITLE } from "@/lib/reviews/schema";
+import { normalizeTags, ratingSchema, MAX_BODY } from "@/lib/reviews/schema";
+
+/** Longest album title we keep while staging an imported post. */
+const MAX_TITLE = 120;
 import { ReviewError, saveReview } from "@/lib/reviews/service";
 import { parseCaption, parsePostsJson } from "./instagram";
 
@@ -211,7 +214,7 @@ export async function publishItems(ownerId: string, itemIds: string[]): Promise<
       }
       const saved = await saveReview(ownerId, {
         albumId: album.id,
-        title: item.title,
+        title: null,
         body: item.body,
         rating: item.rating,
         clipTrackId: null,

@@ -47,6 +47,8 @@ export const reviews = pgTable(
      */
     rating: smallint(),
     clipTrackId: uuid().references(() => tracks.id, { onDelete: "set null" }),
+    /** The reviewer's favorite song. Always a track of this review's album (checked on save). */
+    favoriteTrackId: uuid().references(() => tracks.id, { onDelete: "set null" }),
     status: reviewStatus().notNull().default("draft"),
     publishedAt: timestamp({ withTimezone: true }),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
@@ -148,6 +150,8 @@ export const lists = pgTable(
     ranked: boolean().notNull().default(false),
     year: smallint(),
     status: reviewStatus().notNull().default("draft"),
+    /** When it first went public; the feed sorts shelves by this. */
+    publishedAt: timestamp({ withTimezone: true }),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
   },

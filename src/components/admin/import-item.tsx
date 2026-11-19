@@ -30,7 +30,6 @@ export type ImportItemView = {
 /** One staged Instagram post: confirm the album, tidy the text and rating, then publish or skip. */
 export function ImportItem({ item }: { item: ImportItemView }) {
   const router = useRouter();
-  const [title, setTitle] = useState(item.title ?? "");
   const [body, setBody] = useState(item.body);
   const [rating, setRating] = useState<number | null>(item.rating);
   const [tags, setTags] = useState(item.tags.join(", "));
@@ -42,7 +41,7 @@ export function ImportItem({ item }: { item: ImportItemView }) {
   const [pending, start] = useTransition();
 
   const edit = () => ({
-    title: title.trim() || null,
+    title: null,
     body,
     rating,
     albumMbid,
@@ -124,11 +123,7 @@ export function ImportItem({ item }: { item: ImportItemView }) {
         )}
       </fieldset>
 
-      <div className="grid gap-3 sm:grid-cols-2">
-        <div className="space-y-1.5">
-          <Label htmlFor={`t-${item.id}`}>Title (optional)</Label>
-          <Input id={`t-${item.id}`} value={title} onChange={(e) => setTitle(e.target.value)} />
-        </div>
+      <div className="grid gap-3">
         <div className="space-y-1.5">
           <Label htmlFor={`g-${item.id}`}>Tags (comma separated)</Label>
           <Input id={`g-${item.id}`} value={tags} onChange={(e) => setTags(e.target.value)} />

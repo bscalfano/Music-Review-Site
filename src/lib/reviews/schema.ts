@@ -1,6 +1,5 @@
 import { z } from "zod";
 
-export const MAX_TITLE = 120;
 export const MAX_BODY = 20_000;
 export const MAX_TAGS = 8;
 export const MAX_TAG_LENGTH = 30;
@@ -28,16 +27,12 @@ export const ratingSchema = z.number().int().min(0).max(10).nullable();
 export const reviewInputSchema = z.object({
   albumMbid: z.uuid(),
   reviewId: z.uuid().nullish(),
-  title: z
-    .string()
-    .trim()
-    .max(MAX_TITLE, `Keep the title under ${MAX_TITLE} characters.`)
-    .transform((v) => v || null),
   body: z
     .string()
     .max(MAX_BODY, `Reviews can be up to ${MAX_BODY.toLocaleString("en-US")} characters.`),
   rating: ratingSchema,
   clipTrackId: z.uuid().nullable(),
+  favoriteTrackId: z.uuid().nullable().default(null),
   tags: z
     .array(z.string().max(100))
     .max(MAX_TAGS * 2)

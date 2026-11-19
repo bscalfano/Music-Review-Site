@@ -11,17 +11,17 @@ import { ReviewBody, type BodyTrack } from "@/components/review-body";
 import { StarInput } from "@/components/star-input";
 import { ratingLabel } from "@/components/star-rating";
 import { Button } from "@/components/ui/button";
-import { Field, Input, Textarea } from "@/components/ui/field";
-import { MAX_BODY, MAX_TAG_LENGTH, MAX_TAGS, MAX_TITLE, normalizeTag } from "@/lib/reviews/schema";
+import { Input, Textarea } from "@/components/ui/field";
+import { MAX_BODY, MAX_TAG_LENGTH, MAX_TAGS, normalizeTag } from "@/lib/reviews/schema";
 import { cn } from "@/lib/utils";
 
 export type EditorInitial = {
   id: string;
   slug: string;
-  title: string | null;
   body: string;
   rating: number | null;
   clipTrackId: string | null;
+  favoriteTrackId: string | null;
   tags: string[];
   status: "draft" | "published";
 };
@@ -38,10 +38,12 @@ export function ReviewEditor({ album, tracks, initial, imagePrefixes, handle }: 
   const router = useRouter();
   const [reviewId, setReviewId] = useState(initial?.id ?? null);
   const [status, setStatus] = useState<"draft" | "published">(initial?.status ?? "draft");
-  const [title, setTitle] = useState(initial?.title ?? "");
   const [body, setBody] = useState(initial?.body ?? "");
   const [rating, setRating] = useState<number | null>(initial?.rating ?? null);
   const [clipTrackId, setClipTrackId] = useState<string | null>(initial?.clipTrackId ?? null);
+  const [favoriteTrackId, setFavoriteTrackId] = useState<string | null>(
+    initial?.favoriteTrackId ?? null,
+  );
   const [tags, setTags] = useState<string[]>(initial?.tags ?? []);
   const [tagDraft, setTagDraft] = useState("");
   const [tab, setTab] = useState<"write" | "preview">("write");
@@ -169,10 +171,10 @@ export function ReviewEditor({ album, tracks, initial, imagePrefixes, handle }: 
       const res = await saveReviewAction({
         albumMbid: album.mbid,
         reviewId,
-        title,
         body,
         rating,
         clipTrackId,
+        favoriteTrackId,
         tags,
         status: nextStatus,
       });
@@ -264,16 +266,6 @@ export function ReviewEditor({ album, tracks, initial, imagePrefixes, handle }: 
           </span>
         </div>
       </section>
-
-      <Field label="Title (optional)" htmlFor="title">
-        <Input
-          id="title"
-          value={title}
-          maxLength={MAX_TITLE}
-          onChange={(e) => change(setTitle)(e.target.value)}
-          placeholder="A headline for your review"
-        />
-      </Field>
 
       <section aria-label="Review text" className="space-y-2">
         <div className="flex flex-wrap items-center justify-between gap-2">
@@ -377,6 +369,34 @@ export function ReviewEditor({ album, tracks, initial, imagePrefixes, handle }: 
             )}
           </div>
         )}
+      </section>
+
+      <section aria-labelledby="favorite-heading" className="space-y-2">
+        <h2 id="favorite-heading" className="text-sm font-medium">
+          Favorite song
+        </h2>
+        {tracks.length === 0 ? (
+          <p className="text-muted-foreground text-sm">
+            The track list is still loading. Reload in a moment to pick a favorite.
+          </p>
+        ) : (
+          <select
+            aria-label="Favorite song on this album"
+            value={favoriteTrackId ?? ""}
+            onChange={(e) => change(setFavoriteTrackId)(e.target.value || null)}
+            className="border-border bg-background h-9 max-w-full rounded-lg border px-3 text-sm"
+          >
+            <option value="">No favorite</option>
+            {tracks.map((t) => (
+              <option key={t.id} value={t.id}>
+                {t.title}
+              </option>
+            ))}
+          </select>
+        )}
+        <p className="text-muted-foreground text-xs">
+          Shown at the end of your review. You can only pick a song from this album.
+        </p>
       </section>
 
       <section aria-labelledby="clip-heading" className="space-y-2">

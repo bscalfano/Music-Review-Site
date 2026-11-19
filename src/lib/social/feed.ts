@@ -12,7 +12,6 @@ const { reviews, users, albums, artists, tracks, follows } = schema;
 export type FeedItem = {
   id: string;
   slug: string;
-  title: string | null;
   body: string;
   rating: number | null;
   publishedAt: Date | null;
@@ -52,7 +51,6 @@ async function queryItems(opts: {
     .select({
       id: reviews.id,
       slug: reviews.slug,
-      title: reviews.title,
       body: reviews.body,
       rating: reviews.rating,
       publishedAt: reviews.publishedAt,
@@ -100,7 +98,6 @@ async function queryItems(opts: {
   const items = shown.map((r): FeedItem => ({
     id: r.id,
     slug: r.slug,
-    title: r.title,
     body: r.body,
     rating: r.rating,
     publishedAt: r.publishedAt,

@@ -279,6 +279,15 @@ describe.skipIf(!process.env.DATABASE_URL)("review service keeps album_stats cor
       });
     });
 
+    it("only allows a favorite song from the same album", async () => {
+      const ok = await saveReview(alice, review({ favoriteTrackId: clipTrackId }));
+      const [row] = await db.select().from(reviews).where(eq(reviews.id, ok.id));
+      expect(row.favoriteTrackId).toBe(clipTrackId);
+      await expect(
+        saveReview(alice, review({ favoriteTrackId: otherAlbumTrackId })),
+      ).rejects.toMatchObject({ code: "bad_favorite" });
+    });
+
     it("refuses to edit someone else's review by id", async () => {
       const [bobsReview] = await db.select().from(reviews).where(eq(reviews.authorId, bob));
       await expect(

@@ -158,6 +158,7 @@ export type ReviewPageData = {
   album: AlbumCore;
   tracks: AlbumTrack[];
   clipTrack: AlbumTrack | null;
+  favoriteTrack: AlbumTrack | null;
   tags: string[];
 };
 
@@ -209,6 +210,7 @@ export async function getReviewPage(
     album,
     tracks: trackList,
     clipTrack: trackList.find((t) => t.id === review.clipTrackId) ?? null,
+    favoriteTrack: trackList.find((t) => t.id === review.favoriteTrackId) ?? null,
     tags: tagNames,
   };
 }

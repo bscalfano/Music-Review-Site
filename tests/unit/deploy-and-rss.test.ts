@@ -88,7 +88,6 @@ describe("production env check", () => {
 const item = (over: Partial<FeedItem> = {}): FeedItem => ({
   id: "1",
   slug: "kid-a",
-  title: null,
   body: "A **great** record & more <b>",
   rating: 9,
   publishedAt: new Date("2026-03-03T12:00:00Z"),

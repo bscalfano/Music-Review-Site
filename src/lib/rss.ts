@@ -34,7 +34,7 @@ export function buildRssFeed(opts: {
     .map((item) => {
       const url = abs(`/u/${item.author.handle}/${item.slug}`);
       const name = item.author.displayName ?? `@${item.author.handle}`;
-      const title = `${item.title ?? item.album.title} · ${item.artistName}${stars(item.rating)}`;
+      const title = `${item.album.title} · ${item.artistName}${stars(item.rating)}`;
       return `    <item>
       <title>${xmlEscape(title)}</title>
       <link>${xmlEscape(url)}</link>

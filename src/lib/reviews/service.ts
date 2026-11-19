@@ -13,7 +13,7 @@ const HIDDEN_MESSAGE =
 
 export class ReviewError extends Error {
   constructor(
-    public code: "not_found" | "bad_clip" | "bad_rating" | "hidden",
+    public code: "not_found" | "bad_clip" | "bad_favorite" | "bad_rating" | "hidden",
     message: string,
   ) {
     super(message);
@@ -29,6 +29,8 @@ export type SaveReviewInput = {
   body: string;
   rating: number | null;
   clipTrackId: string | null;
+  /** Favorite song: must be a track of the album. */
+  favoriteTrackId?: string | null;
   tags: string[];
   status: "draft" | "published";
   /** Only for imports (S3): keep the original posting date and mark where it came from. */
@@ -122,6 +124,15 @@ export async function saveReview(authorId: string, input: SaveReviewInput): Prom
       if (!track) throw new ReviewError("bad_clip", "That track isn't on this album.");
     }
 
+    if (input.favoriteTrackId) {
+      const [track] = await tx
+        .select({ id: tracks.id })
+        .from(tracks)
+        .where(and(eq(tracks.id, input.favoriteTrackId), eq(tracks.albumId, album.id)))
+        .limit(1);
+      if (!track) throw new ReviewError("bad_favorite", "That song isn't on this album.");
+    }
+
     const existing = await findExisting(tx, authorId, album.id, input.reviewId);
     if (input.reviewId && (!existing || existing.albumId !== album.id)) {
       throw new ReviewError("not_found", "That review doesn't exist.");
@@ -135,6 +146,7 @@ export async function saveReview(authorId: string, input: SaveReviewInput): Prom
       body: input.body,
       rating: rating.data,
       clipTrackId: input.clipTrackId,
+      favoriteTrackId: input.favoriteTrackId ?? null,
       status: input.status,
       updatedAt: now,
     };

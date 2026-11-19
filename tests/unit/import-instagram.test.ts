@@ -202,7 +202,7 @@ describe.skipIf(!process.env.DATABASE_URL)("staging and publishing", () => {
     expect(blocked).toMatchObject({ ok: false, message: "Pick an album first." });
 
     await updateItem(ownerId, item.id, {
-      title: "A title",
+      title: null,
       body: "Imported text",
       rating: 8,
       albumMbid,
@@ -215,7 +215,7 @@ describe.skipIf(!process.env.DATABASE_URL)("staging and publishing", () => {
     expect(review).toMatchObject({
       status: "published",
       importedFrom: "instagram",
-      title: "A title",
+      title: null,
       rating: 8,
     });
     expect(review.publishedAt?.toISOString()).toBe(new Date(1_500_000_000 * 1000).toISOString());

@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FeedCard } from "@/components/social/feed-card";
+import { ShelfFeedCard } from "@/components/social/shelf-feed-card";
 import { SuggestedReviewers } from "@/components/social/discover-extras";
 import { buttonVariants } from "@/components/ui/button";
 import { requireUser, toViewer } from "@/lib/auth/session";
-import { countFollowing, getFollowingFeed, getSuggestedReviewers } from "@/lib/social/feed";
+import { countFollowing, getSuggestedReviewers } from "@/lib/social/feed";
+import { getFollowingStream } from "@/lib/social/shelf-feed";
 
 export const metadata: Metadata = { title: "Following", robots: { index: false } };
 
@@ -15,8 +17,8 @@ export default async function FeedPage({ searchParams }: Props) {
   const { cursor } = await searchParams;
   const viewer = toViewer(user)!;
 
-  const [{ items, nextCursor }, following] = await Promise.all([
-    getFollowingFeed(viewer, cursor),
+  const [{ entries, nextCursor }, following] = await Promise.all([
+    getFollowingStream(viewer, cursor),
     countFollowing(user.id),
   ]);
 
@@ -29,11 +31,15 @@ export default async function FeedPage({ searchParams }: Props) {
         </Link>
       </div>
 
-      {items.length > 0 ? (
+      {entries.length > 0 ? (
         <ul className="divide-y">
-          {items.map((item) => (
-            <FeedCard key={item.id} item={item} />
-          ))}
+          {entries.map((e) =>
+            e.kind === "review" ? (
+              <FeedCard key={`r-${e.id}`} item={e.item} />
+            ) : (
+              <ShelfFeedCard key={`s-${e.id}`} shelf={e.shelf} />
+            ),
+          )}
         </ul>
       ) : following === 0 ? (
         <NewUserEmptyState viewerId={user.id} />

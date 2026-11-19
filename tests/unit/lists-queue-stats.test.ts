@@ -28,6 +28,7 @@ import {
 import { saveReview, setQuickRating } from "@/lib/reviews/service";
 import { blockUser } from "@/lib/social/blocks";
 import { followUser, respondToFollowRequest } from "@/lib/social/follows";
+import { getFollowingStream } from "@/lib/social/shelf-feed";
 import { listNotifications } from "@/lib/social/notifications";
 import { getUserStats, toDistribution, toStars } from "@/lib/stats/user-stats";
 
@@ -306,6 +307,21 @@ describe.skipIf(!process.env.DATABASE_URL)("lists, queue and stats", () => {
       await expect(saveList(stranger, mine.id, input())).rejects.toThrow(/doesn't exist/);
       expect(await deleteList(stranger, mine.id)).toBe(false);
       expect(await deleteList(owner, mine.id)).toBe(true);
+    });
+
+    it("shows published shelves in the feeds of followers and the author, never drafts", async () => {
+      await followUser(follower, owner);
+      const items = [{ albumMbid: al[0].mbid, note: "" }];
+      await saveList(owner, null, input({ title: "Feed shelf", items }));
+      await saveList(owner, null, input({ title: "Feed draft", status: "draft", items }));
+      const titles = async (viewer: string) =>
+        (await getFollowingStream(viewerOf(viewer)!)).entries.flatMap((e) =>
+          e.kind === "shelf" ? [e.shelf.title] : [],
+        );
+      expect(await titles(follower)).toContain("Feed shelf");
+      expect(await titles(follower)).not.toContain("Feed draft");
+      expect(await titles(owner)).toContain("Feed shelf");
+      expect(await titles(stranger)).not.toContain("Feed shelf");
     });
 
     it("refuses to edit a list a moderator took down", async () => {

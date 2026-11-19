@@ -98,12 +98,9 @@ export function FeedCard({ item }: { item: FeedItem }) {
         </div>
         <h2 className="leading-snug font-semibold">
           <Link href={reviewHref} className="hover:underline">
-            {item.title ?? item.album.title}
+            {item.album.title}
           </Link>
-          <span className="text-muted-foreground font-normal">
-            {" "}
-            {item.title ? `· ${item.album.title}` : ""} · {item.artistName}
-          </span>
+          <span className="text-muted-foreground font-normal"> · {item.artistName}</span>
         </h2>
         <StarRating rating={item.rating} size={16} />
         <p className="text-sm leading-relaxed">

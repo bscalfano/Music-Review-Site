@@ -43,13 +43,6 @@ export function ReviewCard({
             </time>
           )}
         </div>
-        {review.title && (
-          <h3 className="font-semibold">
-            <Link href={href} className="hover:underline">
-              {review.title}
-            </Link>
-          </h3>
-        )}
         <p className="text-sm leading-relaxed">
           {excerpt}{" "}
           {truncated && (
