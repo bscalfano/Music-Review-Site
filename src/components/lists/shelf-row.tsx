@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { EdgeScroller } from "@/components/lists/edge-scroller";
 import { Bump } from "@/components/lists/bump";
 import { albumPath } from "@/lib/albums/paths";
 import { albumCoverUrl } from "@/lib/music";
@@ -19,20 +20,20 @@ function Board({ thin }: { thin?: boolean }) {
 /**
  * A shelf of records seen from the front. Sleeves overlap like a row in a record shop; hover or
  * focus one and it slides up out of the row so you can see the whole cover. Scrolls sideways when
- * the shelf is long, snapping sleeve by sleeve like flipping through a crate.
+ * the shelf is long: wheel and touch work, and resting the mouse near either end scrolls that way.
  */
 export function ShelfRow({ albums }: { albums: (Cover & { artistName: string })[] }) {
   if (albums.length === 0) return null;
   return (
     <div className="space-y-0">
-      <ul
-        aria-label="Records on this shelf"
-        className="flex snap-x snap-mandatory items-end overflow-x-auto px-2 pt-8 pb-0"
+      <EdgeScroller
+        label="Records on this shelf"
+        className="flex items-end overflow-x-auto px-2 pt-8 pb-0"
       >
         {albums.map((a) => (
           <li
             key={a.mbid}
-            className="group relative -ml-10 w-36 shrink-0 snap-start transition-transform duration-200 first:ml-0 focus-within:z-10 focus-within:-translate-y-4 hover:z-10 sm:w-40"
+            className="group relative -ml-10 w-36 shrink-0 transition-transform duration-200 first:ml-0 focus-within:z-10 focus-within:-translate-y-4 hover:z-10 sm:w-40"
           >
             <Bump lift="-1rem">
               <Link
@@ -53,38 +54,35 @@ export function ShelfRow({ albums }: { albums: (Cover & { artistName: string })[
             </Bump>
           </li>
         ))}
-      </ul>
+      </EdgeScroller>
       <Board />
     </div>
   );
 }
 
-/** Most sleeves a mini shelf shows. */
-export const MINI_SHELF_MAX = 12;
+/** Most sleeves a mini shelf loads. */
+export const MINI_SHELF_MAX = 40;
 
 /**
- * A small shelf for profile tabs and the feed. The board is always full width, and sleeves stand
- * on it inset a little so the board overhangs both ends. A short shelf keeps its sleeves together
- * at the left; a long one is spread so the first and last sleeves sit at the inset edges.
+ * A small shelf for profile tabs and the feed. The board is always the same width, and the
+ * sleeves stand on it inset a little so the board overhangs both ends. Sleeves overlap like the
+ * big shelf; when they run past the board the row scrolls, and resting the mouse near either end
+ * scrolls it that way.
  */
 export function MiniShelf({ covers }: { covers: Omit<Cover, "slug">[] }) {
   const shown = covers.slice(0, MINI_SHELF_MAX);
-  const n = shown.length;
-  if (n === 0) return null;
-  const size = "4rem"; // one sleeve
-  const step = "2.5rem"; // how far apart sleeves sit when there's room
+  if (shown.length === 0) return null;
   return (
     <div>
-      <div className="relative mx-3 h-20" aria-hidden>
-        {shown.map((c, i) => (
+      <EdgeScroller
+        as="div"
+        className="mx-3 flex h-20 [scrollbar-width:none] items-end overflow-x-auto overflow-y-hidden [&::-webkit-scrollbar]:hidden"
+      >
+        {shown.map((c) => (
           <Bump
             key={c.mbid}
             lift="-0.4rem"
-            className="bg-muted absolute bottom-0 size-16 overflow-hidden rounded-[2px] shadow-[2px_0_6px_rgb(0_0_0/0.4)]"
-            style={{
-              left:
-                n === 1 ? 0 : `min(calc(${i} * ${step}), calc((100% - ${size}) * ${i} / ${n - 1}))`,
-            }}
+            className="bg-muted relative -ml-6 size-16 shrink-0 overflow-hidden rounded-[2px] shadow-[2px_0_6px_rgb(0_0_0/0.4)] first:ml-0"
           >
             <Image
               src={albumCoverUrl(c, 250)}
@@ -96,7 +94,7 @@ export function MiniShelf({ covers }: { covers: Omit<Cover, "slug">[] }) {
             />
           </Bump>
         ))}
-      </div>
+      </EdgeScroller>
       <Board thin />
     </div>
   );

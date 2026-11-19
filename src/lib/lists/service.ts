@@ -317,7 +317,7 @@ export type ListSummary = {
   year: number | null;
   status: "draft" | "published" | "hidden";
   itemCount: number;
-  /** Up to twelve covers for the mini shelf. */
+  /** Up to forty covers for the mini shelf. */
   covers: { mbid: string; title: string; coverKey: string | null }[];
   updatedAt: Date;
 };
@@ -365,7 +365,9 @@ export async function listsForUser(userId: string, includeDrafts: boolean): Prom
       year: l.year,
       status: l.status,
       itemCount: mine.length,
-      covers: mine.slice(0, 12).map((i) => ({ mbid: i.mbid, title: i.title, coverKey: i.coverKey })),
+      covers: mine
+        .slice(0, 40)
+        .map((i) => ({ mbid: i.mbid, title: i.title, coverKey: i.coverKey })),
       updatedAt: l.updatedAt,
     };
   });
