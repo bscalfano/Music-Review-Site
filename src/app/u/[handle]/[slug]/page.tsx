@@ -190,7 +190,7 @@ export default async function ReviewPage({ params }: Props) {
             >
               <h2
                 id="favorite-song"
-                className="text-muted-foreground shrink-0 text-xs font-semibold tracking-wide whitespace-nowrap uppercase"
+                className="text-muted-foreground shrink-0 text-lg font-semibold tracking-wide whitespace-nowrap uppercase"
               >
                 Favorite song:
               </h2>
