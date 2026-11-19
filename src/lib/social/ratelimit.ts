@@ -11,6 +11,8 @@ export const LIMITS = {
   report: { limit: 20, windowSec: 24 * 60 * 60 },
   upload: { limit: 40, windowSec: 24 * 60 * 60 },
   export: { limit: 5, windowSec: 24 * 60 * 60 },
+  suggest: { limit: 20, windowSec: 24 * 60 * 60 },
+  list: { limit: 60, windowSec: 60 * 60 },
 } as const;
 
 export type LimitedAction = keyof typeof LIMITS;

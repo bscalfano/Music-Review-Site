@@ -188,8 +188,9 @@ export const queueItems = pgTable(
   },
   (t) => [
     index("queue_items_album_owner_idx").on(t.albumId, t.ownerId),
-    uniqueIndex("queue_items_owner_album_queued_key")
+    // One open entry (queued or awaiting a decision) per owner and album.
+    uniqueIndex("queue_items_owner_album_open_key")
       .on(t.ownerId, t.albumId)
-      .where(sql`${t.status} = 'queued'`),
+      .where(sql`${t.status} NOT IN ('reviewed', 'dismissed')`),
   ],
 );

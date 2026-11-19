@@ -208,3 +208,19 @@ export async function updateEmailNotificationsAction(
   revalidatePath("/settings");
   return { ok: true, message: "Email preferences saved." };
 }
+
+export async function updateAcceptSuggestionsAction(
+  accept: boolean,
+): Promise<{ ok: boolean; message: string }> {
+  const { user } = await actor();
+  await getDb()
+    .update(schema.users)
+    .set({ acceptSuggestions: !!accept })
+    .where(eq(schema.users.id, user.id));
+  revalidatePath("/settings");
+  revalidatePath(`/u/${user.handle}`);
+  return {
+    ok: true,
+    message: accept ? "People can suggest albums." : "Suggestions are off.",
+  };
+}

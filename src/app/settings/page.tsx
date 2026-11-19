@@ -12,7 +12,11 @@ import {
 } from "@/components/settings/forms";
 import { YourDataSection } from "@/components/settings/account-forms";
 import { DELETION_GRACE_DAYS } from "@/lib/account/account";
-import { BlockedList, NotificationPrefsForm } from "@/components/settings/social-forms";
+import {
+  BlockedList,
+  NotificationPrefsForm,
+  SuggestionsForm,
+} from "@/components/settings/social-forms";
 import { requireUser } from "@/lib/auth/session";
 import { listBlocked } from "@/lib/social/blocks";
 import { NOTIFICATION_LABELS } from "@/lib/social/notifications";
@@ -131,6 +135,9 @@ export default async function SettingsPage() {
 
       <Section id="privacy" title="Privacy">
         <PrivacyForm isPrivate={user.isPrivate} />
+        <div className="mt-4">
+          <SuggestionsForm accept={user.acceptSuggestions} />
+        </div>
       </Section>
 
       <Section
@@ -139,9 +146,7 @@ export default async function SettingsPage() {
         description="Choose which activity also reaches your inbox."
       >
         <NotificationPrefsForm
-          options={Object.entries(NOTIFICATION_LABELS)
-            .filter(([type]) => type !== "suggestion")
-            .map(([type, label]) => ({ type, label }))}
+          options={Object.entries(NOTIFICATION_LABELS).map(([type, label]) => ({ type, label }))}
           enabled={user.emailNotifications}
           emailConfigured={!!process.env.RESEND_API_KEY}
         />

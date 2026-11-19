@@ -2,7 +2,11 @@
 
 import Link from "next/link";
 import { useState, useTransition } from "react";
-import { unblockAction, updateEmailNotificationsAction } from "@/app/social/actions";
+import {
+  unblockAction,
+  updateAcceptSuggestionsAction,
+  updateEmailNotificationsAction,
+} from "@/app/social/actions";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/field";
 import { AvatarView } from "@/components/avatar-view";
@@ -105,5 +109,40 @@ export function BlockedList({ people }: { people: Blocked[] }) {
         </li>
       ))}
     </ul>
+  );
+}
+
+/** S14: whether other people may suggest albums for your queue. */
+export function SuggestionsForm({ accept }: { accept: boolean }) {
+  const [value, setValue] = useState(accept);
+  const [message, setMessage] = useState<string>();
+  const [pending, start] = useTransition();
+  return (
+    <div className="space-y-2">
+      <Label className="flex items-start gap-3 font-normal">
+        <input
+          type="checkbox"
+          checked={value}
+          disabled={pending}
+          className="mt-0.5 size-4"
+          onChange={(e) => {
+            const next = e.target.checked;
+            setValue(next);
+            start(async () => setMessage((await updateAcceptSuggestionsAction(next)).message));
+          }}
+        />
+        <span>
+          <span className="font-medium">Let people suggest albums for my queue</span>
+          <span className="text-muted-foreground block text-sm">
+            Suggestions only reach you; you accept or dismiss each one.
+          </span>
+        </span>
+      </Label>
+      {message && (
+        <p role="status" className="text-muted-foreground text-sm">
+          {message}
+        </p>
+      )}
+    </div>
   );
 }

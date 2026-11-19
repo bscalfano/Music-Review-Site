@@ -171,10 +171,18 @@ export async function listNotifications(
     }
   }
 
+  // Suggestions point at the recipient's own queue, where they can answer them.
+  const [me] = await db
+    .select({ handle: users.handle })
+    .from(users)
+    .where(eq(users.id, userId))
+    .limit(1);
+
   const items = page.map(({ n, actor }): NotificationItem => {
     const info = reviewInfo.get(n.targetId);
     const profile = `/u/${actor.handle}`;
-    const href = info?.href ?? profile;
+    const href =
+      n.type === "suggestion" && me?.handle ? `/u/${me.handle}?tab=queue` : (info?.href ?? profile);
     return {
       id: n.id,
       type: n.type,

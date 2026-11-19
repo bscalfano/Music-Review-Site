@@ -7,8 +7,18 @@ import { FilterBar } from "@/components/filter-bar";
 import { CoverGrid } from "@/components/profile/cover-grid";
 import { FourFavorites } from "@/components/profile/four-favorites";
 import { ProfileHeader } from "@/components/profile/profile-header";
+import {
+  ListsTab,
+  parseTab,
+  ProfileTabs,
+  QueueTab,
+  StatsTab,
+} from "@/components/profile/profile-tabs";
 import { getCurrentUser, toViewer } from "@/lib/auth/session";
 import { filtersToQuery, hasActiveFilters, parseFilters } from "@/lib/discovery/filters";
+import { countLists, listsForUser } from "@/lib/lists/service";
+import { countQueued, listQueue, listSuggestions } from "@/lib/queue/service";
+import { getUserStats } from "@/lib/stats/user-stats";
 import { VIEWER_DEFAULT_THEME_COOKIE } from "@/lib/profiles/prefs";
 import {
   getFavorites,
@@ -51,6 +61,7 @@ export default async function ProfilePage({ params, searchParams }: Props) {
   const { handle } = await params;
   const sp = await searchParams;
   const cursor = typeof sp.cursor === "string" ? sp.cursor : undefined;
+  const tab = parseTab(sp.tab);
   const filters = parseFilters(sp);
   const page = Number.parseInt(typeof sp.page === "string" ? sp.page : "1", 10) || 1;
   if (handle !== handle.toLowerCase()) permanentRedirect(`/u/${handle.toLowerCase()}`);
@@ -75,13 +86,33 @@ export default async function ProfilePage({ params, searchParams }: Props) {
     forceDefault,
   });
 
-  const [counts, favorites, grid] = await Promise.all([
+  const emptyGrid = { items: [], nextCursor: null, nextPage: null, total: 0, overall: 0 };
+  const [counts, favorites, grid, listCount, queueCount] = await Promise.all([
     getFollowCounts(user.id),
     canSeeContent ? getFavorites(user.id) : Promise.resolve([]),
     canSeeContent
-      ? getProfileGrid({ userId: user.id, viewer, cursor, filters, page })
-      : Promise.resolve({ items: [], nextCursor: null, nextPage: null, total: 0, overall: 0 }),
+      ? getProfileGrid({
+          userId: user.id,
+          viewer,
+          cursor,
+          filters,
+          page,
+          // Only the reviews tab shows the grid; the others just need the totals.
+          limit: tab === "reviews" ? undefined : 1,
+        })
+      : Promise.resolve(emptyGrid),
+    canSeeContent ? countLists(user.id, isOwner) : Promise.resolve(0),
+    canSeeContent ? countQueued(user.id) : Promise.resolve(0),
   ]);
+  const tabData = canSeeContent
+    ? {
+        lists: tab === "lists" ? await listsForUser(user.id, isOwner) : [],
+        queue: tab === "queue" ? await listQueue(user.id) : [],
+        suggestions: tab === "queue" && isOwner ? await listSuggestions(user.id) : [],
+        stats: tab === "stats" ? await getUserStats(user.id, viewer) : null,
+      }
+    : null;
+  const ownerName = user.displayName ?? `@${user.handle}`;
 
   return (
     <div
@@ -105,56 +136,80 @@ export default async function ProfilePage({ params, searchParams }: Props) {
           <>
             <FourFavorites handle={user.handle!} favorites={favorites} isOwner={isOwner} />
 
-            <section aria-labelledby="reviews-heading" className="space-y-3">
-              <nav aria-label="Profile sections" className="flex gap-6 border-b">
-                <span
-                  id="reviews-heading"
-                  aria-current="page"
-                  className="-mb-px border-b-2 border-(--profile-accent) pb-2 text-sm font-semibold"
-                >
-                  Reviews <span className="text-muted-foreground font-normal">{grid.overall}</span>
-                </span>
-              </nav>
+            <section aria-label={tab === "reviews" ? "Reviews" : undefined} className="space-y-3">
+              <ProfileTabs
+                handle={user.handle!}
+                active={tab}
+                counts={{ reviews: grid.overall, lists: listCount, queue: queueCount }}
+              />
 
-              {grid.overall > 1 && <FilterBar basePath={`/u/${user.handle}`} filters={filters} />}
-              {active && grid.overall > 0 && (
-                <p role="status" className="text-muted-foreground text-sm">
-                  {grid.total} of {grid.overall} {grid.overall === 1 ? "review" : "reviews"}
-                </p>
+              {tab === "reviews" && (
+                <>
+                  {grid.overall > 1 && (
+                    <FilterBar basePath={`/u/${user.handle}`} filters={filters} />
+                  )}
+                  {active && grid.overall > 0 && (
+                    <p role="status" className="text-muted-foreground text-sm">
+                      {grid.total} of {grid.overall} {grid.overall === 1 ? "review" : "reviews"}
+                    </p>
+                  )}
+
+                  {grid.items.length > 0 ? (
+                    <CoverGrid
+                      handle={user.handle!}
+                      items={grid.items}
+                      showRatings={profile?.gridShowRatings ?? true}
+                    />
+                  ) : active && grid.overall > 0 ? (
+                    <p className="text-muted-foreground py-12 text-center text-sm">
+                      Nothing matches those filters.
+                    </p>
+                  ) : (
+                    <p className="text-muted-foreground py-12 text-center text-sm">
+                      {isOwner
+                        ? "You haven't logged any albums yet."
+                        : `${user.displayName ?? user.handle} hasn't logged any albums yet.`}
+                    </p>
+                  )}
+
+                  {(grid.nextCursor || grid.nextPage) && (
+                    <div className="flex justify-center pt-2">
+                      <Link
+                        href={`/u/${user.handle}?${filtersToQuery(
+                          filters,
+                          grid.nextCursor
+                            ? { cursor: grid.nextCursor }
+                            : { page: String(grid.nextPage) },
+                        )}`}
+                        className="text-sm underline underline-offset-4"
+                      >
+                        {grid.nextCursor ? "Older reviews →" : "More →"}
+                      </Link>
+                    </div>
+                  )}
+                </>
               )}
-
-              {grid.items.length > 0 ? (
-                <CoverGrid
-                  handle={user.handle!}
-                  items={grid.items}
-                  showRatings={profile?.gridShowRatings ?? true}
+              {tab === "lists" && tabData && (
+                <ListsTab handle={user.handle!} lists={tabData.lists} isOwner={isOwner} />
+              )}
+              {tab === "queue" && tabData && (
+                <QueueTab
+                  ownerId={user.id}
+                  ownerName={ownerName}
+                  queue={tabData.queue}
+                  suggestions={tabData.suggestions}
+                  isOwner={isOwner}
+                  acceptsSuggestions={user.acceptSuggestions}
+                  canSuggest={!!current}
+                  signInHref={
+                    current
+                      ? undefined
+                      : `/sign-in?callbackUrl=${encodeURIComponent(`/u/${user.handle}?tab=queue`)}`
+                  }
                 />
-              ) : active && grid.overall > 0 ? (
-                <p className="text-muted-foreground py-12 text-center text-sm">
-                  Nothing matches those filters.
-                </p>
-              ) : (
-                <p className="text-muted-foreground py-12 text-center text-sm">
-                  {isOwner
-                    ? "You haven't logged any albums yet."
-                    : `${user.displayName ?? user.handle} hasn't logged any albums yet.`}
-                </p>
               )}
-
-              {(grid.nextCursor || grid.nextPage) && (
-                <div className="flex justify-center pt-2">
-                  <Link
-                    href={`/u/${user.handle}?${filtersToQuery(
-                      filters,
-                      grid.nextCursor
-                        ? { cursor: grid.nextCursor }
-                        : { page: String(grid.nextPage) },
-                    )}`}
-                    className="text-sm underline underline-offset-4"
-                  >
-                    {grid.nextCursor ? "Older reviews →" : "More →"}
-                  </Link>
-                </div>
+              {tab === "stats" && tabData?.stats && (
+                <StatsTab stats={tabData.stats} name={ownerName} />
               )}
             </section>
           </>

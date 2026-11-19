@@ -2,6 +2,7 @@ import { and, eq, inArray, isNull, like, sql } from "drizzle-orm";
 import { getDb, schema } from "@/db";
 import type { DbLike } from "@/db/types";
 import { recomputeAlbumStats } from "@/lib/albums/stats";
+import { markQueueReviewed } from "@/lib/queue/mark";
 import { slugify } from "@/lib/slug";
 import { normalizeTags, ratingSchema } from "./schema";
 
@@ -165,6 +166,7 @@ export async function saveReview(authorId: string, input: SaveReviewInput): Prom
 
     await replaceTags(tx, id, input.tags);
     await recomputeAlbumStats(tx, album.id);
+    if (published) await markQueueReviewed(tx, authorId, album.id);
     return { id, slug, status: input.status, albumId: album.id };
   });
 }
@@ -238,6 +240,7 @@ export async function setQuickRating(
       })
       .returning({ id: reviews.id });
     await recomputeAlbumStats(tx, albumId);
+    await markQueueReviewed(tx, authorId, albumId);
     return { kind: "logged", id: row.id };
   });
 }

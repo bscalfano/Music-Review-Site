@@ -139,3 +139,13 @@ Profiles are customized with fixed options only (preset + accent color); users c
 - **Listen on** links on album pages: Deezer and Apple Music are found automatically. Set
   `ODESLI_API_KEY` to add Spotify, YouTube Music and Tidal (Odesli rejected keyless requests when
   last tried). Admins get a "Fix links" button on each album.
+
+## Lists, queue and stats
+
+- **Lists** (`/lists/<handle>/<slug>`, editor at `/write/list`): ranked or unranked, optional year,
+  albums with notes. Each album links to your own review of it when you have one. Drafts are only
+  visible to you; lists follow the same privacy rules as reviews.
+- **Up next** (profile tab): a public to-listen queue. Visitors can suggest an album (it arrives as a
+  notification); you accept or dismiss each one. Publishing a review of a queued album marks it as
+  reviewed. Turn suggestions off in Settings -> Privacy.
+- **Stats** (profile tab): rating distribution, reviews per year, top artists, average by decade.

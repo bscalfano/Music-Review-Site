@@ -395,7 +395,7 @@ Each phase ends with the app building, lint and tests passing, a commit, and a s
 
 **Phase 7 — Discovery** *(built: S13 "Listen on" links via Deezer/iTunes lookups, plus Odesli when `ODESLI_API_KEY` is set (it answered 401 without a key); S8/S4 sort + filters on profile grids and Discover, in URL params; S9 `/search`; S12 `/artists/[slug]`.)*: S13 platform links → S8 sort/filter → S4 genre/tag filters → S9 search → S12 artist pages.
 
-**Phase 8 — Extras:** S11 lists → S14 queue + suggestions → S10 stats → any ticked items from Section 4.
+**Phase 8 — Extras** *(built: S11 lists at `/lists/[handle]/[slug]` with editor at `/write/list`; S14 "Up next" queue with suggestions, accept/dismiss and a settings switch; S10 Stats tab. The ticked Section 4 items (S23, S24, S26) were done in earlier phases. Lists can't be reported yet, only the person who made them.)*: S11 lists → S14 queue + suggestions → S10 stats → any ticked items from Section 4.
 
 ---
 

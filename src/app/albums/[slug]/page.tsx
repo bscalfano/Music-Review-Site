@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import { FollowingActivityStrip, FollowingAverage } from "@/components/album/following-activity";
 import { FixLinksButton } from "@/components/album/fix-links-button";
+import { QueueToggle } from "@/components/album/queue-toggle";
 import { QuickLog } from "@/components/album/quick-log";
 import { RatingHistogram } from "@/components/album/rating-histogram";
 import { ClipButton } from "@/components/clip-button";
@@ -11,6 +12,7 @@ import { ReviewCard } from "@/components/review-card";
 import { albumPath, artistPath, parseAlbumSegment } from "@/lib/albums/paths";
 import { getCurrentUser, toViewer } from "@/lib/auth/session";
 import { kickJobs } from "@/lib/jobs";
+import { getQueueState } from "@/lib/queue/service";
 import { queueLinkResolution } from "@/lib/albums/links";
 import { platformUrls } from "@/lib/music";
 import { isAdminRole } from "@/lib/auth/session";
@@ -67,7 +69,7 @@ export default async function AlbumPage({ params }: Props) {
   const current = await getCurrentUser();
   const viewer = toViewer(current);
 
-  const [stats, tracks, mine, activity, followed] = await Promise.all([
+  const [stats, tracks, mine, activity, followed, queueState] = await Promise.all([
     getAlbumStats(album.id),
     getAlbumTracks(album.id),
     current ? getMyAlbumState(current.id, album.id) : Promise.resolve(null),
@@ -81,7 +83,10 @@ export default async function AlbumPage({ params }: Props) {
           followingOnly: true,
         })
       : Promise.resolve({ items: [], total: 0 }),
+    current ? getQueueState(current.id, album.id) : Promise.resolve(null),
   ]);
+  // Offer the queue until you've logged it; a suggestion you haven't answered counts as not queued.
+  const canQueue = !!current && !(mine && mine.status === "published");
   // Reviews already shown under "people you follow" aren't repeated below.
   const shownIds = followed.items.map((r) => r.id);
   const popular = await listAlbumReviews({
@@ -348,7 +353,16 @@ export default async function AlbumPage({ params }: Props) {
         >
           <section className="space-y-3 rounded-xl border p-4" aria-label="Your panel">
             {current ? (
-              <QuickLog albumId={album.id} albumMbid={album.mbid} mine={mine} />
+              <>
+                <QuickLog albumId={album.id} albumMbid={album.mbid} mine={mine} />
+                {canQueue && (
+                  <QueueToggle
+                    albumId={album.id}
+                    albumMbid={album.mbid}
+                    queued={queueState === "queued"}
+                  />
+                )}
+              </>
             ) : (
               <p className="text-sm">
                 <Link
