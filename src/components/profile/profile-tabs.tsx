@@ -1,4 +1,3 @@
-import { Pin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -8,115 +7,13 @@ import {
   SuggestionActions,
 } from "@/components/queue/queue-controls";
 import { MiniShelf } from "@/components/lists/shelf-row";
-import { CoverImage } from "@/components/cover-image";
-import { StarRating } from "@/components/star-rating";
 import { StatsView } from "@/components/stats/stats-view";
 import { buttonVariants } from "@/components/ui/button";
 import { albumPath, artistPath } from "@/lib/albums/paths";
 import type { ListSummary } from "@/lib/lists/service";
 import { albumCoverUrl } from "@/lib/music";
-import type { PinnedEntry } from "@/lib/pins/service";
 import type { QueueEntry } from "@/lib/queue/service";
 import type { UserStats } from "@/lib/stats/user-stats";
-
-export const PROFILE_TABS = ["reviews", "shelves", "queue", "stats"] as const;
-export type ProfileTab = (typeof PROFILE_TABS)[number];
-const LABELS: Record<ProfileTab, string> = {
-  reviews: "Reviews",
-  shelves: "Shelves",
-  queue: "In rotation",
-  stats: "Stats",
-};
-
-export const parseTab = (v: unknown): ProfileTab => PROFILE_TABS.find((t) => t === v) ?? "reviews";
-
-/** Tab strip for a profile. Plain links (`?tab=`), so each tab is shareable. */
-export function ProfileTabs({
-  handle,
-  active,
-  counts,
-}: {
-  handle: string;
-  active: ProfileTab;
-  counts: Partial<Record<ProfileTab, number>>;
-}) {
-  return (
-    <nav aria-label="Profile sections" className="flex gap-6 overflow-x-auto border-b">
-      {PROFILE_TABS.map((t) => (
-        <Link
-          key={t}
-          href={t === "reviews" ? `/u/${handle}` : `/u/${handle}?tab=${t}`}
-          aria-current={t === active ? "page" : undefined}
-          className="-mb-px border-b-2 border-transparent pb-2 text-sm whitespace-nowrap aria-[current=page]:border-(--profile-accent) aria-[current=page]:font-semibold"
-        >
-          {LABELS[t]}
-          {counts[t] !== undefined && (
-            <span className="text-muted-foreground font-normal"> {counts[t]}</span>
-          )}
-        </Link>
-      ))}
-    </nav>
-  );
-}
-
-/** Up to three reviews and shelves the owner chose to show first. */
-export function PinnedSection({ handle, pins }: { handle: string; pins: PinnedEntry[] }) {
-  if (pins.length === 0) return null;
-  return (
-    <section aria-labelledby="pinned-heading" className="space-y-3">
-      <h2
-        id="pinned-heading"
-        className="flex items-center gap-1.5 text-sm font-semibold tracking-wide uppercase"
-      >
-        <Pin className="size-3.5" aria-hidden /> Pinned
-      </h2>
-      <ul className="grid gap-4 sm:grid-cols-3">
-        {pins.map((p) =>
-          p.kind === "review" ? (
-            <li key={p.review.id} className="space-y-2">
-              <Link
-                href={`/u/${handle}/${p.review.slug}`}
-                className="bg-muted relative block aspect-square overflow-hidden rounded-md"
-              >
-                <CoverImage album={p.review.album} artistName={p.review.artistName} />
-              </Link>
-              <div className="space-y-0.5 text-sm">
-                <Link
-                  href={`/u/${handle}/${p.review.slug}`}
-                  className="line-clamp-1 font-medium hover:underline"
-                >
-                  {p.review.album.title}
-                </Link>
-                <p className="text-muted-foreground line-clamp-1 text-xs">{p.review.artistName}</p>
-                <StarRating rating={p.review.rating} size={13} />
-                {p.review.excerpt && (
-                  <p className="text-muted-foreground line-clamp-2 text-xs">{p.review.excerpt}</p>
-                )}
-              </div>
-            </li>
-          ) : (
-            <li key={p.shelf.id} className="space-y-2">
-              <Link href={`/shelves/${handle}/${p.shelf.slug}`} className="block">
-                <MiniShelf covers={p.shelf.covers} />
-              </Link>
-              <div className="text-sm">
-                <Link
-                  href={`/shelves/${handle}/${p.shelf.slug}`}
-                  className="line-clamp-1 font-medium hover:underline"
-                >
-                  {p.shelf.title}
-                </Link>
-                <p className="text-muted-foreground text-xs">
-                  Shelf · {p.shelf.itemCount} {p.shelf.itemCount === 1 ? "album" : "albums"}
-                </p>
-              </div>
-            </li>
-          ),
-        )}
-      </ul>
-    </section>
-  );
-}
 
 export function ListsTab({
   handle,

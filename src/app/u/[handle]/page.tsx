@@ -7,14 +7,10 @@ import { FilterBar } from "@/components/filter-bar";
 import { CoverGrid } from "@/components/profile/cover-grid";
 import { FourFavorites } from "@/components/profile/four-favorites";
 import { ProfileHeader } from "@/components/profile/profile-header";
-import {
-  ListsTab,
-  parseTab,
-  PinnedSection,
-  ProfileTabs,
-  QueueTab,
-  StatsTab,
-} from "@/components/profile/profile-tabs";
+import { ProfileTabPanels } from "@/components/profile/profile-tab-panels";
+import { PinnedSection } from "@/components/profile/pinned-section";
+import { ListsTab, QueueTab, StatsTab } from "@/components/profile/profile-tabs";
+import { parseTab } from "@/components/profile/tab-ids";
 import { getCurrentUser, toViewer } from "@/lib/auth/session";
 import { filtersToQuery, hasActiveFilters, parseFilters } from "@/lib/discovery/filters";
 import { countLists, listsForUser } from "@/lib/lists/service";
@@ -99,24 +95,21 @@ export default async function ProfilePage({ params, searchParams }: Props) {
           cursor,
           filters,
           page,
-          // Only the reviews tab shows the grid; the others just need the totals.
-          limit: tab === "reviews" ? undefined : 1,
         })
       : Promise.resolve(emptyGrid),
     canSeeContent ? countLists(user.id, isOwner) : Promise.resolve(0),
     canSeeContent ? countQueued(user.id) : Promise.resolve(0),
-    canSeeContent && tab === "reviews" && !cursor && page === 1 && !active
-      ? getPins(user.id, viewer)
-      : Promise.resolve([]),
+    canSeeContent ? getPins(user.id, viewer) : Promise.resolve([]),
   ]);
-  const tabData = canSeeContent
-    ? {
-        lists: tab === "shelves" ? await listsForUser(user.id, isOwner) : [],
-        queue: tab === "queue" ? await listQueue(user.id) : [],
-        suggestions: tab === "queue" && isOwner ? await listSuggestions(user.id) : [],
-        stats: tab === "stats" ? await getUserStats(user.id, viewer) : null,
-      }
-    : null;
+  // Every tab is rendered up front so switching between them never loads a page.
+  const [lists, queue, suggestions, stats] = canSeeContent
+    ? await Promise.all([
+        listsForUser(user.id, isOwner),
+        listQueue(user.id),
+        isOwner ? listSuggestions(user.id) : Promise.resolve([]),
+        getUserStats(user.id, viewer),
+      ])
+    : [[], [], [], null];
   const ownerName = user.displayName ?? `@${user.handle}`;
 
   return (
@@ -141,83 +134,101 @@ export default async function ProfilePage({ params, searchParams }: Props) {
           <>
             <FourFavorites handle={user.handle!} favorites={favorites} isOwner={isOwner} />
 
-            <PinnedSection handle={user.handle!} pins={pins} />
+            <PinnedSection handle={user.handle!} pins={pins} isOwner={isOwner} />
 
-            <section aria-label={tab === "reviews" ? "Reviews" : undefined} className="space-y-3">
-              <ProfileTabs
+            <section className="space-y-3">
+              <ProfileTabPanels
                 handle={user.handle!}
-                active={tab}
-                counts={{ reviews: grid.overall, shelves: listCount, queue: queueCount }}
+                initial={tab}
+                tabs={[
+                  {
+                    id: "reviews",
+                    label: "Reviews",
+                    count: grid.overall,
+                    content: (
+                      <>
+                        <>
+                          {grid.overall > 1 && (
+                            <FilterBar basePath={`/u/${user.handle}`} filters={filters} />
+                          )}
+                          {active && grid.overall > 0 && (
+                            <p role="status" className="text-muted-foreground text-sm">
+                              {grid.total} of {grid.overall}{" "}
+                              {grid.overall === 1 ? "review" : "reviews"}
+                            </p>
+                          )}
+
+                          {grid.items.length > 0 ? (
+                            <CoverGrid
+                              handle={user.handle!}
+                              items={grid.items}
+                              showRatings={profile?.gridShowRatings ?? true}
+                            />
+                          ) : active && grid.overall > 0 ? (
+                            <p className="text-muted-foreground py-12 text-center text-sm">
+                              Nothing matches those filters.
+                            </p>
+                          ) : (
+                            <p className="text-muted-foreground py-12 text-center text-sm">
+                              {isOwner
+                                ? "You haven't logged any albums yet."
+                                : `${user.displayName ?? user.handle} hasn't logged any albums yet.`}
+                            </p>
+                          )}
+
+                          {(grid.nextCursor || grid.nextPage) && (
+                            <div className="flex justify-center pt-2">
+                              <Link
+                                href={`/u/${user.handle}?${filtersToQuery(
+                                  filters,
+                                  grid.nextCursor
+                                    ? { cursor: grid.nextCursor }
+                                    : { page: String(grid.nextPage) },
+                                )}`}
+                                className="text-sm underline underline-offset-4"
+                              >
+                                {grid.nextCursor ? "Older reviews →" : "More →"}
+                              </Link>
+                            </div>
+                          )}
+                        </>
+                      </>
+                    ),
+                  },
+                  {
+                    id: "shelves",
+                    label: "Shelves",
+                    count: listCount,
+                    content: <ListsTab handle={user.handle!} lists={lists} isOwner={isOwner} />,
+                  },
+                  {
+                    id: "queue",
+                    label: "In rotation",
+                    count: queueCount,
+                    content: (
+                      <QueueTab
+                        ownerId={user.id}
+                        ownerName={ownerName}
+                        queue={queue}
+                        suggestions={suggestions}
+                        isOwner={isOwner}
+                        acceptsSuggestions={user.acceptSuggestions}
+                        canSuggest={!!current}
+                        signInHref={
+                          current
+                            ? undefined
+                            : `/sign-in?callbackUrl=${encodeURIComponent(`/u/${user.handle}?tab=queue`)}`
+                        }
+                      />
+                    ),
+                  },
+                  {
+                    id: "stats",
+                    label: "Stats",
+                    content: stats ? <StatsTab stats={stats} name={ownerName} /> : null,
+                  },
+                ]}
               />
-
-              {tab === "reviews" && (
-                <>
-                  {grid.overall > 1 && (
-                    <FilterBar basePath={`/u/${user.handle}`} filters={filters} />
-                  )}
-                  {active && grid.overall > 0 && (
-                    <p role="status" className="text-muted-foreground text-sm">
-                      {grid.total} of {grid.overall} {grid.overall === 1 ? "review" : "reviews"}
-                    </p>
-                  )}
-
-                  {grid.items.length > 0 ? (
-                    <CoverGrid
-                      handle={user.handle!}
-                      items={grid.items}
-                      showRatings={profile?.gridShowRatings ?? true}
-                    />
-                  ) : active && grid.overall > 0 ? (
-                    <p className="text-muted-foreground py-12 text-center text-sm">
-                      Nothing matches those filters.
-                    </p>
-                  ) : (
-                    <p className="text-muted-foreground py-12 text-center text-sm">
-                      {isOwner
-                        ? "You haven't logged any albums yet."
-                        : `${user.displayName ?? user.handle} hasn't logged any albums yet.`}
-                    </p>
-                  )}
-
-                  {(grid.nextCursor || grid.nextPage) && (
-                    <div className="flex justify-center pt-2">
-                      <Link
-                        href={`/u/${user.handle}?${filtersToQuery(
-                          filters,
-                          grid.nextCursor
-                            ? { cursor: grid.nextCursor }
-                            : { page: String(grid.nextPage) },
-                        )}`}
-                        className="text-sm underline underline-offset-4"
-                      >
-                        {grid.nextCursor ? "Older reviews →" : "More →"}
-                      </Link>
-                    </div>
-                  )}
-                </>
-              )}
-              {tab === "shelves" && tabData && (
-                <ListsTab handle={user.handle!} lists={tabData.lists} isOwner={isOwner} />
-              )}
-              {tab === "queue" && tabData && (
-                <QueueTab
-                  ownerId={user.id}
-                  ownerName={ownerName}
-                  queue={tabData.queue}
-                  suggestions={tabData.suggestions}
-                  isOwner={isOwner}
-                  acceptsSuggestions={user.acceptSuggestions}
-                  canSuggest={!!current}
-                  signInHref={
-                    current
-                      ? undefined
-                      : `/sign-in?callbackUrl=${encodeURIComponent(`/u/${user.handle}?tab=queue`)}`
-                  }
-                />
-              )}
-              {tab === "stats" && tabData?.stats && (
-                <StatsTab stats={tabData.stats} name={ownerName} />
-              )}
             </section>
           </>
         ) : (
