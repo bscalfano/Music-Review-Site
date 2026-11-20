@@ -2,8 +2,8 @@
 
 import { useEffect, useRef } from "react";
 
-/** Fraction of the width, at each end, where hovering starts scrolling. */
-const EDGE = 0.1;
+/** Default fraction of the width, at each end, where hovering starts scrolling. */
+const DEFAULT_EDGE = 0.1;
 /** Fastest scroll speed, in pixels per frame, right at the edge. */
 const MAX_SPEED = 14;
 
@@ -15,12 +15,15 @@ const MAX_SPEED = 14;
 export function EdgeScroller({
   label,
   as: Tag = "ul",
+  edge = DEFAULT_EDGE,
   className,
   children,
 }: {
   label?: string;
   /** "ul" when the children are list items; "div" for decorative rows. */
   as?: "ul" | "div";
+  /** Fraction of the width, at each end, where hovering scrolls. */
+  edge?: number;
   className?: string;
   children: React.ReactNode;
 }) {
@@ -61,8 +64,8 @@ export function EdgeScroller({
         if (el.scrollWidth <= el.clientWidth) return setVelocity(0);
         const rect = el.getBoundingClientRect();
         const x = (e.clientX - rect.left) / rect.width;
-        if (x < EDGE) setVelocity(-MAX_SPEED * (1 - x / EDGE));
-        else if (x > 1 - EDGE) setVelocity(MAX_SPEED * (1 - (1 - x) / EDGE));
+        if (x < edge) setVelocity(-MAX_SPEED * (1 - x / edge));
+        else if (x > 1 - edge) setVelocity(MAX_SPEED * (1 - (1 - x) / edge));
         else setVelocity(0);
       }}
       onMouseLeave={() => setVelocity(0)}
