@@ -24,6 +24,7 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition, type ReactNode } from "react";
 import { listPinCandidatesAction, reorderPinsAction, togglePinAction } from "@/app/pins/actions";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/field";
 import type { PinCandidate } from "@/lib/pins/service";
 
 /** One pinned card; `body` is rendered on the server and handed in. */
@@ -135,6 +136,9 @@ function Picker({
   onClose: () => void;
 }) {
   const noun = kind === "review" ? "reviews" : "shelves";
+  const [query, setQuery] = useState("");
+  const q = query.trim().toLowerCase();
+  const shown = items?.filter((c) => !q || `${c.title} ${c.subtitle}`.toLowerCase().includes(q));
   return (
     <div className="space-y-2 rounded-lg border p-3">
       <div className="flex items-center justify-between">
@@ -154,35 +158,52 @@ function Picker({
           Nothing left to pin. Your other published {noun} are already pinned.
         </p>
       ) : (
-        <ul className="max-h-72 divide-y overflow-y-auto">
-          {items.map((c) => (
-            <li key={c.id}>
-              <button
-                type="button"
-                disabled={busy}
-                onClick={() => onPick(c.id)}
-                className="hover:bg-muted flex w-full items-center gap-3 p-2 text-left disabled:opacity-50"
-              >
-                <span className="bg-muted relative size-10 shrink-0 overflow-hidden rounded">
-                  {c.coverUrl && (
-                    <Image
-                      src={c.coverUrl}
-                      alt=""
-                      fill
-                      sizes="40px"
-                      unoptimized
-                      className="object-cover"
-                    />
-                  )}
-                </span>
-                <span className="min-w-0 text-sm">
-                  <span className="block truncate font-medium">{c.title}</span>
-                  <span className="text-muted-foreground block truncate text-xs">{c.subtitle}</span>
-                </span>
-              </button>
-            </li>
-          ))}
-        </ul>
+        <>
+          <Input
+            type="search"
+            autoFocus
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={`Search your ${noun}`}
+            aria-label={`Search your ${noun}`}
+          />
+          {shown && shown.length === 0 && (
+            <p className="text-muted-foreground text-sm">
+              No {noun} match &ldquo;{query.trim()}&rdquo;.
+            </p>
+          )}
+          <ul className="max-h-72 divide-y overflow-y-auto">
+            {shown?.map((c) => (
+              <li key={c.id}>
+                <button
+                  type="button"
+                  disabled={busy}
+                  onClick={() => onPick(c.id)}
+                  className="hover:bg-muted flex w-full items-center gap-3 p-2 text-left disabled:opacity-50"
+                >
+                  <span className="bg-muted relative size-10 shrink-0 overflow-hidden rounded">
+                    {c.coverUrl && (
+                      <Image
+                        src={c.coverUrl}
+                        alt=""
+                        fill
+                        sizes="40px"
+                        unoptimized
+                        className="object-cover"
+                      />
+                    )}
+                  </span>
+                  <span className="min-w-0 text-sm">
+                    <span className="block truncate font-medium">{c.title}</span>
+                    <span className="text-muted-foreground block truncate text-xs">
+                      {c.subtitle}
+                    </span>
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </>
       )}
     </div>
   );
