@@ -1,16 +1,22 @@
+import { LayoutGrid, List } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
-import { ShelfRow } from "@/components/lists/shelf-row";
+import { ShelfGrid, ShelfRow } from "@/components/lists/shelf-row";
+import { PinButton } from "@/components/pin-button";
 import { StarRating } from "@/components/star-rating";
 import { UserAvatar } from "@/components/user-avatar";
 import { albumPath, artistPath } from "@/lib/albums/paths";
 import { getCurrentUser, toViewer } from "@/lib/auth/session";
 import { getList } from "@/lib/lists/service";
+import { isPinned } from "@/lib/pins/service";
 import { albumCoverUrl } from "@/lib/music";
 
-type Props = { params: Promise<{ handle: string; slug: string }> };
+type Props = {
+  params: Promise<{ handle: string; slug: string }>;
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+};
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { handle, slug } = await params;
@@ -29,8 +35,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function ListPage({ params }: Props) {
+export default async function ListPage({ params, searchParams }: Props) {
   const { handle, slug } = await params;
+  const view = (await searchParams)?.view;
   if (handle !== handle.toLowerCase())
     permanentRedirect(`/shelves/${handle.toLowerCase()}/${slug}`);
   const current = await getCurrentUser();
@@ -38,6 +45,9 @@ export default async function ListPage({ params }: Props) {
   if (!list) notFound();
   const isOwner = current?.id === list.author.id;
   const authorName = list.author.displayName ?? `@${list.author.handle}`;
+  // Ranked shelves can swap the list for a numbered poster grid (?view=grid).
+  const showGrid = list.ranked && view === "grid";
+  const albums = list.items.map((i) => ({ ...i.album, artistName: i.artist.name }));
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-8">
@@ -72,6 +82,9 @@ export default async function ListPage({ params }: Props) {
             </>
           )}
         </p>
+        {isOwner && list.status === "published" && (
+          <PinButton kind="shelf" id={list.id} pinned={await isPinned("shelf", list.id)} />
+        )}
         {list.description && (
           <p className="max-w-prose text-sm whitespace-pre-wrap">{list.description}</p>
         )}
@@ -79,14 +92,38 @@ export default async function ListPage({ params }: Props) {
 
       {list.items.length > 0 && (
         <div className="py-4">
-          <ShelfRow albums={list.items.map((i) => ({ ...i.album, artistName: i.artist.name }))} />
+          <ShelfRow albums={albums} />
         </div>
+      )}
+
+      {list.ranked && list.items.length > 0 && (
+        <nav aria-label="Shelf view" className="flex justify-end gap-1 border-y py-1.5">
+          {[
+            { label: "Grid view", icon: LayoutGrid, href: "?view=grid", on: showGrid },
+            { label: "List view", icon: List, href: "?view=list", on: !showGrid },
+          ].map(({ label, icon: Icon, href, on }) => (
+            <Link
+              key={label}
+              href={`/shelves/${list.author.handle}/${list.slug}${href}`}
+              replace
+              scroll={false}
+              aria-label={label}
+              title={label}
+              aria-current={on ? "page" : undefined}
+              className="text-muted-foreground hover:text-foreground aria-[current=page]:bg-muted aria-[current=page]:text-foreground rounded p-1.5"
+            >
+              <Icon className="size-4" aria-hidden />
+            </Link>
+          ))}
+        </nav>
       )}
 
       {list.items.length === 0 ? (
         <p className="text-muted-foreground py-12 text-center text-sm">
           Nothing on this shelf yet.
         </p>
+      ) : showGrid ? (
+        <ShelfGrid albums={albums} />
       ) : (
         <ol className="divide-y">
           {list.items.map((item) => (

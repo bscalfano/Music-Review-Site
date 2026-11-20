@@ -50,6 +50,13 @@
       "when": 1795116392569,
       "tag": "0006_favorite_song_shelf_feed",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1795200446920,
+      "tag": "0007_pinned",
+      "breakpoints": true
     }
   ]
 }

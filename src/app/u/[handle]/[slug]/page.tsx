@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
+import { PinButton } from "@/components/pin-button";
+import { isPinned } from "@/lib/pins/service";
 import { notFound } from "next/navigation";
 import { ClipButton } from "@/components/clip-button";
 import { CommentSection } from "@/components/social/comment-section";
@@ -152,12 +154,21 @@ export default async function ReviewPage({ params }: Props) {
                 )}
               </div>
               {isOwner && (
-                <Link
-                  href={`/write/${review.id}`}
-                  className={buttonVariants({ variant: "outline", size: "sm" })}
-                >
-                  <Pencil aria-hidden /> Edit
-                </Link>
+                <div className="flex items-start gap-2">
+                  {published && (
+                    <PinButton
+                      kind="review"
+                      id={review.id}
+                      pinned={await isPinned("review", review.id)}
+                    />
+                  )}
+                  <Link
+                    href={`/write/${review.id}`}
+                    className={buttonVariants({ variant: "outline", size: "sm" })}
+                  >
+                    <Pencil aria-hidden /> Edit
+                  </Link>
+                </div>
               )}
             </div>
           </header>

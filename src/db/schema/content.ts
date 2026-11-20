@@ -51,6 +51,8 @@ export const reviews = pgTable(
     favoriteTrackId: uuid().references(() => tracks.id, { onDelete: "set null" }),
     status: reviewStatus().notNull().default("draft"),
     publishedAt: timestamp({ withTimezone: true }),
+    /** Set while the author has pinned this review to their profile. */
+    pinnedAt: timestamp({ withTimezone: true }),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
     importedFrom: text(),
@@ -152,6 +154,8 @@ export const lists = pgTable(
     status: reviewStatus().notNull().default("draft"),
     /** When it first went public; the feed sorts shelves by this. */
     publishedAt: timestamp({ withTimezone: true }),
+    /** Set while the author has pinned this shelf to their profile. */
+    pinnedAt: timestamp({ withTimezone: true }),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
   },

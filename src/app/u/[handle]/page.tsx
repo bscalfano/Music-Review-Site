@@ -10,6 +10,7 @@ import { ProfileHeader } from "@/components/profile/profile-header";
 import {
   ListsTab,
   parseTab,
+  PinnedSection,
   ProfileTabs,
   QueueTab,
   StatsTab,
@@ -18,6 +19,7 @@ import { getCurrentUser, toViewer } from "@/lib/auth/session";
 import { filtersToQuery, hasActiveFilters, parseFilters } from "@/lib/discovery/filters";
 import { countLists, listsForUser } from "@/lib/lists/service";
 import { countQueued, listQueue, listSuggestions } from "@/lib/queue/service";
+import { getPins } from "@/lib/pins/service";
 import { getUserStats } from "@/lib/stats/user-stats";
 import { VIEWER_DEFAULT_THEME_COOKIE } from "@/lib/profiles/prefs";
 import {
@@ -87,7 +89,7 @@ export default async function ProfilePage({ params, searchParams }: Props) {
   });
 
   const emptyGrid = { items: [], nextCursor: null, nextPage: null, total: 0, overall: 0 };
-  const [counts, favorites, grid, listCount, queueCount] = await Promise.all([
+  const [counts, favorites, grid, listCount, queueCount, pins] = await Promise.all([
     getFollowCounts(user.id),
     canSeeContent ? getFavorites(user.id) : Promise.resolve([]),
     canSeeContent
@@ -103,6 +105,9 @@ export default async function ProfilePage({ params, searchParams }: Props) {
       : Promise.resolve(emptyGrid),
     canSeeContent ? countLists(user.id, isOwner) : Promise.resolve(0),
     canSeeContent ? countQueued(user.id) : Promise.resolve(0),
+    canSeeContent && tab === "reviews" && !cursor && page === 1 && !active
+      ? getPins(user.id, viewer)
+      : Promise.resolve([]),
   ]);
   const tabData = canSeeContent
     ? {
@@ -135,6 +140,8 @@ export default async function ProfilePage({ params, searchParams }: Props) {
         {canSeeContent ? (
           <>
             <FourFavorites handle={user.handle!} favorites={favorites} isOwner={isOwner} />
+
+            <PinnedSection handle={user.handle!} pins={pins} />
 
             <section aria-label={tab === "reviews" ? "Reviews" : undefined} className="space-y-3">
               <ProfileTabs

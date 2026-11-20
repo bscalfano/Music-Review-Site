@@ -100,3 +100,40 @@ export function MiniShelf({ covers }: { covers: Omit<Cover, "slug">[] }) {
     </div>
   );
 }
+
+/**
+ * A ranked shelf as a poster wall: four across, rank number on a badge under each cover. Meant
+ * for "top 50" style lists where the order is the point.
+ */
+export function ShelfGrid({ albums }: { albums: (Cover & { artistName: string })[] }) {
+  if (albums.length === 0) return null;
+  return (
+    <ol className="grid grid-cols-3 gap-x-2 gap-y-6 sm:grid-cols-4 sm:gap-x-3">
+      {albums.map((a, i) => (
+        <li key={a.mbid} className="relative pb-3">
+          <Link
+            href={albumPath(a)}
+            aria-label={`${i + 1}. ${a.title} by ${a.artistName}`}
+            title={`${a.title}, ${a.artistName}`}
+            className="bg-muted relative block aspect-square overflow-hidden rounded-[3px] ring-1 ring-black/10 outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+          >
+            <Image
+              src={albumCoverUrl(a, 500)}
+              alt=""
+              fill
+              sizes="(min-width: 640px) 25vw, 33vw"
+              unoptimized
+              className="object-cover transition-transform duration-200 hover:scale-105"
+            />
+          </Link>
+          <span
+            aria-hidden
+            className="bg-foreground/80 text-background absolute bottom-0 left-1/2 flex size-7 -translate-x-1/2 items-center justify-center rounded-full text-xs font-semibold tabular-nums ring-2 ring-(--background,white)"
+          >
+            {i + 1}
+          </span>
+        </li>
+      ))}
+    </ol>
+  );
+}
