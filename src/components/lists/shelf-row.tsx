@@ -29,7 +29,7 @@ export function ShelfRow({ albums }: { albums: (Cover & { artistName: string })[
       <EdgeScroller
         label="Records on this shelf"
         edge={0.17}
-        className="flex items-end overflow-x-auto px-2 pt-8 pb-0"
+        className="mx-6 flex [scrollbar-width:none] items-end overflow-x-auto pt-8 pb-0 [&::-webkit-scrollbar]:hidden"
       >
         {albums.map((a) => (
           <li
