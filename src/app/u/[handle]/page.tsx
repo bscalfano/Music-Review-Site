@@ -8,6 +8,7 @@ import { CoverGrid } from "@/components/profile/cover-grid";
 import { FourFavorites } from "@/components/profile/four-favorites";
 import { ProfileHeader } from "@/components/profile/profile-header";
 import { ProfileTabPanels } from "@/components/profile/profile-tab-panels";
+import { BlockedProfile } from "@/components/social/blocked-profile";
 import { PinnedSection } from "@/components/profile/pinned-section";
 import { ListsTab, QueueTab, StatsTab } from "@/components/profile/profile-tabs";
 import { parseTab } from "@/components/profile/tab-ids";
@@ -25,6 +26,7 @@ import {
   getProfileGrid,
 } from "@/lib/profiles/queries";
 import { resolveProfileTheme } from "@/lib/profiles/themes";
+import { hasBlocked } from "@/lib/social/blocks";
 import {
   authorFacts,
   canViewContent,
@@ -72,7 +74,16 @@ export default async function ProfilePage({ params, searchParams }: Props) {
   const facts = authorFacts(user);
   const relation = await loadRelation(viewer, user.id);
   // A blocked, suspended or deleted profile looks exactly like one that doesn't exist.
-  if (!canViewProfileHeader(viewer, facts, relation)) notFound();
+  if (!canViewProfileHeader(viewer, facts, relation)) {
+    // Someone you blocked: show who they are, with a way to unblock. If they blocked you, or it's
+    // gone, it still looks like the page doesn't exist.
+    if (viewer && facts.active && (await hasBlocked(viewer.id, user.id))) {
+      return (
+        <BlockedProfile user={user} profile={profile} counts={await getFollowCounts(user.id)} />
+      );
+    }
+    notFound();
+  }
   const canSeeContent = canViewContent(viewer, facts, relation);
   const isOwner = current?.id === user.id;
   const active = hasActiveFilters(filters);

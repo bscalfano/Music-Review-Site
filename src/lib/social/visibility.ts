@@ -133,3 +133,18 @@ export function profileVisibleTo(viewer: Viewer, author: AuthorColumns): SQL {
   )`);
   return or(eq(author.id, viewer.id), and(active, not(blockedEitherWay)))!;
 }
+
+/**
+ * SQL condition: `viewer` has blocked this (still active) account. Blocked accounts stay findable
+ * by the person who blocked them, so they can open the profile and undo it.
+ */
+export function blockedByViewer(viewer: Viewer, author: AuthorColumns): SQL {
+  if (!viewer) return sql`false`;
+  return and(
+    eq(author.status, "active"),
+    isNull(author.deletedAt),
+    exists(sql`(
+      SELECT 1 FROM blocks b WHERE b.blocker_id = ${viewer.id} AND b.blocked_id = ${author.id}
+    )`),
+  )!;
+}

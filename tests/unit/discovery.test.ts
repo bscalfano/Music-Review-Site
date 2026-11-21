@@ -409,14 +409,17 @@ describe.skipIf(!process.env.DATABASE_URL)("discovery against the database", () 
       const asSelf = await searchSite(`secretive ${tag}`, viewerOf(priv));
       expect(asSelf.reviews).toHaveLength(1);
     });
-    it("hides blocked people and their reviews from the blocker", async () => {
+    it("hides a blocked person's reviews from the blocker, but they can still find the person", async () => {
       const r = await searchSite(`blockedword ${tag}`, viewerOf(viewer));
       expect(r.reviews).toHaveLength(0);
-      const handles = async (v: ReturnType<typeof viewerOf> | null) =>
-        (await searchSite(`d_blocked${tag}`, v)).people.map((p) => p.handle);
-      expect(await handles(viewerOf(viewer))).not.toContain(`d_blocked${tag}`);
-      // Anyone else still sees them.
-      expect(await handles(null)).toContain(`d_blocked${tag}`);
+      const people = async (v: ReturnType<typeof viewerOf> | null) =>
+        (await searchSite(`d_blocked${tag}`, v)).people;
+      // The blocker can still look the account up (to open it and unblock), marked as blocked.
+      const found = (await people(viewerOf(viewer))).find((p) => p.handle === `d_blocked${tag}`);
+      expect(found).toMatchObject({ blocked: true });
+      // Anyone else sees them as usual.
+      const others = (await people(null)).find((p) => p.handle === `d_blocked${tag}`);
+      expect(others).toMatchObject({ blocked: false });
     });
     it("finds people by @handle and still lists private accounts as people", async () => {
       const r = await searchSite(`@d_priv${tag}`, null);

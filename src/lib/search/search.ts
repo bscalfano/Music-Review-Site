@@ -2,7 +2,7 @@ import { and, desc, ilike, isNotNull, or, sql } from "drizzle-orm";
 import { getDb, schema } from "@/db";
 import { searchAlbumsLocal, type AlbumHit } from "@/lib/albums/search";
 import { getSearchReviews, type FeedItem } from "@/lib/social/feed";
-import { profileVisibleTo, type Viewer } from "@/lib/social/visibility";
+import { blockedByViewer, profileVisibleTo, type Viewer } from "@/lib/social/visibility";
 
 const { artists, users } = schema;
 
@@ -24,6 +24,8 @@ export type PersonHit = {
   displayName: string | null;
   image: string | null;
   isPrivate: boolean;
+  /** The signed-in viewer has blocked this person. */
+  blocked: boolean;
 };
 
 export type SearchResults = {
@@ -62,12 +64,13 @@ async function searchPeople(q: string, viewer: Viewer, limit: number): Promise<P
       displayName: users.displayName,
       image: users.image,
       isPrivate: users.isPrivate,
+      blocked: sql<boolean>`${blockedByViewer(viewer, users)}`,
     })
     .from(users)
     .where(
       and(
         isNotNull(users.handle),
-        profileVisibleTo(viewer, users),
+        or(profileVisibleTo(viewer, users), blockedByViewer(viewer, users)),
         or(
           ilike(users.handle, like),
           ilike(users.displayName, like),

@@ -5,6 +5,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { LinkifiedText } from "@/components/linkified-text";
 import { FollowButton } from "@/components/social/follow-button";
 import { ProfileMenu } from "@/components/social/profile-menu";
+import { UnblockButton } from "@/components/social/unblock-button";
 import { ImageEditButton } from "./image-edit-button";
 import { ImageUploader } from "./image-uploader";
 import { EditProfileButton, ProfileEditProvider, ProfileInfoSwitch } from "./profile-edit";
@@ -23,6 +24,7 @@ export function ProfileHeader({
   viewerId,
   followState,
   countsVisible = true,
+  blockedByViewer = false,
 }: {
   user: UserRow;
   profile: ProfileRow | null;
@@ -34,6 +36,8 @@ export function ProfileHeader({
   followState: FollowState;
   /** Follower/following lists are hidden for private accounts you can't see. */
   countsVisible?: boolean;
+  /** The owner of this page is someone the viewer blocked: show an Unblock control, no reviews. */
+  blockedByViewer?: boolean;
 }) {
   const banner = bannerUrl(profile?.bannerKey ?? null, "full");
   const details = [profile?.pronouns, profile?.location].filter(Boolean);
@@ -97,6 +101,11 @@ export function ProfileHeader({
             <div className="mb-2 flex items-center gap-2">
               {isOwner ? (
                 <EditProfileButton />
+              ) : blockedByViewer ? (
+                <>
+                  <ProfileMenu targetId={user.id} handle={user.handle ?? ""} blocked />
+                  <UnblockButton targetId={user.id} handle={user.handle ?? ""} variant="blocked" />
+                </>
               ) : viewerId ? (
                 <>
                   <FollowButton
@@ -184,7 +193,12 @@ export function ProfileHeader({
             />
 
             <p className="text-muted-foreground text-sm">
-              <span className="text-foreground font-semibold">{reviewCount}</span> reviews ·{" "}
+              {!blockedByViewer && (
+                <>
+                  <span className="text-foreground font-semibold">{reviewCount}</span> reviews
+                  ·{" "}
+                </>
+              )}
               {countsVisible ? (
                 <>
                   <Link href={`/u/${user.handle}/followers`} className="hover:underline">

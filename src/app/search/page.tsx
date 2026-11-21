@@ -137,6 +137,7 @@ export default async function SearchPage({ searchParams }: Props) {
                       <span className="text-muted-foreground block truncate text-xs">
                         @{p.handle}
                         {p.isPrivate ? " · private" : ""}
+                        {p.blocked ? " · blocked" : ""}
                       </span>
                     </span>
                   </Link>
