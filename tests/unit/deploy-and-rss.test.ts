@@ -97,6 +97,7 @@ const item = (over: Partial<FeedItem> = {}): FeedItem => ({
   author: { handle: "bri", displayName: "Bri <script>", image: null },
   album: { mbid: "m", slug: "kid-a", title: "Kid A", coverKey: null },
   artistName: "Radiohead & co",
+  artistSlug: "radiohead",
   clip: null,
   ...over,
 });

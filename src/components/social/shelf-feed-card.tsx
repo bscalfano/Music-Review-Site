@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { MiniShelf } from "@/components/lists/shelf-row";
+import { ClickableItem } from "@/components/social/clickable-item";
 import { UserAvatar } from "@/components/user-avatar";
 import type { ShelfFeedItem } from "@/lib/social/shelf-feed";
 
@@ -8,7 +9,7 @@ export function ShelfFeedCard({ shelf }: { shelf: ShelfFeedItem }) {
   const name = shelf.author.displayName ?? `@${shelf.author.handle}`;
   const href = `/shelves/${shelf.author.handle}/${shelf.slug}`;
   return (
-    <li className="py-5">
+    <ClickableItem href={href} className="py-5">
       <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
         <Link
           href={`/u/${shelf.author.handle}`}
@@ -35,6 +36,6 @@ export function ShelfFeedCard({ shelf }: { shelf: ShelfFeedItem }) {
           {shelf.description}
         </p>
       )}
-    </li>
+    </ClickableItem>
   );
 }

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
+import { BackButton } from "@/components/back-button";
 import { PinButton } from "@/components/pin-button";
 import { isPinned } from "@/lib/pins/service";
 import { notFound } from "next/navigation";
@@ -86,6 +87,10 @@ export default async function ReviewPage({ params }: Props) {
       style={theme.style}
     >
       <main className="mx-auto max-w-3xl px-4 py-8">
+        <BackButton
+          fallbackHref={`/u/${author.handle}`}
+          fallbackLabel={`Back to ${author.displayName ?? `@${author.handle}`}'s profile`}
+        />
         {!published && (
           <p className="bg-muted mb-4 rounded-lg px-4 py-2 text-sm" role="status">
             This is a draft. Only you can see it.{" "}

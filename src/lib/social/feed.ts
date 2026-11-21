@@ -23,6 +23,7 @@ export type FeedItem = {
   author: { handle: string; displayName: string | null; image: string | null };
   album: { mbid: string; slug: string; title: string; coverKey: string | null };
   artistName: string;
+  artistSlug: string;
   clip: { trackId: string; title: string; previewUrl: string | null } | null;
 };
 
@@ -64,6 +65,7 @@ async function queryItems(opts: {
       albumTitle: albums.title,
       coverKey: albums.coverKey,
       artistName: artists.name,
+      artistSlug: artists.slug,
       trackId: tracks.id,
       trackTitle: tracks.title,
       previewUrl: tracks.previewUrl,
@@ -108,6 +110,7 @@ async function queryItems(opts: {
     author: { handle: r.handle!, displayName: r.displayName, image: r.image },
     album: { mbid: r.albumMbid, slug: r.albumSlug, title: r.albumTitle, coverKey: r.coverKey },
     artistName: r.artistName,
+    artistSlug: r.artistSlug,
     clip: r.trackId
       ? {
           trackId: r.trackId,

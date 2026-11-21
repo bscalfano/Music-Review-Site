@@ -1,11 +1,12 @@
 import { MessageCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { ClickableItem } from "@/components/social/clickable-item";
 import { ClipButton } from "@/components/clip-button";
 import { HeartButton } from "@/components/social/heart-button";
 import { StarRating } from "@/components/star-rating";
 import { UserAvatar } from "@/components/user-avatar";
-import { albumPath } from "@/lib/albums/paths";
+import { albumPath, artistPath } from "@/lib/albums/paths";
 import { markdownExcerpt } from "@/lib/markdown/directives";
 import { albumCoverUrl } from "@/lib/music";
 import type { FeedItem } from "@/lib/social/feed";
@@ -38,7 +39,7 @@ export function FeedCard({ item }: { item: FeedItem }) {
 
   if (item.body.trim() === "") {
     return (
-      <li className="flex items-center gap-3 py-3 text-sm">
+      <ClickableItem href={reviewHref} className="flex items-center gap-3 py-3 text-sm">
         <Link href={`/u/${item.author.handle}`} aria-label={`${name}'s profile`}>
           <UserAvatar user={item.author} size={28} />
         </Link>
@@ -47,10 +48,15 @@ export function FeedCard({ item }: { item: FeedItem }) {
             {name}
           </Link>{" "}
           {item.rating === null ? "listened to" : "rated"}{" "}
-          <Link href={reviewHref} className="font-medium hover:underline">
+          <Link href={albumPath(item.album)} className="font-medium hover:underline">
             {item.album.title}
           </Link>{" "}
-          <span className="text-muted-foreground">by {item.artistName}</span>
+          <span className="text-muted-foreground">
+            by{" "}
+            <Link href={artistPath({ slug: item.artistSlug })} className="hover:underline">
+              {item.artistName}
+            </Link>
+          </span>
         </p>
         <StarRating rating={item.rating} size={14} />
         {heart}
@@ -60,13 +66,13 @@ export function FeedCard({ item }: { item: FeedItem }) {
         >
           {date(item.publishedAt)}
         </time>
-      </li>
+      </ClickableItem>
     );
   }
 
   const excerpt = markdownExcerpt(item.body, 280);
   return (
-    <li className="flex gap-4 py-5">
+    <ClickableItem href={reviewHref} className="flex gap-4 py-5">
       <Link
         href={albumPath(item.album)}
         className="bg-muted relative block size-24 shrink-0 overflow-hidden rounded-lg sm:size-32"
@@ -97,10 +103,16 @@ export function FeedCard({ item }: { item: FeedItem }) {
           </time>
         </div>
         <h2 className="leading-snug font-semibold">
-          <Link href={reviewHref} className="hover:underline">
+          <Link href={albumPath(item.album)} className="hover:underline">
             {item.album.title}
           </Link>
-          <span className="text-muted-foreground font-normal"> · {item.artistName}</span>
+          <span className="text-muted-foreground font-normal">
+            {" "}
+            ·{" "}
+            <Link href={artistPath({ slug: item.artistSlug })} className="hover:underline">
+              {item.artistName}
+            </Link>
+          </span>
         </h2>
         <StarRating rating={item.rating} size={16} />
         <p className="text-sm leading-relaxed">
@@ -135,6 +147,6 @@ export function FeedCard({ item }: { item: FeedItem }) {
           </span>
         </div>
       </div>
-    </li>
+    </ClickableItem>
   );
 }
