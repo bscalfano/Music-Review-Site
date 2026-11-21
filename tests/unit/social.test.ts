@@ -59,7 +59,6 @@ describe.skipIf(!process.env.DATABASE_URL)("social layer", () => {
       title: null,
       body: "",
       rating: null,
-      clipTrackId: null,
       tags: [],
       status: "published",
       ...over,

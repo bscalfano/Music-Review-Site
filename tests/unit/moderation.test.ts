@@ -69,7 +69,6 @@ describe.skipIf(!process.env.DATABASE_URL)("moderation and accounts", () => {
       title: null,
       body: "A written review.",
       rating: 8,
-      clipTrackId: null,
       tags: [],
       status: "published",
       ...over,
@@ -163,7 +162,6 @@ describe.skipIf(!process.env.DATABASE_URL)("moderation and accounts", () => {
         title: null,
         body: "Private words",
         rating: 5,
-        clipTrackId: null,
         tags: [],
         status: "published",
       });
@@ -345,7 +343,6 @@ describe.skipIf(!process.env.DATABASE_URL)("moderation and accounts", () => {
         title: "Unfinished",
         body: "Secret draft text",
         rating: 4,
-        clipTrackId: null,
         tags: ["wip"],
         status: "draft",
       });

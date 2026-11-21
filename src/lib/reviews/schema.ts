@@ -31,7 +31,6 @@ export const reviewInputSchema = z.object({
     .string()
     .max(MAX_BODY, `Reviews can be up to ${MAX_BODY.toLocaleString("en-US")} characters.`),
   rating: ratingSchema,
-  clipTrackId: z.uuid().nullable(),
   favoriteTrackId: z.uuid().nullable().default(null),
   tags: z
     .array(z.string().max(100))

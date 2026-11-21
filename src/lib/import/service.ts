@@ -217,7 +217,6 @@ export async function publishItems(ownerId: string, itemIds: string[]): Promise<
         title: null,
         body: item.body,
         rating: item.rating,
-        clipTrackId: null,
         tags: item.tags,
         status: "published",
         publishedAt: item.postedAt,

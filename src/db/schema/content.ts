@@ -46,8 +46,7 @@ export const reviews = pgTable(
      * NULL = no rating (distinct from 0).
      */
     rating: smallint(),
-    clipTrackId: uuid().references(() => tracks.id, { onDelete: "set null" }),
-    /** The reviewer's favorite song. Always a track of this review's album (checked on save). */
+    /** The reviewer's favorite song, which is also the review's 30-second preview. Always a track of this review's album (checked on save). */
     favoriteTrackId: uuid().references(() => tracks.id, { onDelete: "set null" }),
     status: reviewStatus().notNull().default("draft"),
     publishedAt: timestamp({ withTimezone: true }),

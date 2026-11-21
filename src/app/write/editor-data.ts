@@ -34,7 +34,6 @@ export async function loadEditor(
           slug: review.slug,
           body: review.body,
           rating: review.rating,
-          clipTrackId: review.clipTrackId,
           favoriteTrackId: review.favoriteTrackId,
           tags: review.tags,
           status: review.status,

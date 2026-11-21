@@ -75,7 +75,7 @@ async function queryItems(opts: {
     .innerJoin(users, eq(reviews.authorId, users.id))
     .innerJoin(albums, eq(reviews.albumId, albums.id))
     .innerJoin(artists, eq(albums.artistId, artists.id))
-    .leftJoin(tracks, eq(reviews.clipTrackId, tracks.id))
+    .leftJoin(tracks, eq(reviews.favoriteTrackId, tracks.id))
     .where(
       and(
         eq(reviews.status, "published"),

@@ -59,7 +59,7 @@ export default async function ReviewPage({ params }: Props) {
   const data = await getReviewPage(handle, slug, toViewer(current));
   if (!data) notFound();
 
-  const { review, author, authorProfile, album, tracks, clipTrack, favoriteTrack, tags } = data;
+  const { review, author, authorProfile, album, tracks, favoriteTrack, tags } = data;
   const isOwner = current?.id === author.id;
   const forceDefault = (await cookies()).get(VIEWER_DEFAULT_THEME_COOKIE)?.value === "1";
   const theme = resolveProfileTheme({
@@ -177,17 +177,6 @@ export default async function ReviewPage({ params }: Props) {
               )}
             </div>
           </header>
-
-          {clipTrack && (
-            <div className="mt-6 flex items-center gap-3">
-              <ClipButton
-                trackId={clipTrack.id}
-                previewUrl={clipTrack.previewUrl}
-                label={`${clipTrack.title}`}
-              />
-              <span className="text-muted-foreground text-xs">30-second clip</span>
-            </div>
-          )}
 
           {!isLog && (
             <div className="mt-6 text-[1.05rem]">

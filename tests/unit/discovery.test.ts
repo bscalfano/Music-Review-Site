@@ -266,7 +266,6 @@ describe.skipIf(!process.env.DATABASE_URL)("discovery against the database", () 
       title: null,
       body: "Some words.",
       rating: 6,
-      clipTrackId: null,
       tags: [],
       status: "published",
       ...over,

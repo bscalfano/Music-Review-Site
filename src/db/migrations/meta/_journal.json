@@ -64,6 +64,13 @@
       "when": 1795228199956,
       "tag": "0008_mutes",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1795231217178,
+      "tag": "0009_favorite_is_preview",
+      "breakpoints": true
     }
   ]
 }

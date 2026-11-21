@@ -20,7 +20,6 @@ export type EditorInitial = {
   slug: string;
   body: string;
   rating: number | null;
-  clipTrackId: string | null;
   favoriteTrackId: string | null;
   tags: string[];
   status: "draft" | "published";
@@ -40,7 +39,6 @@ export function ReviewEditor({ album, tracks, initial, imagePrefixes, handle }: 
   const [status, setStatus] = useState<"draft" | "published">(initial?.status ?? "draft");
   const [body, setBody] = useState(initial?.body ?? "");
   const [rating, setRating] = useState<number | null>(initial?.rating ?? null);
-  const [clipTrackId, setClipTrackId] = useState<string | null>(initial?.clipTrackId ?? null);
   const [favoriteTrackId, setFavoriteTrackId] = useState<string | null>(
     initial?.favoriteTrackId ?? null,
   );
@@ -173,7 +171,6 @@ export function ReviewEditor({ album, tracks, initial, imagePrefixes, handle }: 
         reviewId,
         body,
         rating,
-        clipTrackId,
         favoriteTrackId,
         tags,
         status: nextStatus,
@@ -206,7 +203,7 @@ export function ReviewEditor({ album, tracks, initial, imagePrefixes, handle }: 
     });
   }
 
-  const clipTrack = tracks.find((t) => t.id === clipTrackId) ?? null;
+  const favoriteTrack = tracks.find((t) => t.id === favoriteTrackId) ?? null;
   const published = status === "published";
 
   return (
@@ -380,61 +377,34 @@ export function ReviewEditor({ album, tracks, initial, imagePrefixes, handle }: 
             The track list is still loading. Reload in a moment to pick a favorite.
           </p>
         ) : (
-          <select
-            aria-label="Favorite song on this album"
-            value={favoriteTrackId ?? ""}
-            onChange={(e) => change(setFavoriteTrackId)(e.target.value || null)}
-            className="border-border bg-background h-9 max-w-full rounded-lg border px-3 text-sm"
-          >
-            <option value="">No favorite</option>
-            {tracks.map((t) => (
-              <option key={t.id} value={t.id}>
-                {t.title}
-              </option>
-            ))}
-          </select>
-        )}
-        <p className="text-muted-foreground text-xs">
-          Shown at the end of your review. You can only pick a song from this album.
-        </p>
-      </section>
-
-      <section aria-labelledby="clip-heading" className="space-y-2">
-        <h2 id="clip-heading" className="text-sm font-medium">
-          Song clip
-        </h2>
-        {tracks.length === 0 ? (
-          <p className="text-muted-foreground text-sm">
-            The track list is still loading. Reload in a moment to attach a clip.
-          </p>
-        ) : (
           <div className="flex flex-wrap items-center gap-3">
             <select
-              aria-label="Track for the song clip"
-              value={clipTrackId ?? ""}
-              onChange={(e) => change(setClipTrackId)(e.target.value || null)}
+              aria-label="Favorite song on this album"
+              value={favoriteTrackId ?? ""}
+              onChange={(e) => change(setFavoriteTrackId)(e.target.value || null)}
               className="border-border bg-background h-9 max-w-full rounded-lg border px-3 text-sm"
             >
-              <option value="">No clip</option>
+              <option value="">No favorite</option>
               {tracks.map((t) => (
                 <option key={t.id} value={t.id}>
-                  {t.position}. {t.title}
+                  {t.title}
                 </option>
               ))}
             </select>
-            {clipTrack && (
+            {favoriteTrack && (
               <ClipButton
-                key={clipTrack.id}
-                trackId={clipTrack.id}
-                previewUrl={clipTrack.previewUrl}
-                label={`Test: ${clipTrack.title}`}
+                key={favoriteTrack.id}
+                trackId={favoriteTrack.id}
+                previewUrl={favoriteTrack.previewUrl}
+                label={`Test: ${favoriteTrack.title}`}
               />
             )}
           </div>
         )}
         <p className="text-muted-foreground text-xs">
-          A 30-second preview plays on your review. Some tracks don&apos;t have one; use the test
-          button to check.
+          Shown at the end of your review, with a 30-second preview readers can play. You can only
+          pick a song from this album. Some tracks don&apos;t have a preview; use the test button to
+          check.
         </p>
       </section>
 

@@ -31,7 +31,7 @@ describe.skipIf(!process.env.DATABASE_URL)("review service keeps album_stats cor
   let albumId: string;
   let otherAlbumId: string;
   let sameTitleAlbumId: string;
-  let clipTrackId: string;
+  let favoriteTrackId: string;
   let otherAlbumTrackId: string;
   const artistIds: string[] = [];
 
@@ -62,7 +62,6 @@ describe.skipIf(!process.env.DATABASE_URL)("review service keeps album_stats cor
     title: null,
     body: "",
     rating: null,
-    clipTrackId: null,
     tags: [],
     status: "published",
     ...over,
@@ -82,7 +81,7 @@ describe.skipIf(!process.env.DATABASE_URL)("review service keeps album_stats cor
 
     const main = await makeAlbum("Stats Test Album", true);
     albumId = main.albumId;
-    clipTrackId = main.trackId;
+    favoriteTrackId = main.trackId;
     const other = await makeAlbum("Another Album", true);
     otherAlbumId = other.albumId;
     otherAlbumTrackId = other.trackId;
@@ -269,20 +268,10 @@ describe.skipIf(!process.env.DATABASE_URL)("review service keeps album_stats cor
       expect(second.slug).toBe("stats-test-album-2");
     });
 
-    it("only allows a clip from the same album", async () => {
-      const ok = await saveReview(alice, review({ clipTrackId }));
-      expect(ok.status).toBe("published");
-      await expect(
-        saveReview(alice, review({ clipTrackId: otherAlbumTrackId })),
-      ).rejects.toMatchObject({
-        code: "bad_clip",
-      });
-    });
-
-    it("only allows a favorite song from the same album", async () => {
-      const ok = await saveReview(alice, review({ favoriteTrackId: clipTrackId }));
+    it("only allows a favorite song (which is also the preview) from the same album", async () => {
+      const ok = await saveReview(alice, review({ favoriteTrackId }));
       const [row] = await db.select().from(reviews).where(eq(reviews.id, ok.id));
-      expect(row.favoriteTrackId).toBe(clipTrackId);
+      expect(row.favoriteTrackId).toBe(favoriteTrackId);
       await expect(
         saveReview(alice, review({ favoriteTrackId: otherAlbumTrackId })),
       ).rejects.toMatchObject({ code: "bad_favorite" });
@@ -327,9 +316,9 @@ describe.skipIf(!process.env.DATABASE_URL)("review service keeps album_stats cor
 
     it("looks a clip up once, stores it, and reuses it while fresh", async () => {
       const url = "https://cdn.example.com/opening.mp3";
-      expect(await resolveTrackPreview(clipTrackId, { previews: [provider(url)] })).toBe(url);
+      expect(await resolveTrackPreview(favoriteTrackId, { previews: [provider(url)] })).toBe(url);
       expect(
-        await resolveTrackPreview(clipTrackId, { previews: [provider("https://other")] }),
+        await resolveTrackPreview(favoriteTrackId, { previews: [provider("https://other")] }),
       ).toBe(url);
       expect(calls).toEqual(["Opening Song"]);
     });
@@ -338,11 +327,11 @@ describe.skipIf(!process.env.DATABASE_URL)("review service keeps album_stats cor
       const fresh = "https://cdn.example.com/opening-v2.mp3";
       // The previous test just checked the track, so this force is rate limited.
       expect(
-        await resolveTrackPreview(clipTrackId, { force: true, previews: [provider(fresh)] }),
+        await resolveTrackPreview(favoriteTrackId, { force: true, previews: [provider(fresh)] }),
       ).toBe("https://cdn.example.com/opening.mp3");
       const later = new Date(Date.now() + 5 * 60 * 1000);
       expect(
-        await resolveTrackPreview(clipTrackId, {
+        await resolveTrackPreview(favoriteTrackId, {
           force: true,
           previews: [provider(fresh)],
           now: later,

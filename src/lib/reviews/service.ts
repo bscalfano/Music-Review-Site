@@ -13,7 +13,7 @@ const HIDDEN_MESSAGE =
 
 export class ReviewError extends Error {
   constructor(
-    public code: "not_found" | "bad_clip" | "bad_favorite" | "bad_rating" | "hidden",
+    public code: "not_found" | "bad_favorite" | "bad_rating" | "hidden",
     message: string,
   ) {
     super(message);
@@ -28,7 +28,6 @@ export type SaveReviewInput = {
   title: string | null;
   body: string;
   rating: number | null;
-  clipTrackId: string | null;
   /** Favorite song: must be a track of the album. */
   favoriteTrackId?: string | null;
   tags: string[];
@@ -115,15 +114,6 @@ export async function saveReview(authorId: string, input: SaveReviewInput): Prom
     const [album] = await tx.select().from(albums).where(eq(albums.id, input.albumId)).limit(1);
     if (!album) throw new ReviewError("not_found", "That album doesn't exist.");
 
-    if (input.clipTrackId) {
-      const [track] = await tx
-        .select({ id: tracks.id })
-        .from(tracks)
-        .where(and(eq(tracks.id, input.clipTrackId), eq(tracks.albumId, album.id)))
-        .limit(1);
-      if (!track) throw new ReviewError("bad_clip", "That track isn't on this album.");
-    }
-
     if (input.favoriteTrackId) {
       const [track] = await tx
         .select({ id: tracks.id })
@@ -145,7 +135,6 @@ export async function saveReview(authorId: string, input: SaveReviewInput): Prom
       title: input.title,
       body: input.body,
       rating: rating.data,
-      clipTrackId: input.clipTrackId,
       favoriteTrackId: input.favoriteTrackId ?? null,
       status: input.status,
       updatedAt: now,

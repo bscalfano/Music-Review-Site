@@ -101,7 +101,6 @@ describe.skipIf(!process.env.DATABASE_URL)("lists, queue and stats", () => {
       title: null,
       body: "words",
       rating: 6,
-      clipTrackId: null,
       tags: [],
       status: "published",
       ...over,

@@ -10,7 +10,6 @@ const base = {
   title: "",
   body: "",
   rating: null,
-  clipTrackId: null,
   tags: [],
   status: "published" as const,
 };
@@ -33,7 +32,7 @@ describe("review input validation", () => {
 
   it("rejects a bad album id, a bad clip or favorite id and an unknown status", () => {
     expect(reviewInputSchema.safeParse({ ...base, albumMbid: "nope" }).success).toBe(false);
-    expect(reviewInputSchema.safeParse({ ...base, clipTrackId: "nope" }).success).toBe(false);
+    expect(reviewInputSchema.safeParse({ ...base, favoriteTrackId: "nope" }).success).toBe(false);
     expect(reviewInputSchema.safeParse({ ...base, favoriteTrackId: "nope" }).success).toBe(false);
     expect(reviewInputSchema.safeParse({ ...base, status: "hidden" }).success).toBe(false);
   });
