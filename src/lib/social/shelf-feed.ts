@@ -2,6 +2,7 @@ import { and, asc, eq, inArray, lte, sql } from "drizzle-orm";
 import { getDb, schema } from "@/db";
 import { decodeCursor, encodeCursor } from "@/lib/profiles/queries";
 import { getFollowingFeed, type FeedItem } from "./feed";
+import { notMutedBy } from "./mutes";
 import { authorVisibleTo, type Viewer } from "./visibility";
 
 const { lists, listItems, albums, artists, users } = schema;
@@ -58,6 +59,7 @@ async function getFollowingShelves(
         eq(lists.status, "published"),
         sql`${lists.publishedAt} IS NOT NULL`,
         authorVisibleTo(viewer, users),
+        notMutedBy(viewer, lists.authorId),
         sql`(${lists.authorId} = ${viewer.id} OR EXISTS (
           SELECT 1 FROM follows f
           WHERE f.follower_id = ${viewer.id} AND f.followee_id = ${lists.authorId}

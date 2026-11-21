@@ -57,6 +57,28 @@ export const blocks = pgTable(
   ],
 );
 
+/**
+ * Mutes are one-sided and silent: the muted person isn't told, and nothing about what they can
+ * see changes. The muter just stops seeing their posts in feeds.
+ */
+export const mutes = pgTable(
+  "mutes",
+  {
+    muterId: uuid()
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    mutedId: uuid()
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    primaryKey({ columns: [t.muterId, t.mutedId] }),
+    index("mutes_muted_idx").on(t.mutedId),
+    check("mutes_not_self", sql`${t.muterId} <> ${t.mutedId}`),
+  ],
+);
+
 export const notifications = pgTable(
   "notifications",
   {

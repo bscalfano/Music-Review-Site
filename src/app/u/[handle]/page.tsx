@@ -27,6 +27,7 @@ import {
 } from "@/lib/profiles/queries";
 import { resolveProfileTheme } from "@/lib/profiles/themes";
 import { hasBlocked } from "@/lib/social/blocks";
+import { hasMuted } from "@/lib/social/mutes";
 import {
   authorFacts,
   canViewContent,
@@ -137,6 +138,7 @@ export default async function ProfilePage({ params, searchParams }: Props) {
         isOwner={isOwner}
         viewerId={current?.id ?? null}
         followState={relation.followState}
+        muted={!!viewer && !isOwner && (await hasMuted(viewer.id, user.id))}
         countsVisible={canSeeContent}
       />
 

@@ -10,6 +10,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { getDb, schema } from "@/db";
 import { getFollowingActivity } from "@/lib/social/album-activity";
 import { blockUser, unblockUser } from "@/lib/social/blocks";
+import { hasMuted, listMuted, muteUser, unmuteUser } from "@/lib/social/mutes";
 import { addComment, deleteComment, editComment, listComments } from "@/lib/social/comments";
 import { getDiscoverFeed, getFollowingFeed, getSuggestedReviewers } from "@/lib/social/feed";
 import {
@@ -23,6 +24,7 @@ import {
 import { listNotifications, unreadCount, markAllRead } from "@/lib/social/notifications";
 import { checkRateLimit } from "@/lib/social/ratelimit";
 import { getReviewHearts, toggleHeart } from "@/lib/social/reactions";
+import { listAlbumReviews } from "@/lib/reviews/queries";
 import { saveReview, setQuickRating } from "@/lib/reviews/service";
 
 const { users, albums, artists, reviews, notifications, queueItems } = schema;
@@ -422,6 +424,50 @@ describe.skipIf(!process.env.DATABASE_URL)("social layer", () => {
         (i) => i.author.handle === "soc_logger",
       );
       expect(item).toMatchObject({ rating: 7, body: "" });
+    });
+
+    it("hides a muted author from the feeds, quietly, and shows them again after unmuting", async () => {
+      const inFeed = async () => (await getFollowingFeed(viewerOf(alice))).items.map((i) => i.id);
+      const inDiscover = async () =>
+        (await getDiscoverFeed(viewerOf(alice))).items.map((i) => i.id);
+      expect(await inFeed()).toContain(bobReview);
+
+      const before = (await notesFor(bob)).length;
+      await muteUser(alice, bob);
+      expect(await hasMuted(alice, bob)).toBe(true);
+      expect((await listMuted(alice)).map((p) => p.id)).toEqual([bob]);
+      expect(await inFeed()).not.toContain(bobReview);
+      expect(await inDiscover()).not.toContain(bobReview);
+      // Still following, and bob isn't told.
+      expect(await getFollowState(alice, bob)).toBe("accepted");
+      expect((await notesFor(bob)).length).toBe(before);
+      // On an album page, "people you follow" leaves them out too, but the album's reviews don't.
+      const activity = await getFollowingActivity(albumId, viewerOf(alice));
+      expect(activity.people.map((p) => p.userId)).not.toContain(bob);
+      expect(
+        (
+          await listAlbumReviews({
+            albumId,
+            viewer: viewerOf(alice),
+            sort: "recent",
+            limit: 10,
+            followingOnly: true,
+          })
+        ).items.map((i) => i.id),
+      ).not.toContain(bobReview);
+      // Mutes are one-way: bob's own feed is unaffected by alice muting him.
+      expect(await hasMuted(bob, alice)).toBe(false);
+
+      await unmuteUser(alice, bob);
+      expect(await hasMuted(alice, bob)).toBe(false);
+      expect(await inFeed()).toContain(bobReview);
+      expect(
+        (await getFollowingActivity(albumId, viewerOf(alice))).people.map((p) => p.userId),
+      ).toContain(bob);
+    });
+
+    it("can't mute yourself", async () => {
+      await expect(muteUser(alice, alice)).rejects.toBeInstanceOf(SocialError);
     });
 
     it("hides a blocked author from the feed", async () => {

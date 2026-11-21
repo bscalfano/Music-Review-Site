@@ -9,6 +9,7 @@ import {
   loadRelation,
   type Viewer,
 } from "@/lib/social/visibility";
+import { notMutedBy } from "@/lib/social/mutes";
 
 const { reviews, users, albums, artists, tracks, albumStats, tags, reviewTags, profiles } = schema;
 
@@ -258,6 +259,8 @@ function albumReviewFilter(
             AND f.status = 'accepted'
         )`
       : undefined,
+    // "People you follow" leaves out anyone you've muted.
+    followingOnly ? notMutedBy(viewer, reviews.authorId) : undefined,
   )!;
 }
 

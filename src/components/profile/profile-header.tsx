@@ -25,6 +25,7 @@ export function ProfileHeader({
   followState,
   countsVisible = true,
   blockedByViewer = false,
+  muted = false,
 }: {
   user: UserRow;
   profile: ProfileRow | null;
@@ -38,6 +39,8 @@ export function ProfileHeader({
   countsVisible?: boolean;
   /** The owner of this page is someone the viewer blocked: show an Unblock control, no reviews. */
   blockedByViewer?: boolean;
+  /** The viewer has muted this person (their posts are hidden from the viewer's feeds). */
+  muted?: boolean;
 }) {
   const banner = bannerUrl(profile?.bannerKey ?? null, "full");
   const details = [profile?.pronouns, profile?.location].filter(Boolean);
@@ -113,7 +116,12 @@ export function ProfileHeader({
                     initial={followState}
                     isPrivate={user.isPrivate}
                   />
-                  <ProfileMenu targetId={user.id} handle={user.handle ?? ""} blocked={false} />
+                  <ProfileMenu
+                    targetId={user.id}
+                    handle={user.handle ?? ""}
+                    blocked={false}
+                    muted={muted}
+                  />
                 </>
               ) : (
                 <Link

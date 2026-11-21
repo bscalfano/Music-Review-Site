@@ -18,6 +18,7 @@ import {
   NOTIFICATION_LABELS,
   type NotificationType,
 } from "@/lib/social/notifications";
+import { muteUser, unmuteUser } from "@/lib/social/mutes";
 import { toggleHeart } from "@/lib/social/reactions";
 import { getDb, schema } from "@/db";
 import { eq } from "drizzle-orm";
@@ -112,6 +113,26 @@ export async function unblockAction(targetId: string): Promise<{ ok: true } | Fa
   const { user } = await actor();
   if (!id.safeParse(targetId).success) return fail("Invalid user.");
   await unblockUser(user.id, targetId);
+  revalidatePath("/", "layout");
+  return { ok: true };
+}
+
+export async function muteAction(targetId: string): Promise<{ ok: true } | Fail> {
+  const { user } = await actor();
+  if (!id.safeParse(targetId).success) return fail("Invalid user.");
+  try {
+    await muteUser(user.id, targetId);
+    revalidatePath("/", "layout");
+    return { ok: true };
+  } catch (err) {
+    return toFail(err);
+  }
+}
+
+export async function unmuteAction(targetId: string): Promise<{ ok: true } | Fail> {
+  const { user } = await actor();
+  if (!id.safeParse(targetId).success) return fail("Invalid user.");
+  await unmuteUser(user.id, targetId);
   revalidatePath("/", "layout");
   return { ok: true };
 }

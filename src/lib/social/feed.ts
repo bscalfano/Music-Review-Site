@@ -5,6 +5,7 @@ import { filterConditions, sortOrder, type Filters } from "@/lib/discovery/filte
 import { decodeCursor, encodeCursor } from "@/lib/profiles/queries";
 import { countComments } from "./comments";
 import { getReviewHearts } from "./reactions";
+import { notMutedBy } from "./mutes";
 import { authorVisibleTo, profileVisibleTo, type Viewer } from "./visibility";
 
 const { reviews, users, albums, artists, tracks, follows } = schema;
@@ -140,11 +141,14 @@ export function getFollowingFeed(viewer: NonNullable<Viewer>, cursor?: string) {
   return queryItems({
     viewer,
     cursor,
-    where: sql`(${reviews.authorId} = ${viewer.id} OR EXISTS (
-      SELECT 1 FROM follows f
-      WHERE f.follower_id = ${viewer.id} AND f.followee_id = ${reviews.authorId}
-        AND f.status = 'accepted'
-    ))`,
+    where: and(
+      sql`(${reviews.authorId} = ${viewer.id} OR EXISTS (
+        SELECT 1 FROM follows f
+        WHERE f.follower_id = ${viewer.id} AND f.followee_id = ${reviews.authorId}
+          AND f.status = 'accepted'
+      ))`,
+      notMutedBy(viewer, reviews.authorId),
+    ),
   });
 }
 
@@ -158,7 +162,11 @@ export function getDiscoverFeed(
     viewer,
     cursor,
     ...opts,
-    where: and(eq(users.isPrivate, false), sql`${reviews.body} <> ''`),
+    where: and(
+      eq(users.isPrivate, false),
+      sql`${reviews.body} <> ''`,
+      notMutedBy(viewer, reviews.authorId),
+    ),
   });
 }
 

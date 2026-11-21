@@ -19,6 +19,7 @@ import {
 } from "@/components/settings/social-forms";
 import { requireUser } from "@/lib/auth/session";
 import { listBlocked } from "@/lib/social/blocks";
+import { listMuted } from "@/lib/social/mutes";
 import { NOTIFICATION_LABELS } from "@/lib/social/notifications";
 import { albumCoverUrl } from "@/lib/music";
 import { VIEWER_DEFAULT_THEME_COOKIE } from "@/lib/profiles/prefs";
@@ -149,6 +150,20 @@ export default async function SettingsPage() {
           options={Object.entries(NOTIFICATION_LABELS).map(([type, label]) => ({ type, label }))}
           enabled={user.emailNotifications}
           emailConfigured={!!process.env.RESEND_API_KEY}
+        />
+      </Section>
+
+      <Section
+        id="muted"
+        title="Muted accounts"
+        description="Their reviews and shelves are hidden from your feeds. They aren't told, and you can still visit their profile."
+      >
+        <BlockedList
+          kind="mute"
+          people={(await listMuted(user.id)).map(({ image, ...p }) => ({
+            ...p,
+            avatar: avatarUrl(image),
+          }))}
         />
       </Section>
 

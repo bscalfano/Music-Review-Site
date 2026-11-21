@@ -1,5 +1,6 @@
 import { and, desc, eq, isNull, sql } from "drizzle-orm";
 import { getDb, schema } from "@/db";
+import { notMutedBy } from "./mutes";
 import { authorVisibleTo, type Viewer } from "./visibility";
 
 const { follows, users, reviews, queueItems } = schema;
@@ -30,7 +31,7 @@ export type FollowingActivity = {
 /**
  * What the people the viewer follows did with an album: one query over `follows` -> reviews,
  * plus queue-only entries. Every row passes the visibility rule (private accounts the viewer
- * can't see, blocks, suspended users never appear).
+ * can't see, blocks, suspended users never appear), and people you've muted are left out.
  */
 export async function getFollowingActivity(
   albumId: string,
@@ -68,6 +69,7 @@ export async function getFollowingActivity(
           eq(follows.followerId, viewer.id),
           eq(follows.status, "accepted"),
           authorVisibleTo(viewer, users),
+          notMutedBy(viewer, users.id),
         ),
       )
       .orderBy(desc(reviews.publishedAt)),
@@ -94,6 +96,7 @@ export async function getFollowingActivity(
           eq(follows.followerId, viewer.id),
           eq(follows.status, "accepted"),
           authorVisibleTo(viewer, users),
+          notMutedBy(viewer, users.id),
           sql`NOT EXISTS (
             SELECT 1 FROM reviews r
             WHERE r.author_id = ${users.id} AND r.album_id = ${albumId}

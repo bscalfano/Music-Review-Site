@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useTransition } from "react";
 import {
   unblockAction,
+  unmuteAction,
   updateAcceptSuggestionsAction,
   updateEmailNotificationsAction,
 } from "@/app/social/actions";
@@ -73,13 +74,25 @@ type Blocked = {
   avatar: string | null;
 };
 
-export function BlockedList({ people }: { people: Blocked[] }) {
+export function BlockedList({
+  people,
+  kind = "block",
+}: {
+  people: Blocked[];
+  /** "mute" reuses this list for muted accounts. */
+  kind?: "block" | "mute";
+}) {
+  const undo = kind === "mute" ? unmuteAction : unblockAction;
   const [removed, setRemoved] = useState<Set<string>>(new Set());
   const [pending, start] = useTransition();
   const shown = people.filter((p) => !removed.has(p.id));
 
   if (shown.length === 0) {
-    return <p className="text-muted-foreground text-sm">You haven&apos;t blocked anyone.</p>;
+    return (
+      <p className="text-muted-foreground text-sm">
+        You haven&apos;t {kind === "mute" ? "muted" : "blocked"} anyone.
+      </p>
+    );
   }
   return (
     <ul className="divide-y">
@@ -99,12 +112,12 @@ export function BlockedList({ people }: { people: Blocked[] }) {
             disabled={pending}
             onClick={() =>
               start(async () => {
-                const res = await unblockAction(p.id);
+                const res = await undo(p.id);
                 if (res.ok) setRemoved((s) => new Set(s).add(p.id));
               })
             }
           >
-            Unblock
+            {kind === "mute" ? "Unmute" : "Unblock"}
           </Button>
         </li>
       ))}

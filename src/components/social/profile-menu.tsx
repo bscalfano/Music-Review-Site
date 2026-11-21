@@ -3,22 +3,32 @@
 import { MoreHorizontal } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import { blockAction, unblockAction } from "@/app/social/actions";
+import { blockAction, muteAction, unblockAction, unmuteAction } from "@/app/social/actions";
 import { ReportButton } from "@/components/social/report-button";
 
-/** The "…" menu on someone else's profile: block / unblock. */
+/** The "…" menu on someone else's profile: mute, block, report. */
 export function ProfileMenu({
   targetId,
   handle,
   blocked,
+  muted = false,
 }: {
   targetId: string;
   handle: string;
   blocked: boolean;
+  muted?: boolean;
 }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string>();
+
+  function toggleMute() {
+    startTransition(async () => {
+      const res = muted ? await unmuteAction(targetId) : await muteAction(targetId);
+      if (res.ok) router.refresh();
+      else setError(res.message);
+    });
+  }
 
   function toggle() {
     if (
@@ -45,6 +55,21 @@ export function ProfileMenu({
         <MoreHorizontal className="size-4" aria-hidden />
       </summary>
       <div className="bg-popover absolute right-0 z-20 mt-1 w-44 rounded-lg border p-1 shadow-md">
+        {!blocked && (
+          <button
+            type="button"
+            onClick={toggleMute}
+            disabled={pending}
+            title={
+              muted
+                ? "Show their posts in your feeds again"
+                : "Hide their posts from your feeds. They won't be told."
+            }
+            className="hover:bg-muted w-full rounded-md px-3 py-1.5 text-left text-sm"
+          >
+            {muted ? `Unmute @${handle}` : `Mute @${handle}`}
+          </button>
+        )}
         <button
           type="button"
           onClick={toggle}
