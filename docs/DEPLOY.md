@@ -38,7 +38,18 @@ Other variables:
    ```
 
    Do this before the first real visit, and again whenever a release includes a new file in
-   `src/db/migrations/`.
+   `src/db/migrations/`. Skipping it makes pages that use the new columns or tables fail with
+   database errors.
+
+   For a brand-new production database this applies every migration (`0000` to the latest) in
+   order, and that is all you need. Two of them carry data steps worth knowing about:
+   - `0006` gives existing published shelves a publish date so they sort in the feed.
+   - `0009` merges "Song clip" into "Favorite song": it copies each clip into the favorite where
+     none was set, then drops the old clip column. It can't be undone, so if you ever deploy
+     this onto a database with real reviews, back it up first.
+
+   To check what's pending, compare the files in `src/db/migrations/` with the rows in the
+   `drizzle.__drizzle_migrations` table.
 
 5. Open `https://YOUR_DEPLOYMENT/api/health`. It should say `{"ok":true}`.
 6. Don't run `pnpm db:seed` against production. Seed users are fake and would show up on Discover.
