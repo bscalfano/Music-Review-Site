@@ -259,8 +259,8 @@ function albumReviewFilter(
             AND f.status = 'accepted'
         )`
       : undefined,
-    // "People you follow" leaves out anyone you've muted.
-    followingOnly ? notMutedBy(viewer, reviews.authorId) : undefined,
+    // Anyone you've muted is left out of every list of an album's reviews.
+    notMutedBy(viewer, reviews.authorId),
   )!;
 }
 

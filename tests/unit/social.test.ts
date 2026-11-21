@@ -441,7 +441,7 @@ describe.skipIf(!process.env.DATABASE_URL)("social layer", () => {
       // Still following, and bob isn't told.
       expect(await getFollowState(alice, bob)).toBe("accepted");
       expect((await notesFor(bob)).length).toBe(before);
-      // On an album page, "people you follow" leaves them out too, but the album's reviews don't.
+      // On an album page they're left out of "people you follow" and of the popular/recent lists.
       const activity = await getFollowingActivity(albumId, viewerOf(alice));
       expect(activity.people.map((p) => p.userId)).not.toContain(bob);
       expect(
@@ -455,6 +455,10 @@ describe.skipIf(!process.env.DATABASE_URL)("social layer", () => {
           })
         ).items.map((i) => i.id),
       ).not.toContain(bobReview);
+      for (const sort of ["popular", "recent"] as const) {
+        const list = await listAlbumReviews({ albumId, viewer: viewerOf(alice), sort, limit: 10 });
+        expect(list.items.map((i) => i.id)).not.toContain(bobReview);
+      }
       // Mutes are one-way: bob's own feed is unaffected by alice muting him.
       expect(await hasMuted(bob, alice)).toBe(false);
 
@@ -464,6 +468,11 @@ describe.skipIf(!process.env.DATABASE_URL)("social layer", () => {
       expect(
         (await getFollowingActivity(albumId, viewerOf(alice))).people.map((p) => p.userId),
       ).toContain(bob);
+      expect(
+        (
+          await listAlbumReviews({ albumId, viewer: viewerOf(alice), sort: "recent", limit: 10 })
+        ).items.map((i) => i.id),
+      ).toContain(bobReview);
     });
 
     it("can't mute yourself", async () => {
