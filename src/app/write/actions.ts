@@ -41,6 +41,7 @@ export async function saveReviewAction(input: unknown): Promise<SaveReviewResult
     if (!album) return { ok: false, message: "We couldn't find that album." };
     kickJobs();
     const saved = await saveReview(user.id, { ...data, title: null, albumId: album.id });
+    kickJobs(); // a first review of an artist queues their discography import
     revalidateReviewPaths(user.handle, saved.slug);
     return { ok: true, id: saved.id, slug: saved.slug, status: saved.status, handle: user.handle };
   } catch (err) {

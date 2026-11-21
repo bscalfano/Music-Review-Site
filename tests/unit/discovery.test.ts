@@ -11,7 +11,7 @@ import { getArtistReviews } from "@/lib/social/feed";
 import { mergeDiscography, getLibraryAlbums, type ArtistAlbum } from "@/lib/artists/queries";
 import { resolveAlbumLinks } from "@/lib/albums/links";
 import { filtersToQuery, parseFilters } from "@/lib/discovery/filters";
-import { createMusicBrainzProvider, parseDiscography } from "@/lib/music/musicbrainz";
+import { createMusicBrainzProvider, parseDiscographyPage } from "@/lib/music/musicbrainz";
 import {
   deezerIdFromUrl,
   findAlbumSourceUrl,
@@ -185,6 +185,7 @@ describe("discography", () => {
     "artist-credit": [{ artist: { id: "a", name: "A" } }],
   });
   const json1 = {
+    "release-group-count": 5,
     "release-groups": [
       rg("1", "Old", "Album", [], "1995"),
       rg("2", "Live!", "Album", ["Live"], "1996"),
@@ -193,14 +194,26 @@ describe("discography", () => {
       rg("5", "Best Of", "Album", ["Compilation"], "2010"),
     ],
   };
-  it("keeps studio albums and EPs, newest first", () => {
-    expect(parseDiscography(json1).map((a) => a.title)).toEqual(["New EP", "Old"]);
+  it("keeps every release type, newest first, with its secondary types", () => {
+    const page = parseDiscographyPage(json1);
+    expect(page.total).toBe(5);
+    expect(page.items.map((a) => a.title)).toEqual([
+      "New EP",
+      "Best Of",
+      "A Single",
+      "Live!",
+      "Old",
+    ]);
+    expect(page.items.find((a) => a.title === "Live!")?.secondaryTypes).toEqual(["Live"]);
   });
-  it("is fetched from MusicBrainz's browse endpoint", async () => {
+  it("is browsed from MusicBrainz without a type filter, page by page", async () => {
     const { fetch, calls } = fakeFetch([["release-group?", () => json(json1)]]);
     const mb = createMusicBrainzProvider({ userAgent: "t/0 ( t )", fetchImpl: fetch, retries: 0 });
-    expect((await mb.getDiscography("abc")).length).toBe(2);
+    const page = await mb.getDiscography("abc", { offset: 100, limit: 100 });
+    expect(page.items).toHaveLength(5);
     expect(calls[0].url).toContain("artist=abc");
+    expect(calls[0].url).toContain("offset=100");
+    expect(calls[0].url).not.toContain("type=");
   });
   it("merges with our library, which wins and carries ratings", () => {
     const lib: ArtistAlbum[] = [
@@ -210,6 +223,7 @@ describe("discography", () => {
         title: "Old",
         releaseDate: "1995",
         primaryType: "Album",
+        secondaryTypes: [],
         coverKey: null,
         inLibrary: true,
         ratingCount: 3,
@@ -217,12 +231,15 @@ describe("discography", () => {
         reviewCount: 1,
       },
     ];
-    const merged = mergeDiscography(lib, parseDiscography(json1));
+    const merged = mergeDiscography(lib, parseDiscographyPage(json1).items);
     expect(merged.map((a) => [a.title, a.inLibrary])).toEqual([
       ["New EP", false],
+      ["Best Of", false],
+      ["A Single", false],
+      ["Live!", false],
       ["Old", true],
     ]);
-    expect(merged[1].average).toBe("4.0");
+    expect(merged[4].average).toBe("4.0");
   });
 });
 

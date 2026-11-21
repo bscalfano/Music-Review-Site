@@ -31,6 +31,7 @@ export async function quickRateAction(
   if (!limit.ok) return { ok: false, message: rateLimitMessage(limit) };
   try {
     const res = await setQuickRating(user.id, albumId, rating);
+    kickJobs(); // a first rating of an artist queues their discography import
     refresh(user.handle);
     return { ok: true, draft: res.kind === "draft" };
   } catch (err) {

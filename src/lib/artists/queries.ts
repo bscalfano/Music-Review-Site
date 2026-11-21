@@ -16,6 +16,7 @@ export type ArtistAlbum = {
   title: string;
   releaseDate: string | null;
   primaryType: string | null;
+  secondaryTypes: string[];
   coverKey: string | null;
   /** In our database (so it has a page). MusicBrainz-only entries are false. */
   inLibrary: boolean;
@@ -34,6 +35,7 @@ export async function getLibraryAlbums(artistId: string): Promise<ArtistAlbum[]>
       title: albums.title,
       releaseDate: albums.releaseDate,
       primaryType: albums.primaryType,
+      secondaryTypes: albums.secondaryTypes,
       coverKey: albums.coverKey,
       ratingCount: albumStats.ratingCount,
       ratingSum: albumStats.ratingSum,
@@ -49,6 +51,7 @@ export async function getLibraryAlbums(artistId: string): Promise<ArtistAlbum[]>
     title: r.title,
     releaseDate: r.releaseDate,
     primaryType: r.primaryType,
+    secondaryTypes: r.secondaryTypes,
     coverKey: r.coverKey,
     inLibrary: true,
     ratingCount: r.ratingCount ?? 0,
@@ -75,6 +78,7 @@ export function mergeDiscography(
       title: d.title,
       releaseDate: d.releaseDate,
       primaryType: d.primaryType,
+      secondaryTypes: d.secondaryTypes,
       coverKey: null,
       inLibrary: false,
       ratingCount: 0,

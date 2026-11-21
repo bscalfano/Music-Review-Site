@@ -7,6 +7,7 @@ export type JobPayloads = {
   enrich_album: { albumId: string };
   notification_email: { notificationId: string };
   resolve_links: { albumId: string };
+  import_discography: { artistId: string; offset: number };
 };
 export type JobType = keyof JobPayloads;
 

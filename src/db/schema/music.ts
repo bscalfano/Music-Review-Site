@@ -19,6 +19,8 @@ export const artists = pgTable(
     name: text().notNull(),
     sortName: text(),
     slug: text().notNull().unique(),
+    /** Set once the whole MusicBrainz discography has been copied in (see import_discography). */
+    discographyImportedAt: timestamp({ withTimezone: true }),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
   },
   (t) => [index("artists_name_trgm").using("gin", sql`${t.name} gin_trgm_ops`)],
@@ -39,6 +41,11 @@ export const albums = pgTable(
     /** MusicBrainz dates are partial ("1997", "1997-05"), so this is text. */
     releaseDate: text(),
     primaryType: text(),
+    /** MusicBrainz secondary types: "Live", "Compilation", "Soundtrack", "Remix", ... */
+    secondaryTypes: text()
+      .array()
+      .notNull()
+      .default(sql`'{}'::text[]`),
     /** R2 object key of the cached cover; null until the enrichment job runs. */
     coverKey: text(),
     genres: text()

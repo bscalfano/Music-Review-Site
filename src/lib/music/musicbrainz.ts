@@ -13,6 +13,7 @@ import type {
   AlbumDetails,
   AlbumSearchResult,
   ArtistRef,
+  DiscographyPage,
   TrackInfo,
 } from "./types";
 
@@ -129,13 +130,19 @@ export function parseSearch(json: unknown): AlbumSearchResult[] {
   return parsed.data["release-groups"].map(toSearchResult);
 }
 
-/** Browse results have the same shape as search results; keep studio albums and EPs, newest first. */
-export function parseDiscography(json: unknown): AlbumSearchResult[] {
-  return parseSearch(json)
-    .filter(
-      (a) => (a.primaryType === "Album" || a.primaryType === "EP") && a.secondaryTypes.length === 0,
-    )
+const browseSchema = z.object({
+  "release-group-count": z.number().optional(),
+  "release-groups": z.array(z.object(releaseGroupBase)),
+});
+
+/** A page of an artist's release groups, every type, newest first. */
+export function parseDiscographyPage(json: unknown): DiscographyPage {
+  const parsed = browseSchema.safeParse(json);
+  if (!parsed.success) throw new MusicBrainzParseError("release-group browse", parsed.error);
+  const items = parsed.data["release-groups"]
+    .map(toSearchResult)
     .sort((a, b) => (b.releaseDate ?? "").localeCompare(a.releaseDate ?? ""));
+  return { total: parsed.data["release-group-count"] ?? items.length, items };
 }
 
 export function parseReleaseGroup(json: unknown): { details: AlbumDetails; raw: RawReleaseGroup } {
@@ -242,16 +249,21 @@ export function createMusicBrainzProvider(deps: MusicBrainzDeps): AlbumCatalogPr
       return json ? parseReleaseGroup(json).details : null;
     },
 
-    async getDiscography(artistMbid) {
-      const json = await cached(cache, `mb:discography:${artistMbid}`, DAY_MS, () =>
-        get("release-group", {
-          artist: artistMbid,
-          type: "album|ep",
-          inc: "artist-credits",
-          limit: "100",
-        }),
+    async getDiscography(artistMbid, { offset = 0, limit = 100 } = {}) {
+      // No `type` filter: this is everything on the artist's MusicBrainz page.
+      const json = await cached(
+        cache,
+        `mb:discography:${artistMbid}:${offset}:${limit}`,
+        DAY_MS,
+        () =>
+          get("release-group", {
+            artist: artistMbid,
+            inc: "artist-credits",
+            limit: String(limit),
+            offset: String(offset),
+          }),
       );
-      return parseDiscography(json);
+      return parseDiscographyPage(json);
     },
 
     async getTracks(mbid) {

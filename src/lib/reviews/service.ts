@@ -1,6 +1,7 @@
 import { and, eq, inArray, isNull, like, sql } from "drizzle-orm";
 import { getDb, schema } from "@/db";
 import type { DbLike } from "@/db/types";
+import { queueDiscographyImport } from "@/lib/albums/discography";
 import { recomputeAlbumStats } from "@/lib/albums/stats";
 import { markQueueReviewed } from "@/lib/queue/mark";
 import { slugify } from "@/lib/slug";
@@ -167,7 +168,11 @@ export async function saveReview(authorId: string, input: SaveReviewInput): Prom
 
     await replaceTags(tx, id, input.tags);
     await recomputeAlbumStats(tx, album.id);
-    if (published) await markQueueReviewed(tx, authorId, album.id);
+    if (published) {
+      await markQueueReviewed(tx, authorId, album.id);
+      // The first review of an artist pulls in their whole MusicBrainz discography.
+      await queueDiscographyImport(tx, album.artistId);
+    }
     return { id, slug, status: input.status, albumId: album.id };
   });
 }
@@ -224,6 +229,7 @@ export async function setQuickRating(
         .set({ rating: parsed.data, updatedAt: now })
         .where(eq(reviews.id, existing.id));
       await recomputeAlbumStats(tx, albumId);
+      if (existing.status === "published") await queueDiscographyImport(tx, album.artistId);
       return { kind: existing.status === "published" ? "logged" : "draft", id: existing.id };
     }
 
@@ -242,6 +248,7 @@ export async function setQuickRating(
       .returning({ id: reviews.id });
     await recomputeAlbumStats(tx, albumId);
     await markQueueReviewed(tx, authorId, albumId);
+    await queueDiscographyImport(tx, album.artistId);
     return { kind: "logged", id: row.id };
   });
 }

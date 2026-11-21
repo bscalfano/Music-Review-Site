@@ -62,6 +62,7 @@ export async function ensureAlbum(
         artistId,
         releaseDate: details.releaseDate,
         primaryType: details.primaryType,
+        secondaryTypes: details.secondaryTypes,
         genres: details.genres,
       })
       .onConflictDoNothing({ target: albums.mbid })

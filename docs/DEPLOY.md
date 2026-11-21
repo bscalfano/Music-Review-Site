@@ -46,12 +46,19 @@ Other variables:
    - `0006` gives existing published shelves a publish date so they sort in the feed.
    - `0010` adds a "queued at" date to In rotation entries and sets it from the existing created
      date, so old entries don't all show up in the feed as new.
+   - `0011` adds the columns the discography import uses. It copies no data.
    - `0009` merges "Song clip" into "Favorite song": it copies each clip into the favorite where
      none was set, then drops the old clip column. It can't be undone, so if you ever deploy
      this onto a database with real reviews, back it up first.
 
    To check what's pending, compare the files in `src/db/migrations/` with the rows in the
    `drizzle.__drizzle_migrations` table.
+
+   After your first real reviews are in (for example after the Instagram import), run
+   `pnpm import:discographies` once against production to pull in the full MusicBrainz discography
+   of every artist you've already reviewed. From then on it happens by itself: the first review or
+   rating of a new artist queues the import as background jobs, a page of 100 releases per job.
+   MusicBrainz allows about one request per second, so a very large catalog takes a little while.
 
 5. Open `https://YOUR_DEPLOYMENT/api/health`. It should say `{"ok":true}`.
 6. Don't run `pnpm db:seed` against production. Seed users are fake and would show up on Discover.

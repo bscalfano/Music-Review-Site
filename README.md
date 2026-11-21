@@ -31,6 +31,7 @@ pnpm dev                     # http://localhost:3000
 | `pnpm db:generate`                  | Generate a migration from schema changes                                                                                         |
 | `pnpm check:env`                    | Check an env file has everything production needs (`--file=...`)                                                                 |
 | `pnpm db:migrate`                   | Apply migrations to `DATABASE_URL`                                                                                               |
+| `pnpm import:discographies`         | Import full MusicBrainz discographies of artists you've reviewed (`--artist=slug` for one)                                       |
 
 Browser-based Playwright tests would need `pnpm exec playwright install chromium` first; the current tests do not.
 

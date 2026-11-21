@@ -18,6 +18,11 @@ export type AlbumSearchResult = {
   secondaryTypes: string[];
 };
 
+export type DiscographyPage = {
+  total: number;
+  items: AlbumSearchResult[];
+};
+
 export type AlbumDetails = AlbumSearchResult & {
   genres: string[];
 };
@@ -47,8 +52,15 @@ export interface AlbumCatalogProvider {
   searchAlbums(query: string, opts?: { limit?: number }): Promise<AlbumSearchResult[]>;
   getAlbum(mbid: string): Promise<AlbumDetails | null>;
   getTracks(mbid: string): Promise<TrackInfo[]>;
-  /** S12: an artist's studio albums and EPs (no live/compilation/remix releases), newest first. */
-  getDiscography(artistMbid: string): Promise<AlbumSearchResult[]>;
+  /**
+   * One page of everything MusicBrainz lists for an artist: albums, EPs, singles, live records,
+   * compilations, soundtracks, remixes and the rest. `total` is the full count, so callers can
+   * keep asking for the next `offset` until they've seen it all.
+   */
+  getDiscography(
+    artistMbid: string,
+    opts?: { offset?: number; limit?: number },
+  ): Promise<DiscographyPage>;
 }
 
 export interface PreviewProvider {
