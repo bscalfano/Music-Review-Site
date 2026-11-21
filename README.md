@@ -36,7 +36,7 @@ Browser-based Playwright tests would need `pnpm exec playwright install chromium
 
 ## Database
 
-Schema lives in `src/db/schema/` (Drizzle). Migrations are in `src/db/migrations/` and are generated, never hand-edited, except `0000_extensions.sql` (enables `pg_trgm` for fuzzy search) and `0009_favorite_is_preview.sql` (a hand-added step that copies data before a column is dropped). Remember to run `pnpm db:migrate` against production after every release that adds one; see `docs/DEPLOY.md`.
+Schema lives in `src/db/schema/` (Drizzle). Migrations are in `src/db/migrations/` and are generated, never hand-edited, except `0000_extensions.sql` (enables `pg_trgm` for fuzzy search), plus `0009_favorite_is_preview.sql` (copies data before a column is dropped) and `0010_queued_at.sql` (backfills a new column), which have hand-added data steps. Remember to run `pnpm db:migrate` against production after every release that adds one; see `docs/DEPLOY.md`.
 
 ```bash
 pnpm db:generate --name=describe_the_change   # after editing the schema

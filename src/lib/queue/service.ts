@@ -54,7 +54,7 @@ export async function addToQueue(
   // If someone had suggested this, adding it yourself simply accepts it.
   const accepted = await db
     .update(queueItems)
-    .set({ status: "queued" })
+    .set({ status: "queued", queuedAt: new Date() })
     .where(
       and(
         eq(queueItems.ownerId, ownerId),
@@ -170,7 +170,7 @@ export async function respondToSuggestion(
   }
   const [row] = await db
     .update(queueItems)
-    .set({ status: accept ? "queued" : "dismissed" })
+    .set(accept ? { status: "queued", queuedAt: new Date() } : { status: "dismissed" })
     .where(
       and(
         eq(queueItems.id, itemId),

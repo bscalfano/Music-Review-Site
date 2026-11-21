@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FeedCard } from "@/components/social/feed-card";
+import { RotationFeedCard } from "@/components/social/rotation-feed-card";
 import { ShelfFeedCard } from "@/components/social/shelf-feed-card";
 import { SuggestedReviewers } from "@/components/social/discover-extras";
 import { buttonVariants } from "@/components/ui/button";
@@ -36,8 +37,10 @@ export default async function FeedPage({ searchParams }: Props) {
           {entries.map((e) =>
             e.kind === "review" ? (
               <FeedCard key={`r-${e.id}`} item={e.item} />
-            ) : (
+            ) : e.kind === "shelf" ? (
               <ShelfFeedCard key={`s-${e.id}`} shelf={e.shelf} />
+            ) : (
+              <RotationFeedCard key={`q-${e.id}`} rotation={e.rotation} />
             ),
           )}
         </ul>

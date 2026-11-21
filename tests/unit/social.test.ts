@@ -25,6 +25,8 @@ import { listNotifications, unreadCount, markAllRead } from "@/lib/social/notifi
 import { checkRateLimit } from "@/lib/social/ratelimit";
 import { getReviewHearts, toggleHeart } from "@/lib/social/reactions";
 import { listAlbumReviews } from "@/lib/reviews/queries";
+import { addToQueue, removeFromQueue } from "@/lib/queue/service";
+import { getFollowingStream } from "@/lib/social/shelf-feed";
 import { saveReview, setQuickRating } from "@/lib/reviews/service";
 
 const { users, albums, artists, reviews, notifications, queueItems } = schema;
@@ -472,6 +474,34 @@ describe.skipIf(!process.env.DATABASE_URL)("social layer", () => {
           await listAlbumReviews({ albumId, viewer: viewerOf(alice), sort: "recent", limit: 10 })
         ).items.map((i) => i.id),
       ).toContain(bobReview);
+    });
+
+    it("shows albums people add to In rotation in the following feed", async () => {
+      const rotation = async (viewerId: string) =>
+        (await getFollowingStream(viewerOf(viewerId))).entries
+          .filter((e) => e.kind === "rotation")
+          .map((e) =>
+            e.kind === "rotation" ? `${e.rotation.author.handle}:${e.rotation.album.mbid}` : "",
+          );
+      const [album] = await db
+        .select({ mbid: albums.mbid })
+        .from(albums)
+        .where(eq(albums.id, albumId2));
+      const entry = `soc_bob:${album.mbid}`;
+
+      expect(await rotation(alice)).not.toContain(entry);
+      expect(await addToQueue(bob, albumId2, "heard good things")).toBe("added");
+      expect(await rotation(alice)).toContain(entry);
+      // Not shown to someone who doesn't follow bob, but shown to bob himself.
+      expect(await rotation(carol)).not.toContain(entry);
+      expect(await rotation(bob)).toContain(entry);
+      // Muting hides it.
+      await muteUser(alice, bob);
+      expect(await rotation(alice)).not.toContain(entry);
+      await unmuteUser(alice, bob);
+      // Taking it out of the rotation takes it off the feed.
+      await removeFromQueue(bob, albumId2);
+      expect(await rotation(alice)).not.toContain(entry);
     });
 
     it("can't mute yourself", async () => {

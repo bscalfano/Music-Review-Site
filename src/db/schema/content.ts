@@ -192,6 +192,8 @@ export const queueItems = pgTable(
     note: text(),
     status: queueStatus().notNull().default("queued"),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+    /** When it actually went into the owner's rotation (a suggestion is queued later, on accept). */
+    queuedAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
   },
   (t) => [
     index("queue_items_album_owner_idx").on(t.albumId, t.ownerId),
